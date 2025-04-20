@@ -1,0 +1,150 @@
+/* src/components/ModalLogOut/ModalLogOut.module.css */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoutModalContainer {
+    position: relative;
+    width: 533px;
+    height: 447px;
+    backdrop-filter: blur(100px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    z-index: 21;
+}
+
+.logoutLogoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logoutLogoIcon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.logoutLogoText {
+    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-size: 24px;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 500;
+}
+
+.logoutConfirmMessage {
+    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-size: 22px;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+.logoutButtonContainer {
+    width: 100%;
+    max-width: 330px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.logoutButton {
+    width: 100%;
+    height: 55px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(to right, #f6b851, #e04b9a);
+    color: white;
+    font-size: 16px;
+    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.logoutButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.cancelLogoutButton {
+    width: 100%;
+    height: 55px;
+    border: none;
+    border-radius: 30px;
+    background-color: white;
+    color: #e04b9a;
+    font-size: 16px;
+    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cancelLogoutButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 20;
+}
+
+/* Адаптивные стили */
+@media screen and (max-width: 767px) {
+    .logoutModalContainer {
+        padding: 24px;
+        width: 90%;
+        max-width: 330px;
+        height: auto;
+        aspect-ratio: 533/447;
+    }
+
+    .logoutLogoIcon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logoutLogoText {
+        font-size: 20px;
+    }
+
+    .logoutConfirmMessage {
+        font-size: 18px;
+        margin-bottom: 30px;
+    }
+
+    .logoutButton,
+    .cancelLogoutButton {
+        height: 50px;
+        font-size: 14px;
+    }
+}

@@ -1,30 +1,33 @@
 /* src/pages/DashboardPage/DashboardPage.module.css */
 
-/* Основний контейнер для Dashboard */
+/* Основной контейнер для Dashboard */
 .dashboardContainer {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-color: #101010;
-    /* Основний фон з Figma */
     color: #fbfbfb;
-    /* Колір тексту */
     position: relative;
-    width: 100%;
+    width: 100vw;
+    /* Исправляем горизонтальное центрирование */
+    margin-left: calc(-50vw + 50%);
+    /* Этот трюк помогает правильно центрировать на всю ширину экрана */
     overflow-x: hidden;
     font-family: 'Poppins-Regular', Helvetica, sans-serif;
 }
 
-
-/* Контейнер для вмісту (все крім Header) */
-.contentWrapper {
+/* Главный контейнер дэшборда с адаптивными стилями */
+.dashboardPage {
+    width: 320px;
     display: flex;
-    flex: 1;
-    width: 100%;
-    max-width: 1280px;
+    flex-direction: column;
     margin: 0 auto;
-    position: relative;
-    z-index: 1;
+}
+
+/* Стили для хедера */
+.header {
+    width: 320px;
+    height: 60px;
 }
 
 /* Фонові елементи (подібні до тих, що в Login) */
@@ -95,6 +98,29 @@
     z-index: -1;
 }
 
+/* Контейнер для вмісту (все крім Header) */
+.contentWrapper {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Компоненты навигации и дашборда */
+.navigation {
+    width: 320px;
+    height: 96px;
+}
+
+.balance,
+.currency,
+.divider {
+    display: none;
+}
+
 /* Лівий сайдбар */
 .sidebar {
     display: flex;
@@ -102,125 +128,92 @@
     background-color: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(50px);
     border-radius: 8px;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 12px;
 }
 
-/* Основна область контенту */
 .mainContent {
-    background-color: rgba(255, 255, 255, 0.05);
+    width: 100%;
+    padding: 12px;
     backdrop-filter: blur(50px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 4px 60px 0px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
 }
 
-/* Кнопка додавання транзакцій */
-.addButton {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    z-index: 10;
-}
-
-/* Стилі для мобільних пристроїв (до 767px) */
-@media screen and (max-width: 767px) {
-    .contentWrapper {
-        flex-direction: column;
-        padding: 12px;
-        max-width: 320px;
-        /* Ширина для мобільної версії */
-    }
-
-    /* Фонові градієнти для мобільної версії */
-    .purpleGradient1 {
-        width: 434px;
-        height: 434px;
-        top: -150px;
-        left: -281px;
-        border-radius: 217px;
-    }
-
-    .purpleGradient2 {
-        width: 173px;
-        height: 173px;
-        top: 16px;
-        left: 158px;
-        border-radius: 86px;
-        background: linear-gradient(to right, rgba(142, 46, 121, 0.68), rgba(171, 51, 173, 0.68));
-        filter: blur(60px);
-    }
-
-    .purpleGradient3 {
-        width: 362px;
-        height: 362px;
-        top: 302px;
-        left: 136px;
-        border-radius: 181px;
-        background: linear-gradient(to bottom right, rgba(109, 84, 235, 1), rgba(109, 84, 235, 1), rgba(101, 35, 146, 1));
-        filter: blur(121px);
-    }
-
-    .purpleGradient4 {
-        width: 173px;
-        height: 173px;
-        top: 242px;
-        left: 284px;
-        border-radius: 86px;
-        background-color: #2f2d8e;
-        filter: blur(91px);
-    }
-
-    .purpleGradient5 {
-        width: 134px;
-        height: 134px;
-        top: 470px;
-        left: 134px;
-        border-radius: 67px;
-        background-color: #6c1c77;
-        filter: blur(91px);
-    }
-
-    /* Загальний синій фон */
-    .blueGlow {
-        position: absolute;
-        width: 454px;
-        height: 454px;
-        top: 57px;
-        left: 0;
-        background-color: rgba(46, 21, 176, 0.73);
-        border-radius: 227px;
-        filter: blur(100px);
-        z-index: -1;
-    }
-
-    .sidebar {
-        width: 100%;
-        margin-bottom: 12px;
-        padding: 12px;
-        backdrop-filter: blur(50px);
-        background-color: var(--form-color, rgba(255, 255, 255, 0.1));
-        box-shadow: var(--form-effects, 0px 4px 60px 0px rgba(0, 0, 0, 0.25));
-        border-radius: 8px;
-    }
-
-    .mainContent {
-        width: 100%;
-        padding: 12px;
-        backdrop-filter: blur(50px);
-        background-color: var(--form-color, rgba(255, 255, 255, 0.1));
-        box-shadow: var(--form-effects, 0px 4px 60px 0px rgba(0, 0, 0, 0.25));
-        border-radius: 8px;
-    }
-
-    .addButton {
-        bottom: 20px;
-        right: 20px;
-    }
+/* Загальний синій фон для мобильных */
+.blueGlow {
+    position: absolute;
+    width: 454px;
+    height: 454px;
+    top: 57px;
+    left: 0;
+    background-color: rgba(46, 21, 176, 0.73);
+    border-radius: 227px;
+    filter: blur(100px);
+    z-index: -1;
 }
 
 /* Стилі для планшетів (768px - 1279px) */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
+    .dashboardPage {
+        width: 768px;
+    }
+
+    .header {
+        width: 768px;
+        height: 80px;
+    }
+
+    .dashboard {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .dashboardData {
+        display: flex;
+        flex-direction: row;
+        gap: 32px;
+        margin-bottom: 20px;
+    }
+
+    .navigation {
+        width: 336px;
+        height: 134px;
+    }
+
+    .balance {
+        display: block;
+        width: 336px;
+        height: 80px;
+    }
+
+    .currency {
+        display: block;
+        width: 336px;
+        height: 80px;
+    }
+
     .contentWrapper {
         flex-direction: column;
         padding: 32px;
         max-width: 768px;
+    }
+
+    .sidebar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+    .mainContent {
+        width: 100%;
+        padding: 20px;
     }
 
     /* Фонові елементи для планшета */
@@ -247,201 +240,63 @@
         right: -300px;
         border-radius: 297.5px;
     }
-
-    .sidebar {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: flex-start;
-        width: 100%;
-        margin-bottom: 20px;
-        padding: 20px;
-        /* backdrop-blur: 50px; */
-        background-color: var(--form-color, rgba(255, 255, 255, 0.1));
-        box-shadow: var(--form-effects, 0px 4px 60px 0px rgba(0, 0, 0, 0.25));
-        border-radius: 8px;
-    }
-
-    .mainContent {
-        width: 100%;
-        padding: 20px;
-        /* backdrop-blur: 50px; */
-        background-color: var(--form-color, rgba(255, 255, 255, 0.1));
-        box-shadow: var(--form-effects, 0px 4px 60px 0px rgba(0, 0, 0, 0.25));
-        border-radius: 8px;
-    }
-
-    .addButton {
-        bottom: 40px;
-        right: 40px;
-    }
 }
 
 /* Стилі для десктопів (1280px і більше) */
 @media screen and (min-width: 1280px) {
+    .dashboardPage {
+        width: 1280px;
+    }
+
+    .header {
+        width: 1280px;
+        height: 80px;
+    }
+
+    .dashboard {
+        padding-left: 0;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .dashboardData {
+        flex-direction: column;
+        gap: 33px;
+        margin-bottom: 0;
+    }
+
+    .navigation {
+        width: 480px;
+        height: 133px;
+    }
+
+    .balance {
+        width: 480px;
+        height: 80px;
+    }
+
+    .currency {
+        width: 480px;
+        height: 380px;
+    }
+
     .contentWrapper {
         flex-direction: row;
         padding: 16px;
         gap: 32px;
         max-width: 1280px;
+        position: relative;
     }
 
-    .sidebar {
-        display: flex;
-        flex-direction: column;
-        width: 30%;
-        padding: 20px;
-        min-height: calc(100vh - 120px);
-        /* Висота мінус header і paddings */
-        /* backdrop-blur: 50px; */
-        background-color: var(--form-color, rgba(255, 255, 255, 0.1));
-        box-shadow: var(--form-effects, 0px 4px 60px 0px rgba(0, 0, 0, 0.25));
-        border-radius: 8px;
+    .divider {
+        display: block;
+        width: 1px;
+        height: calc(100vh - 60px);
+        background-color: rgba(255, 255, 255, 0.6);
+        box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
+        position: absolute;
+        left: 480px;
+        top: 60px;
+        z-index: 2;
     }
-
-    .mainContent {
-        width: 70%;
-        padding: 20px;
-        min-height: calc(100vh - 120px);
-        /* Висота мінус header і paddings */
-        /* backdrop-blur: 50px; */
-        background-color: var(--form-color, rgba(255, 255, 255, 0.1));
-        box-shadow: var(--form-effects, 0px 4px 60px 0px rgba(0, 0, 0, 0.25));
-        border-radius: 8px;
-    }
-}
-
-/* Спільні стилі для дочірніх елементів */
-.navItem {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #fbfbfb;
-    padding: 12px 16px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-}
-
-.navItem:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-.navItemActive {
-    /* копируйте стили из .navItem */
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #fbfbfb;
-    padding: 12px 16px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-    /* и добавьте специфичные для .navItemActive */
-    background-color: rgba(255, 255, 255, 0.15);
-    font-weight: 700;
-}
-
-/* Стилі для карток компонентів */
-.card {
-    background-color: rgba(74, 86, 226, 0.1);
-    backdrop-filter: blur(50px);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-/* Стилі для заголовків */
-.title {
-    font-size: 24px;
-    font-weight: 400;
-    margin-bottom: 16px;
-    color: #fbfbfb;
-}
-
-/* Стилі для балансу */
-.balance {
-    font-size: 30px;
-    font-weight: 700;
-    color: #fbfbfb;
-    margin-bottom: 8px;
-}
-
-/* Градієнт для кнопок */
-.buttonGradient {
-    background: linear-gradient(to right, #f3a952, #ca6b99);
-    border-radius: 20px;
-    color: #fbfbfb;
-    border: none;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: normal;
-    letter-spacing: 1.8px;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    box-shadow: var(--button-shadow, 1px 9px 15px 0px rgba(0, 0, 0, 0.2));
-    height: 50px;
-}
-
-.buttonGradient:hover {
-    opacity: 0.9;
-}
-
-.buttonGradient:hover {
-    opacity: 0.9;
-}
-
-.buttonOutline {
-    background-color: #fbfbfb;
-    border-radius: 20px;
-    color: var(--text-button, rgba(98, 63, 139, 1));
-    border: 1px solid #4a56e2;
-    padding: 12px 24px;
-    font-size: 18px;
-    font-weight: normal;
-    letter-spacing: 1.8px;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    box-shadow: 1px 9px 15px rgba(0, 0, 0, 0.2);
-    height: 50px;
-}
-
-.buttonOutline:hover {
-    opacity: 0.9;
-}
-
-/* Стилі для таблиці транзакцій */
-.transactionsTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.transactionsTable th {
-    text-align: left;
-    padding: 12px 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.transactionsTable td {
-    padding: 12px 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Стилі для мобільних карток транзакцій */
-.transactionCard {
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 12px;
-    border-left: 4px solid;
-    /* Колір буде встановлено динамічно */
-}
-
-.transactionCard.income {
-    border-left-color: #24CCA7;
-    /* Зелений для доходів */
-}
-
-.transactionCard.expense {
-    border-left-color: #FF6596;
-    /* Червоний для витрат */
 }

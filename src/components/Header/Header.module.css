@@ -1,0 +1,217 @@
+/* src/components/Header/Header.module.css */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #372e5e;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    margin: 0 auto;
+    max-width: 1280px;
+}
+
+.logoWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logoContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.logo {
+    width: 19px;
+    height: 23px;
+    color: #fbfbfb;
+}
+
+.title {
+    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    color: #fbfbfb;
+    margin: 0;
+    font-weight: 400;
+}
+
+.userSection {
+    display: flex;
+    align-items: center;
+}
+
+.userName {
+    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.divider {
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin: 0 12px;
+}
+
+.exitButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0;
+}
+
+.exitIcon {
+    display: flex;
+    align-items: center;
+}
+
+.exitSvg {
+    width: 18px;
+    height: 18px;
+}
+
+.exitText {
+    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Адаптивные стили для мобильных */
+@media screen and (max-width: 767px) {
+    .header {
+        height: 60px;
+    }
+
+    .container {
+        padding: 0 8px;
+        width: 320px;
+    }
+
+    .logoWrapper {
+        width: 100px;
+        height: 40px;
+    }
+
+    .logoContainer {
+        width: 25px;
+        height: 25px;
+    }
+
+    .title {
+        font-size: 14px;
+    }
+
+    .userName {
+        font-size: 14px;
+        margin-right: 8px;
+    }
+
+    .exitText {
+        font-size: 14px;
+    }
+
+    .exitSvg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .divider {
+        height: 18px;
+        margin: 0 8px;
+    }
+
+    /* Специальный эффект тени для мобильного меню */
+    .mobileMenu {
+        box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.25), inset 0 -3px 2px 0 rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Адаптивные стили для планшетов */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    .header {
+        height: 80px;
+    }
+
+    .container {
+        padding: 0 12px;
+        width: 768px;
+    }
+
+    .logoWrapper {
+        width: 110px;
+        height: 44px;
+    }
+
+    .logoContainer {
+        width: 28px;
+        height: 28px;
+    }
+
+    .title {
+        font-size: 16px;
+    }
+
+    .userName {
+        font-size: 15px;
+        margin-right: 10px;
+    }
+
+    .exitText {
+        font-size: 15px;
+    }
+
+    .divider {
+        height: 22px;
+    }
+}
+
+/* Адаптивные стили для десктопа */
+@media screen and (min-width: 1280px) {
+    .header {
+        height: 80px;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .logoWrapper {
+        width: 115px;
+        height: 48px;
+    }
+
+    .logoContainer {
+        width: 30px;
+        height: 30px;
+    }
+
+    .title {
+        font-size: 17px;
+    }
+
+    .userName {
+        font-size: 16px;
+        margin-right: 12px;
+    }
+
+    .exitText {
+        font-size: 16px;
+    }
+
+    .divider {
+        height: 24px;
+    }
+}
