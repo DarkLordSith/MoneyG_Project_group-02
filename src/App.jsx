@@ -11,7 +11,7 @@ const App = () => {
   return (
     <>
       {/* Loader компонент для отображения индикатора загрузки */}
-      {/* <Loader /> */}
+      <Loader />
 
       <Routes>
         <Route path="/" element={<Layout />}>

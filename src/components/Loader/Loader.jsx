@@ -1,27 +1,27 @@
 import React from "react";
+import { ColorRing } from "react-loader-spinner";
 import { useSelector } from "react-redux";
-import styles from "./Loader.module.css";
+import s from "./Loader.module.css";
 
 const Loader = () => {
-  // Получаем состояния загрузки из разных слайсов
-  const authRefreshing = useSelector((state) => state.auth.isRefreshing);
-  const transactionsLoading = useSelector(
-    (state) => state.transactions.isLoading
-  );
+  // Отримуємо стан завантаження з Redux store (Підписуємось на global.isLoading)
+  const isLoading = useSelector((state) => state.global?.isLoading);
 
-  // Если ни один из процессов не загружается, не рендерим лоадер
-  const isLoading = authRefreshing || transactionsLoading;
-
+  // Якщо немає завантаження, не відображаємо лоадер
   if (!isLoading) return null;
 
   return (
-    <div className={styles.loaderBackdrop}>
-      <div className={styles.loaderContainer}>
-        <div className={styles.loader}>
-          <div className={styles.dot}></div>
-          <div className={styles.dot}></div>
-          <div className={styles.dot}></div>
-        </div>
+    <div className={s.loaderBackdrop}>
+      <div className={s.spinnerWrapper}>
+        <ColorRing
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="color-ring-loading"
+          wrapperStyle={{}}
+          wrapperClass="color-ring-wrapper"
+          colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+        />
       </div>
     </div>
   );
