@@ -5,7 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import styles from "./Header.module.css";
 
 const Header = ({ onLogout }) => {
-  // Получение данных пользователя из Redux store по существующей структуре
+  // Получение данных пользователя из Redux store
   const { user } = useSelector((state) => state.auth);
   const email = user?.email || "user@example.com";
   const userName = email.split("@")[0]; // Берем часть email до @
@@ -76,9 +76,8 @@ const Header = ({ onLogout }) => {
           <button
             type="button"
             className={styles.exitButton}
-            onClick={onLogout} // Используем переданный колбэк
+            onClick={onLogout}
           >
-            {/* Иконка выхода */}
             <span className={styles.exitIcon}>
               <svg
                 width="18"

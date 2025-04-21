@@ -5,10 +5,12 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    /* Для відображення на всю сторінку */
     background-color: #101010;
     color: #fbfbfb;
     position: relative;
     width: 100vw;
+    /* Для відображення на всю сторінку */
     /* Исправляем горизонтальное центрирование */
     margin-left: calc(-50vw + 50%);
     /* Этот трюк помогает правильно центрировать на всю ширину экрана */
@@ -107,40 +109,53 @@
     margin: 0 auto;
     position: relative;
     z-index: 1;
+    flex-direction: column;
+
 }
 
-/* Компоненты навигации и дашборда */
-.navigation {
-    width: 320px;
-    height: 96px;
-}
-
+/* Базові стилі для всіх версій */
+.navigation,
 .balance,
-.currency,
-.divider {
-    display: none;
+.currency {
+    border-radius: 8px;
 }
 
-/* Лівий сайдбар */
+.navigation {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(50px);
+}
+
+
+.currency {
+    background-color: rgba(81, 59, 126, 0.6);
+    box-shadow: 1px 9px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Лівий сайдбар (для мобільної і десктопної версій) */
 .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(50px);
-    border-radius: 8px;
     width: 100%;
     margin-bottom: 12px;
-    padding: 12px;
 }
 
-/* .mainContent {
+.dashboardData {
+    display: flex;
+    flex-direction: column;
+}
+
+.mainContent {
     width: 100%;
     padding: 12px;
     backdrop-filter: blur(50px);
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0px 4px 60px 0px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
-} */
+}
+
+.divider {
+    display: none;
+}
 
 /* Загальний синій фон для мобильных */
 .blueGlow {
@@ -155,6 +170,23 @@
     z-index: -1;
 }
 
+/* Стилі для мобільної версії (за замовчуванням) */
+.navigation {
+    width: 320px;
+    height: 96px;
+
+}
+
+.balance {
+    width: 280px;
+    height: 80px;
+    margin: 12px 0;
+}
+
+.currency {
+    display: none;
+}
+
 /* Стилі для планшетів (768px - 1279px) */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
     .dashboardPage {
@@ -166,53 +198,54 @@
         height: 80px;
     }
 
-    .dashboard {
+    .contentWrapper {
+        max-width: 768px;
+        padding-top: 0px;
         padding-left: 32px;
         padding-right: 32px;
+
     }
 
-    .dashboardData {
+    /* Спеціальні стилі для планшетної версії */
+    .tabletLayout {
+        width: 100%;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        gap: 28px;
+        margin-bottom: 28px;
+    }
+
+    .tabletTopSection {
+        display: flex;
+        justify-content: space-between;
         gap: 32px;
-        margin-bottom: 20px;
     }
 
     .navigation {
         width: 336px;
-        height: 134px;
+        height: 66px;
+        margin-top: 40px;
+        margin-bottom: 28px;
+        /* height: 214px; */
+        /* padding: 20px; */
     }
 
     .balance {
-        display: block;
         width: 336px;
         height: 80px;
+        /* margin: 0; */
     }
 
     .currency {
         display: block;
         width: 336px;
-        height: 80px;
-    }
-
-    .contentWrapper {
-        flex-direction: column;
-        padding: 32px;
-        max-width: 768px;
-    }
-
-    .sidebar {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: flex-start;
-        width: 100%;
-        margin-bottom: 20px;
+        height: 214px;
         padding: 20px;
     }
 
     .mainContent {
-        width: 100%;
+        width: 704px;
+        height: 312px;
         padding: 20px;
     }
 
@@ -253,50 +286,59 @@
         height: 80px;
     }
 
-    .dashboard {
-        padding-left: 0;
-        display: flex;
+    .contentWrapper {
         flex-direction: row;
+        max-width: 1280px;
+        height: 721px;
+        gap: 0;
+        /* Убираем gap */
+        /* padding-top: 10px; */
     }
 
     .dashboardData {
+        display: flex;
         flex-direction: column;
         gap: 33px;
-        margin-bottom: 0;
     }
 
     .navigation {
         width: 480px;
-        height: 133px;
+        /* height: 133px; */
+        padding: 20px;
     }
 
     .balance {
         width: 480px;
         height: 80px;
+        margin: 0;
     }
 
     .currency {
+        display: block;
         width: 480px;
         height: 380px;
+        padding: 20px;
     }
 
-    .contentWrapper {
-        flex-direction: row;
-        padding: 16px;
-        gap: 32px;
-        max-width: 1280px;
-        position: relative;
+    .sidebar {
+        width: 480px;
     }
 
     .divider {
         display: block;
         width: 1px;
-        height: calc(100vh - 60px);
+        height: 641px;
+
         background-color: rgba(255, 255, 255, 0.6);
         box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
-        position: absolute;
-        left: 480px;
-        top: 60px;
-        z-index: 2;
+    }
+
+    .mainContent {
+        width: 715px;
+        height: 308px;
+        flex-grow: 1;
+        padding: 20px;
+        margin-left: 69px;
+        /* Добавляем отступ только для mainContent */
     }
 }
