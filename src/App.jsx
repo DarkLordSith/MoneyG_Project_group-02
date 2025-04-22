@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { lazy, Suspense } from "react";
 import Layout from "./components/Layout/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
@@ -8,21 +9,28 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Loader from "./components/Loader/Loader"; // Импорт компонента Loader
 
 
+const StatisticsTab = lazy(() => import("./pages/StatisticsTab/StatisticsTab"));
+
+
 const App = () => {
   return (
     <>
       {/* Loader компонент для отображения индикатора загрузки */}
       <Loader />
-
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
-          <Route path="login" element={<LoginPage />} />
+            <Route index element={<HomePage />} />
+            <Route path="statistics" element={<StatisticsTab />} /> 
+         
+         
+            <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
-      </Routes>
+        </Routes>
+      </Suspense>
     </>
   );
 };
