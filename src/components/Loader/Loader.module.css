@@ -1,0 +1,17 @@
+.loaderBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(220deg, #6d54eb 28.31%, #652392 66.76%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.spinnerWrapper {
+    width: 100px;
+    height: 100px;
+}
