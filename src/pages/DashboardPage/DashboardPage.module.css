@@ -73,21 +73,13 @@
 }
 
 /* Базові стилі для всіх версій */
-.navigation,
-.balance,
-.currency {
+
+.balance .currency {
     border-radius: 8px;
 }
 
-.navigation {
-    background-color: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(50px);
-}
 
-.currency {
-    background-color: rgba(81, 59, 126, 0.6);
-    box-shadow: 1px 9px 20px rgba(0, 0, 0, 0.25);
-}
+
 
 /* Лівий сайдбар (для мобільної і десктопної версій) */
 .sidebar {
@@ -105,9 +97,6 @@
 .mainContent {
     width: 100%;
     padding: 12px;
-    backdrop-filter: blur(50px);
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0px 4px 60px 0px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
 }
 
@@ -117,14 +106,13 @@
 
 /* Стилі для мобільної версії (за замовчуванням) */
 .navigation {
-    width: 320px;
-    height: 96px;
+    /* width: 320px;
+    height: 96px; */
 }
 
 .balance {
     width: 280px;
     height: 80px;
-    margin: 12px 0;
 }
 
 .currency {
@@ -145,8 +133,6 @@
     .contentWrapper {
         max-width: 768px;
         padding-top: 0px;
-        padding-left: 32px;
-        padding-right: 32px;
     }
 
     /* Спеціальні стилі для планшетної версії */
@@ -167,7 +153,6 @@
     .navigation {
         width: 336px;
         height: 66px;
-        margin-top: 40px;
         margin-bottom: 28px;
     }
 
@@ -211,18 +196,17 @@
     .dashboardData {
         display: flex;
         flex-direction: column;
-        gap: 33px;
     }
 
     .navigation {
         width: 480px;
-        padding: 20px;
+
     }
 
     .balance {
         width: 480px;
         height: 80px;
-        margin: 0;
+        margin-bottom: 32px;
     }
 
     .currency {

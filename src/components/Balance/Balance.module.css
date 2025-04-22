@@ -51,6 +51,7 @@
 /* Адаптивні стилі для планшетів */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
     .balanceWrapper {
+        margin-top: 68px;
         width: 336px;
     }
 

@@ -8,7 +8,7 @@ import { useMediaQuery } from "react-responsive";
 // Импорты компонентов
 import Loader from "../../components/Loader/Loader";
 import Header from "../../components/Header/Header";
-// import Navigation from '../../components/Navigation/Navigation';
+import Navigation from "../../components/Navigation/Navigation";
 import Balance from "../../components/Balance/Balance";
 // import Currency from '../../components/Currency/Currency';
 import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
@@ -78,7 +78,7 @@ const DashboardPage = () => {
           {isMobile && (
             <div className={styles.sidebar}>
               <div className={styles.navigation}>
-                <p>Navigation</p>
+                <Navigation />
               </div>
               <div className={styles.balance}>
                 <Balance />
@@ -92,7 +92,7 @@ const DashboardPage = () => {
               <div className={styles.tabletTopSection}>
                 <div className={styles.navigationBalanceGroup}>
                   <div className={styles.navigation}>
-                    <p>Navigation</p>
+                    <Navigation />
                   </div>
                   <div className={styles.balance}>
                     <Balance />
@@ -110,7 +110,7 @@ const DashboardPage = () => {
               <div className={styles.sidebar}>
                 <div className={styles.dashboardData}>
                   <div className={styles.navigation}>
-                    <p>Navigation</p>
+                    <Navigation />
                   </div>
                   <div className={styles.balance}>
                     <Balance />
