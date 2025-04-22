@@ -1,0 +1,236 @@
+a {
+    text-decoration: none;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgb(16, 16, 16);
+    background-image:
+        url("../LoginForm/images/login-modal-mob@1x.webp"),
+        url("../LoginForm/images/login-modal-circle-mob@1x.webp");
+    background-size: 50%, 30%;
+    background-position:
+        right bottom,
+        left top;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper {
+    position: fixed;
+    pointer-events: none;
+    z-index: -1;
+    width: 454px;
+    height: 454px;
+    border-radius: 454px;
+    transform: translate(50%, 50%);
+    bottom: 50%;
+    right: 50%;
+    background: rgba(47, 21, 176, 0.73);
+    filter: blur(100px);
+}
+
+@media only screen and (min-resolution: 192dpi) {
+    .backdrop {
+        background-image:
+            url("../LoginForm/images/login-modal-mob@2x.webp"),
+            url("../LoginForm/images/login-modal-circle-mob@2x.webp");
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .backdrop {
+        background-size: 100% 100%;
+        background-color: #101010;
+        background-image: url("./images/bg_registerTab1px.png");
+    }
+}
+
+@media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
+    .backdrop {
+        background-image: url("./images/bg_refisterTab2x.png");
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .backdrop {
+        background-image: url("./images/bg_desktop_1x.png");
+    }
+}
+
+@media only screen and (min-width: 1440px) and (min-resolution: 192dpi) {
+    .backdrop {
+        background-image: url("./images/bg_desktop_2x.png");
+    }
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    width: 100%;
+    padding: 98px 20px;
+    background-repeat: no-repeat;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 60px 0px;
+}
+
+@media only screen and (min-width: 768px) {
+    .modal {
+        border-radius: 8px;
+        box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+        width: 533px;
+        /* height: 570px; */
+        padding: 40px 62px;
+        background-position: -60px -60px;
+        background-size: 125% 125%;
+        background-image:
+            url("../LoginForm/images/login-modal-desk@1x.webp"),
+            url("../LoginForm/images/login-modal-circle-desk@1x.webp");
+    }
+}
+
+@media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
+    .modal {
+        background-image:
+            url("../LoginForm/images/login-modal-desk@2x.webp"),
+            url("../LoginForm/images/login-modal-circle-desk@2x.webp");
+    }
+}
+
+.inputs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
+    margin: 52px 0;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.inputGroup {
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.input {
+    display: flex;
+    border: none;
+    background: transparent;
+    width: 280px;
+    height: 35px;
+    padding-left: 50px;
+    color: rgba(255, 255, 255, 0.4);
+    position: relative;
+    z-index: 2;
+}
+
+.input:focus {
+    border-bottom: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .input {
+        width: 409px;
+    }
+}
+
+.inputIcon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 24px;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.eyeIcon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    z-index: 3;
+}
+
+.error {
+    color: rgba(250, 104, 0, 0.853);
+    position: absolute;
+    top: 40px;
+    font-size: 0.7em;
+    padding-left: 50px;
+    z-index: 4;
+}
+
+.underline {
+    position: absolute;
+
+    bottom: -4px;
+
+    width: calc(100%);
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.4);
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+    transform: scaleX(1);
+    transform-origin: left;
+    z-index: 1;
+}
+
+.progressBarComponent {
+    width: auto;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 19px;
+    color: rgba(251, 251, 251, 1);
+    margin: 0;
+
+    img {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+.textLogo {
+    font-weight: 400;
+    font-style: 29px;
+}
+
+@media only screen and (min-width: 768px) {
+    .logo {
+        font-size: 26px;
+
+        img {
+            width: 36px;
+            height: 36px;
+        }
+    }
+}
