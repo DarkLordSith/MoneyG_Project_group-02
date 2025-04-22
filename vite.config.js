@@ -3,13 +3,4 @@ import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    outDir: "dist",
-  },
-  resolve: {
-    alias: {
-      "@": "/src",
-    },
-  },
-  base: "/MoneyG_Project_group-02/",
 });
