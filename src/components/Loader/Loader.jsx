@@ -19,6 +19,9 @@ const Loader = () => {
           size={80}
           aria-label="Loading Spinner"
           speedMultiplier={0.8}
+          cssOverride={{
+            borderWidth: "10px",
+          }}
         />
       </div>
     </div>

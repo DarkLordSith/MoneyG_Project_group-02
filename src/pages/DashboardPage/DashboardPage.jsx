@@ -62,13 +62,10 @@ const DashboardPage = () => {
       {isLoading && <Loader />}
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
 
-      <div className={styles.backgroundElements}>
-        <div className={styles.purpleGradient1}></div>
-        <div className={styles.purpleGradient2}></div>
-        <div className={styles.purpleGradient3}></div>
-        <div className={styles.purpleGradient4}></div>
-        <div className={styles.purpleGradient5}></div>
-        {isMobile && <div className={styles.blueGlow}></div>}
+      <div
+        className={`${styles.backgroundElements} ${isMobile ? styles.mobileBg : isTablet ? styles.tabletBg : styles.desktopBg}`}
+      >
+        {/* Фоновые изображения теперь подключаются через CSS */}
       </div>
 
       <div className={styles.dashboardPage}>
