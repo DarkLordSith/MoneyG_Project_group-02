@@ -1,7 +1,7 @@
 @import "modern-normalize/modern-normalize.css";
-@import "./styles/fonts.css";
-@import "./styles/variables.css";
-@import "./styles/media.css";
+@import "./fonts.css";
+@import "./media.css";
+@import "./variables.css";
 
 :root {
   font-size: 16px;
