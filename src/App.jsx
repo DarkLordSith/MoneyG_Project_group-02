@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
+
 const App = () => {
   return (
     <Routes>
