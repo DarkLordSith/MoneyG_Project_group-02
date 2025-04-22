@@ -7,6 +7,7 @@ import DashboardPage from "./pages/DashboardPage/DashboardPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Loader from "./components/Loader/Loader"; // Импорт компонента Loader
 
+
 const App = () => {
   return (
     <>
