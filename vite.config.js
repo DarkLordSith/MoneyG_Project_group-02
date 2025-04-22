@@ -11,5 +11,5 @@ export default defineConfig({
       "@": "/src",
     },
   },
-  base: "./",
+  base: "/MoneyG_Project_group-02/",
 });
