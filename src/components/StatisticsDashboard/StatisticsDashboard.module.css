@@ -1,34 +1,74 @@
 .wrapper {
-   display: flex;
-    gap: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    position: relative;
-    z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 20;
 }
 
 .selectWrapper {
+  width: 280px;
   position: relative;
-  width: 100%;
 }
 
 .select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 50px;
-  padding: 0.6rem 1rem;
   border-radius: 8px;
+  padding: 0 16px;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
+  font-weight: 400;
   color: white;
-  border: 1px solid #FBFBFB;
-  font-weight: 500;
   background: linear-gradient(to right, #6b4fe1, #8455d8);
-  appearance: none;
+  border: 1px solid #fbfbfb;
   cursor: pointer;
-  background-image: none;
+  position: relative;
 }
 
-/* Стрелочка 🔼 по умолчанию */
-.selectWrapper::after {
+
+.dropdown {
+  margin-top: 8px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(
+    0deg,
+    rgba(83, 61, 186, 0.7) 0%,
+    rgba(80, 48, 154, 0.7) 43.14%,
+    rgba(106, 70, 165, 0.525) 73.27%,
+    rgba(133, 93, 175, 0.133) 120.03%
+  );
+  backdrop-filter: blur(100px);
+  box-shadow: 0px 4px 60px 0px #00000040;
+  max-height: 157px;
+  overflow-y: auto;
+  z-index: 30;
+}
+
+.option {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: white;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.option:hover {
+  background: #FFFFFF1A;
+}
+
+.optionActive {
+  background: #FFFFFF1A;
+}
+
+
+.selected {
+  color: #FF868D;
+}
+/* Стрелка */
+.select::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -45,23 +85,23 @@
 
 .select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3); 
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
-/* При фокусе — стрелка поворачивается вниз 🔽 */
-.selectWrapper:focus-within::after {
+
+.selectWrapper:focus-within .select::after {
   transform: translateY(-50%) rotate(180deg);
 }
 
-
+/* Адаптив */
 @media (min-width: 768px) {
-    .wrapper {
-        flex-direction: row;
-        gap: 16px;
-    }
+  .wrapper {
+    flex-direction: row;
+    gap: 16px;
+  }
 }
 
 @media (min-width: 1280px) {
-    .wrapper {
-        gap: 32px;
-    }
+  .wrapper {
+    gap: 32px;
+  }
 }

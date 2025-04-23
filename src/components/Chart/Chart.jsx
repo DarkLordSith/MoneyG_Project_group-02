@@ -44,7 +44,7 @@ const Chart = ({ summary, categories, balance }) => {
   };
 
     return (
-        <div className={css.chartWrapper}>
+        <div className={css.chartContainer}>
             <Doughnut data={data} options={options} />
             <div className={css.chartCenter}> 
                 {expenses ? (
