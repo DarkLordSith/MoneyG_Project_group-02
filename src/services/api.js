@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../redux/store";
 
 const api = axios.create({
-  baseURL: "https://your-backend-url/api",
+  baseURL: "https://money-guard-backend-lnfk.onrender.com",
 });
 
 api.interceptors.request.use((config) => {
