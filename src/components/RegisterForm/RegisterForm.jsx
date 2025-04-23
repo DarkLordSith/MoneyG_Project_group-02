@@ -13,6 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import clsx from "clsx";
 
+import api from "../../api/api";
 import logo from "../LoginForm/images/logo.svg";
 import s from "./RegisterForm.module.css";
 import FormButton from "../common/FormButton/FormButton";
@@ -51,26 +52,37 @@ const RegisterForm = () => {
     resolver: yupResolver(schema),
   });
 
+  // const onSubmit = async (data) => {
+  //   try {
+  //     const response = await fetch("../../services/api.js", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     if (!response.ok) {
+  //       const err = await response.json();
+  //       throw new Error(err.message || "Помилка реєстрації");
+  //     }
+
+  //     const result = await response.json();
+  //     localStorage.setItem("token", result.token);
+  //     navigate("/dashboard");
+  //   } catch (error) {
+  //     toast.error(error.message || "Помилка реєстрації");
+  //   }
+  // };
+
   const onSubmit = async (data) => {
-    try {
-      const response = await fetch("../../services/api.js", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.message || "Помилка реєстрації");
-      }
-
-      const result = await response.json();
-      localStorage.setItem("token", result.token);
-      navigate("/dashboard");
-    } catch (error) {
-      toast.error(error.message || "Помилка реєстрації");
-    }
-  };
+  try {
+    const response = await api.post("/register", data);
+    localStorage.setItem("token", response.data.token);
+    navigate("/dashboard");
+  } catch (error) { 
+    const errorMessage = error.response?.data?.message || "Щось пішло не так. Спробуйте ще раз.";
+    toast.error(errorMessage);
+  }
+};
 
   const handleEmailBlur = (e) => {
     const trimmed = e.target.value.trim();
