@@ -1,0 +1,213 @@
+/* Основной контейнер для таблицы транзакций */
+.transactionsWrapper {
+    display: flex;
+    width: 715px;
+    max-height: calc(100vh - 110px);
+    border-radius: 10px;
+    /* padding: 10px; */
+}
+
+/* Текст для отображения информационных сообщений */
+.messageText {
+    text-align: center;
+    margin: 24px auto;
+}
+
+/* Стили для прокручиваемого контейнера тела таблицы */
+.tableDataContainer tbody {
+    display: block;
+    width: 100%;
+    max-height: calc(100vh - 170px);
+    overflow-y: auto;
+}
+
+/* Выравнивание заголовка и строк таблицы */
+.tableDataContainer thead,
+.tableDataContainer tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Стили для заголовка таблицы с закругленными углами */
+.tableDataContainer thead {
+    border-radius: 8px;
+}
+
+/* Изображение для пустого состояния без транзакций */
+.emptyStateVisual {
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+/* Центрирование изображения пустого состояния */
+.emptyStateGraphic {
+    display: flex;
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* Основные стили таблицы с транзакциями */
+.tableDataContainer {
+    color: var(--white);
+    font-weight: 600;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+}
+
+/* Стили для ячеек таблицы с нижней границей */
+.tableDataContainer td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.41);
+    font-size: 14px;
+}
+
+/* Фиксированный заголовок с фиолетовым фоном и тенью */
+.tableHeader {
+    position: sticky;
+    top: 0;
+    background: rgba(82, 59, 126, 1);
+    box-shadow: 0px 4px 60px 0px rgba(0, 0, 0, 0.25);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+/* Подсветка строки при наведении */
+.tbody tr:hover {
+    background-color: #3d3a4e;
+}
+
+/* Стили для колонки даты */
+.dateColumn {
+    text-align: left;
+    padding: 16px 0;
+    padding-left: 20px;
+}
+
+/* Стили для колонки типа транзакции */
+.typeColumn {
+    text-align: left;
+    width: auto;
+}
+
+/* Стили для колонок категории и комментария */
+.categoryColumn,
+.commentColumn {
+    text-align: left;
+}
+
+/* Стили для колонки суммы с правым выравниванием */
+.amountColumn {
+    text-align: right;
+    padding-right: 22px;
+}
+
+/* Скрытие колонки действий */
+.hiddenActions {
+    display: none;
+}
+
+/* Стили для скроллбара webkit */
+.tableDataContainer tbody::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Стиль ползунка скроллбара */
+.tableDataContainer tbody::-webkit-scrollbar-thumb {
+    background-color: #6b5e97;
+    border-radius: 4px;
+}
+
+/* Стиль трека скроллбара */
+.tableDataContainer tbody::-webkit-scrollbar-track {
+    background-color: #2d2a40;
+}
+
+/* Стили скроллбара для Firefox */
+.tableDataContainer tbody {
+    scrollbar-width: thin;
+    scrollbar-color: #6b5e97 #2d2a40;
+}
+
+@media only screen and (max-width: 767px) {
+
+    /* Мобильная версия контейнера */
+    .transactionsWrapper {
+        margin: 0 auto;
+        width: 280px;
+        padding: 0;
+        max-height: 60vh;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+
+    /* Блочное отображение для мобильных устройств */
+    .tableDataContainer,
+    .tableDataContainer tbody,
+    .tableDataContainer tr,
+    .tableDataContainer td {
+        display: block;
+    }
+
+    /* Сброс ограничения высоты для мобильной версии */
+    .tableDataContainer tbody {
+        max-height: none;
+    }
+
+    /* Центрирование заголовка для мобильной версии */
+    .tableDataContainer thead {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+    }
+
+    /* Карточка транзакции для мобильной версии */
+    .tableDataContainer tbody tr {
+        background: rgba(82, 59, 126, 0.6);
+        margin-bottom: 8px;
+        border-radius: 0.5rem;
+        position: relative;
+    }
+
+    /* Стили ячеек для мобильной версии */
+    .tableDataContainer td {
+        font-size: 16px;
+        font-weight: 400;
+        text-align: right;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Убираем границу у последней ячейки */
+    .tableDataContainer td:last-child {
+        border-bottom: none;
+    }
+
+    /* Стили для кнопок действий в мобильной версии */
+    .tableDataContainer .actionBtn {
+        border-bottom: none;
+    }
+
+    /* Добавление меток для мобильной версии */
+    .tableDataContainer td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 6px;
+        width: 45%;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    /* Позиционирование кнопок действий внизу карточки */
+    .tableDataContainer .action-buttons {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 0.5rem;
+    }
+
+}

@@ -106,8 +106,8 @@
 
 /* Стилі для мобільної версії (за замовчуванням) */
 .navigation {
-    /* width: 320px;
-    height: 96px; */
+    width: 320px;
+    /* height: 96px; */
 }
 
 .balance {
@@ -146,7 +146,7 @@
 
     .tabletTopSection {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         gap: 32px;
     }
 

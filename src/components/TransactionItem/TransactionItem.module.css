@@ -1,0 +1,255 @@
+/* Стиль для ячейки с доходом - желтый цвет */
+td.profitAmount {
+    color: #fbbf24;
+    font-weight: 600 !important;
+    text-align: right;
+    padding-right: 16px;
+}
+
+/* Стиль для ячейки с расходом - красный цвет */
+td.lossAmount {
+    color: #f87171;
+    font-weight: 600 !important;
+    text-align: right;
+    padding-right: 16px;
+}
+
+/* Основной контейнер строки транзакции */
+.transactionRow {
+    margin: 0 auto;
+}
+
+/* Контейнер строки для расходной транзакции */
+.transactionRowExpense {
+    margin: 0 auto;
+}
+
+/* Общие стили для базовых колонок */
+.columnDate,
+.columnType,
+.columnCategory,
+.columnDescription {
+    font-weight: 400;
+    padding: 16px 0;
+    word-wrap: break-word;
+}
+
+/* Стили для колонки даты с левым выравниванием */
+.columnDate {
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* Стили для колонки типа транзакции */
+.columnType {
+    width: auto;
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* Стили для колонок категории и описания */
+.columnCategory,
+.columnDescription {
+    text-align: left;
+}
+
+/* Контейнер для кнопок действий */
+.buttonsWrapper {
+    display: flex;
+}
+
+/* Контейнер для кнопок редактирования и удаления */
+.controlsCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 24px;
+}
+
+/* Капитализация первой буквы комментария */
+.columnDescription:first-letter {
+    text-transform: capitalize;
+}
+
+/* Скрытый текст редактирования для мобильной версии */
+.editLabel {
+    display: none;
+}
+
+/* Стили для кнопки редактирования */
+.modifyButton {
+    color: #9ca3af;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* Эффект наведения на иконку редактирования */
+.editIcon:hover,
+.editIcon:focus {
+    scale: 1.5;
+    stroke: var(--white);
+}
+
+/* Стили для кнопки удаления с градиентом */
+.removeButton {
+    width: 69px;
+    height: 29px;
+    border-radius: 20px;
+    background-position: left center;
+
+    color: var(--white);
+    padding: 4px 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(167deg, #ffc727 0%, #9e40ba 61.46%, #7000ff 90.54%);
+    transition: var(--transition);
+    background-size: 200%;
+}
+
+/* Эффект наведения на кнопку удаления */
+.removeButton:hover,
+.removeButton:focus {
+    background-position: right center;
+    transform: var(--scale);
+}
+
+@media screen and (max-width: 767px) {
+
+    /* Отображение текста редактирования в мобильной версии */
+    .editLabel {
+        display: contents;
+        font-size: 16px;
+    }
+
+    /* Эффект наведения на текст редактирования */
+    .editLabel:hover {
+        transform: var(--scale);
+        color: var(--white);
+    }
+
+    /* Сброс эффекта масштабирования иконки в мобильной версии */
+    .editIcon:hover,
+    .editIcon:focus {
+        scale: 1;
+        stroke: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Эффект наведения на кнопку редактирования */
+    .modifyButton:hover,
+    .modifyButton:focus {
+        transform: var(--scale);
+        color: var(--white);
+    }
+
+    /* Эффект наведения на кнопку удаления */
+    .removeButton:hover {
+        background-position: right center;
+        transform: var(--scale);
+    }
+
+    /* Желтый индикатор для строки дохода */
+    .transactionRow::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 10;
+        width: 5px;
+        height: 100%;
+        background-color: #fbbf24;
+        border-radius: 10px 0 0 10px;
+    }
+
+    /* Оранжевый индикатор для строки расхода */
+    .transactionRowExpense::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 10;
+        width: 5px;
+        height: 100%;
+        background-color: #ff6a3d;
+        border-radius: 10px 0 0 10px;
+    }
+
+    /* Отступы для ячеек строки дохода */
+    .transactionRow td {
+        padding: 12px 20px;
+        display: flex;
+    }
+
+    /* Отступы для ячеек строки расхода */
+    .transactionRowExpense td {
+        padding: 12px 20px;
+        display: flex;
+    }
+
+    /* Расположение контента в колонке даты */
+    .columnDate {
+        justify-content: space-between;
+    }
+
+    /* Расположение контента в колонке типа */
+    .columnType {
+        justify-content: space-between;
+        text-align: left;
+        padding-left: 32px;
+    }
+
+    /* Расположение контента в колонке категории */
+    .columnCategory {
+        justify-content: space-between;
+        text-align: left;
+        padding-left: 16px;
+    }
+
+    /* Расположение контента в колонке комментария */
+    .columnDescription {
+        justify-content: space-between;
+        gap: 5px;
+        text-align: left;
+        padding-left: 16px;
+    }
+
+    /* Обрезка длинного текста комментария */
+    .columnDescription p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Расположение контента в колонках сумм */
+    .profitAmount,
+    .lossAmount {
+        justify-content: space-between;
+    }
+
+    /* Расположение кнопок управления */
+    .controlsCell {
+        justify-content: space-between;
+        display: flex;
+    }
+
+    /* Центрирование кнопки редактирования */
+    .modifyButton {
+        align-items: center;
+        display: flex;
+        gap: 5px;
+    }
+
+    /* Стили для меток полей в мобильной версии */
+    .labelDate,
+    .labelType,
+    .labelCategory,
+    .labelDescription {
+        font-weight: 600;
+    }
+
+    /* Белый цвет для метки суммы */
+    .labelAmount {
+        color: white;
+    }
+}

@@ -112,10 +112,4 @@
 }
 
 /* Стили для десктопа */
-@media screen and (min-width: 1280px) {
-
-    /* Добавление отступа слева на больших экранах */
-    .navList {
-        /* padding-left: 16px; */
-    }
-}
+@media screen and (min-width: 1280px) {}

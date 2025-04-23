@@ -12,7 +12,7 @@ import Navigation from "../../components/Navigation/Navigation";
 import Balance from "../../components/Balance/Balance";
 // import Currency from '../../components/Currency/Currency';
 import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
-// import ModalEditTransaction from '../../components/ModalEditTransaction/ModalEditTransaction';
+import TransactionList from "../../components/TransactionList/TransactionList";
 // import ModalAddTransaction from '../../components/ModalAddTransaction/ModalAddTransaction';
 // import ButtonAddTransactions from '../../components/ButtonAddTransactions/ButtonAddTransactions';
 
@@ -125,7 +125,7 @@ const DashboardPage = () => {
           )}
 
           <div className={styles.mainContent}>
-            <p>Table content</p>
+            <TransactionList />
             <Outlet />
           </div>
         </div>

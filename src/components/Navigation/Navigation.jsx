@@ -1,10 +1,12 @@
 // src/components/Navigation/Navigation.jsx
-import { NavLink } from "react-router-dom";
-import clsx from "clsx";
-import useMedia from "../../hooks/useMedia";
-import s from "./Navigation.module.css";
 
-// Создам свои компоненты иконок вместо импорта SVG файлов
+// Імпорти необхідних бібліотек та компонентів
+import { NavLink } from "react-router-dom"; // Для створення навігаційних посилань
+import clsx from "clsx"; // Для умовного додавання CSS класів
+import useMedia from "../../hooks/useMedia"; // Кастомний хук для визначення типу пристрою
+import s from "./Navigation.module.css"; // Імпорт CSS модулів
+
+// SVG компонент для іконки Home
 const HomeIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 32 32">
     <path
@@ -14,6 +16,7 @@ const HomeIcon = ({ className }) => (
   </svg>
 );
 
+// SVG компонент для іконки Statistics
 const StatisticsIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 32 32">
     <path
@@ -23,6 +26,7 @@ const StatisticsIcon = ({ className }) => (
   </svg>
 );
 
+// SVG компонент для іконки Currency
 const CurrencyIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 32 32">
     <path
@@ -32,38 +36,55 @@ const CurrencyIcon = ({ className }) => (
   </svg>
 );
 
+// Основний компонент навігації
 const Navigation = () => {
+  // Використання кастомного хука для визначення мобільного пристрою
   const { isMobile } = useMedia();
 
+  // Функція для створення динамічних класів (активний/неактивний стан)
   const buildLinkClass = ({ isActive }) => {
     return clsx(s.navItem, isActive && s.activeLink);
   };
 
   return (
-    <nav>
+    // Головний елемент навігації з класом для стилізації
+    <nav className={s.navigation}>
+      {/* Список навігаційних посилань */}
       <ul className={s.navList}>
+        {/* Посилання на головну сторінку (Home) */}
         <li>
-          <NavLink className={buildLinkClass} to="/">
+          <NavLink
+            className={buildLinkClass}
+            to="/dashboard/home"
+            end // end атрибут для точного співпадіння маршруту (активний тільки для /dashboard/home)
+          >
             <div className={s.navIconWrapper}>
               <HomeIcon className={s.navIcon} />
             </div>
+            {/* Текст показується тільки на планшетах та десктопах */}
             {!isMobile && <span className={s.navItemText}>Home</span>}
           </NavLink>
         </li>
+
+        {/* Посилання на сторінку статистики */}
         <li>
-          <NavLink className={buildLinkClass} to="/statistics">
+          <NavLink className={buildLinkClass} to="/dashboard/statistics">
             <div className={s.navIconWrapper}>
               <StatisticsIcon className={s.navIcon} />
             </div>
+            {/* Текст показується тільки на планшетах та десктопах */}
             {!isMobile && <span className={s.navItemText}>Statistics</span>}
           </NavLink>
         </li>
+
+        {/* Посилання на сторінку валют (тільки для мобільних пристроїв) */}
         {isMobile && (
           <li>
-            <NavLink className={buildLinkClass} to="/currency">
+            <NavLink className={buildLinkClass} to="/dashboard/currency">
               <div className={s.navIconWrapper}>
                 <CurrencyIcon className={s.navIcon} />
               </div>
+              {/* Текст не показується на мобільних пристроях */}
             </NavLink>
           </li>
         )}
