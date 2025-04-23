@@ -1,11 +1,57 @@
 .wrapper {
-    display: flex;
+   display: flex;
     gap: 20px;
     flex-direction: column;
     align-items: flex-start;
     position: relative;
     z-index: 10;
 }
+
+.selectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select {
+  width: 100%;
+  height: 50px;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 16px;
+  color: white;
+  border: 1px solid #FBFBFB;
+  font-weight: 500;
+  background: linear-gradient(to right, #6b4fe1, #8455d8);
+  appearance: none;
+  cursor: pointer;
+  background-image: none;
+}
+
+/* Стрелочка 🔼 по умолчанию */
+.selectWrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 20px;
+  height: 11px;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='11' viewBox='0 0 20 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19 10L10 1L1 10' stroke='%23FBFBFB'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3); 
+}
+/* При фокусе — стрелка поворачивается вниз 🔽 */
+.selectWrapper:focus-within::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
 
 @media (min-width: 768px) {
     .wrapper {
