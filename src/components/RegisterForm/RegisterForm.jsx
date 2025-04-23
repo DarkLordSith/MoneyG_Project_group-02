@@ -52,35 +52,30 @@ const RegisterForm = () => {
     resolver: yupResolver(schema),
   });
 
-  // const onSubmit = async (data) => {
-  //   try {
-  //     const response = await fetch("../../services/api.js", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(data),
-  //     });
+const onSubmit = async (data) => {
+  if (data.password !== data.confirmPassword) {
+    toast.error("Паролі не збігаються");
+    return;
+  }
 
-  //     if (!response.ok) {
-  //       const err = await response.json();
-  //       throw new Error(err.message || "Помилка реєстрації");
-  //     }
+  const payload = {
+    name: data.name.trim(),
+    email: data.email.trim(),
+    password: data.password,
+  };
 
-  //     const result = await response.json();
-  //     localStorage.setItem("token", result.token);
-  //     navigate("/dashboard");
-  //   } catch (error) {
-  //     toast.error(error.message || "Помилка реєстрації");
-  //   }
-  // };
+  console.log("➡️ Дані, що відправляються на бекенд:", payload);
 
-  const onSubmit = async (data) => {
   try {
-    const response = await api.post("/register", data);
+    const response = await api.post("/auth/register", payload);
+
     localStorage.setItem("token", response.data.token);
     navigate("/dashboard");
-  } catch (error) { 
-    const errorMessage = error.response?.data?.message || "Щось пішло не так. Спробуйте ще раз.";
-    toast.error(errorMessage);
+  } catch (error) {
+    console.error("Помилка реєстрації:", error.response?.data);
+    const errorMsg =
+      error.response?.data?.message || "Щось пішло не так. Спробуйте ще раз.";
+    toast.error(errorMsg);
   }
 };
 
@@ -110,7 +105,7 @@ const RegisterForm = () => {
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
           <div className={s.inputs}>
-            {/* Name */}
+            
             <div className={s.inputGroup}>
               <MdPerson className={s.inputIcon} />
               <input
@@ -125,7 +120,6 @@ const RegisterForm = () => {
               )}
             </div>
 
-            {/* Email */}
             <div className={s.inputGroup}>
               <MdOutlineMailOutline className={s.inputIcon} />
               <input
@@ -141,7 +135,6 @@ const RegisterForm = () => {
               )}
             </div>
 
-            {/* Password */}
             <div className={s.inputGroup}>
               <MdLock className={s.inputIcon} />
               <input
@@ -162,7 +155,6 @@ const RegisterForm = () => {
               )}
             </div>
 
-            {/* Confirm Password */}
             <div className={s.inputGroup} style={{ marginBottom: 0 }}>
               <MdLock className={s.inputIcon} />
               <input
@@ -185,7 +177,6 @@ const RegisterForm = () => {
               )}
             </div>
 
-            {/* Password Strength */}
             <PasswordStrengthCustom password={watch("confirmPassword")} />
           </div>
 

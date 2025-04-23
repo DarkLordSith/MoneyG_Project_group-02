@@ -260,12 +260,13 @@ position: fixed;
 }
 
 .error {
-    color: rgba(250, 104, 0, 0.853);
+color: rgba(250, 104, 0, 0.853);
     position: absolute;
-    top: 40px;
+    /* top: 50px; */
     font-size: 0.7em;
     padding-left: 50px;
     z-index: 4;
+    margin-top: 3px;
 }
 
 .underline {
