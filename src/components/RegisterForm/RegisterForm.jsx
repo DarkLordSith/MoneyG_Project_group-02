@@ -64,8 +64,6 @@ const onSubmit = async (data) => {
     password: data.password,
   };
 
-  console.log("➡️ Дані, що відправляються на бекенд:", payload);
-
   try {
     const response = await api.post("/auth/register", payload);
 
