@@ -1,20 +1,20 @@
 // src/redux/finance/operations.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../services/api";
+import axios from "axios";
 import { setIsLoading } from "../global/slice";
 
+// НОВА ОПЕРАЦІЯ - отримання балансу користувача
 export const fetchBalance = createAsyncThunk(
   "finance/fetchBalance",
   async (_, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
 
-      // Використовуємо налаштований api instance
-      const { data } = await api.get("/transactions-summary");
+      // Використовуємо axios напряму, як в ваших інших операціях
+      const { data } = await axios.get("/transactions-summary");
 
       console.log("Balance response:", data); // Для дебагу
 
-      // Перевіряємо різні можливі формати відповіді
       if (data.periodTotal !== undefined) {
         return data.periodTotal;
       }

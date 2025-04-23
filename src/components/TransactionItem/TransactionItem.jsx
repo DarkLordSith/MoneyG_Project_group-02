@@ -20,10 +20,10 @@ const formatDate = (dateString) => {
 };
 
 const mockCategories = [
-  { id: "1", name: "Gifts" },
-  { id: "2", name: "Salary" },
-  { id: "3", name: "Transport" },
-  { id: "4", name: "Groceries" },
+  { id: "1", name: "Other" },
+  { id: "2", name: "Income" },
+  { id: "3", name: "Car" },
+  { id: "4", name: "Prodycts" },
 ];
 
 function TransactionItem({ transaction }) {
