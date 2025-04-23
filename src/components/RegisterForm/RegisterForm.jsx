@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import clsx from "clsx";
 
-import api from "../../api/api";
+import api from "../../services/api";
 import logo from "../LoginForm/images/logo.svg";
 import s from "./RegisterForm.module.css";
 import FormButton from "../common/FormButton/FormButton";
