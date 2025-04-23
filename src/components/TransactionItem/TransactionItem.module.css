@@ -1,17 +1,29 @@
 /* Стиль для ячейки с доходом - желтый цвет */
 td.profitAmount {
-    color: #fbbf24;
-    font-weight: 600 !important;
+    color: var(--color-accent);
+    font-weight: 600;
     text-align: right;
     padding-right: 16px;
+}
+
+/* Увеличиваем специфичность для переопределения других стилей */
+table tr td.profitAmount,
+tbody tr td.profitAmount {
+    font-weight: 600;
 }
 
 /* Стиль для ячейки с расходом - красный цвет */
 td.lossAmount {
     color: #f87171;
-    font-weight: 600 !important;
+    font-weight: 600;
     text-align: right;
     padding-right: 16px;
+}
+
+/* Увеличиваем специфичность для переопределения других стилей */
+table tr td.lossAmount,
+tbody tr td.lossAmount {
+    font-weight: 600;
 }
 
 /* Основной контейнер строки транзакции */
@@ -90,7 +102,7 @@ td.lossAmount {
 .editIcon:hover,
 .editIcon:focus {
     scale: 1.5;
-    stroke: var(--white);
+    stroke: var(--color-white);
 }
 
 /* Стили для кнопки удаления с градиентом */
@@ -99,14 +111,13 @@ td.lossAmount {
     height: 29px;
     border-radius: 20px;
     background-position: left center;
-
-    color: var(--white);
+    color: var(--color-white);
     padding: 4px 12px;
     border: none;
     cursor: pointer;
     font-size: 14px;
     box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
-    background: linear-gradient(167deg, #ffc727 0%, #9e40ba 61.46%, #7000ff 90.54%);
+    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
     transition: var(--transition);
     background-size: 200%;
 }
@@ -129,21 +140,21 @@ td.lossAmount {
     /* Эффект наведения на текст редактирования */
     .editLabel:hover {
         transform: var(--scale);
-        color: var(--white);
+        color: var(--color-white);
     }
 
     /* Сброс эффекта масштабирования иконки в мобильной версии */
     .editIcon:hover,
     .editIcon:focus {
         scale: 1;
-        stroke: rgba(255, 255, 255, 0.6);
+        stroke: var(--color-white-600);
     }
 
     /* Эффект наведения на кнопку редактирования */
     .modifyButton:hover,
     .modifyButton:focus {
         transform: var(--scale);
-        color: var(--white);
+        color: var(--color-white);
     }
 
     /* Эффект наведения на кнопку удаления */
@@ -157,10 +168,10 @@ td.lossAmount {
         content: "";
         position: absolute;
         top: 0;
-        left: 10;
+        left: 0;
         width: 5px;
         height: 100%;
-        background-color: #fbbf24;
+        background-color: var(--color-accent);
         border-radius: 10px 0 0 10px;
     }
 
@@ -169,22 +180,28 @@ td.lossAmount {
         content: "";
         position: absolute;
         top: 0;
-        left: 10;
+        left: 0;
         width: 5px;
         height: 100%;
         background-color: #ff6a3d;
         border-radius: 10px 0 0 10px;
     }
 
+    /* Добавляем position: relative к строкам, чтобы псевдоэлементы позиционировались правильно */
+    .transactionRow,
+    .transactionRowExpense {
+        position: relative;
+    }
+
     /* Отступы для ячеек строки дохода */
     .transactionRow td {
-        padding: 12px 20px;
+        padding: 12px 20px 12px 25px;
         display: flex;
     }
 
     /* Отступы для ячеек строки расхода */
     .transactionRowExpense td {
-        padding: 12px 20px;
+        padding: 12px 20px 12px 25px;
         display: flex;
     }
 
@@ -222,9 +239,20 @@ td.lossAmount {
     }
 
     /* Расположение контента в колонках сумм */
-    .profitAmount,
-    .lossAmount {
+    td.profitAmount,
+    td.lossAmount {
         justify-content: space-between;
+    }
+
+    /* Сохраняем цвета для сумм в мобильной версии */
+    .transactionRow td.profitAmount,
+    table .transactionRow td.profitAmount {
+        color: var(--color-accent);
+    }
+
+    .transactionRowExpense td.lossAmount,
+    table .transactionRowExpense td.lossAmount {
+        color: #f87171;
     }
 
     /* Расположение кнопок управления */
@@ -250,6 +278,47 @@ td.lossAmount {
 
     /* Белый цвет для метки суммы */
     .labelAmount {
-        color: white;
+        color: var(--color-white);
     }
+}
+
+/* Альтернативные подходы для повышения специфичности без !important */
+
+/* 1. Используем более специфичные селекторы */
+.transactions-table tbody tr td.profitAmount {
+    font-weight: 600;
+}
+
+.transactions-table tbody tr td.lossAmount {
+    font-weight: 600;
+}
+
+/* 2. Если нужно переопределить inline-стили, используем CSS переменные в HTML */
+/* 
+Пример в HTML:
+<td style="--font-weight: 600; font-weight: var(--font-weight, normal);" class="profitAmount">
+*/
+
+/* 3. Используем атрибуты для повышения специфичности */
+td[class="profitAmount"] {
+    font-weight: 600;
+}
+
+td[class="lossAmount"] {
+    font-weight: 600;
+}
+
+/* 4. Комбинируем селекторы для увеличения специфичности */
+tbody tr:not([data-disabled]) td.profitAmount,
+tbody tr:not([data-disabled]) td.lossAmount {
+    font-weight: 600;
+}
+
+/* 5. Используем селектор :not() для исключений */
+td.profitAmount:not(.lightweight) {
+    font-weight: 600;
+}
+
+td.lossAmount:not(.lightweight) {
+    font-weight: 600;
 }

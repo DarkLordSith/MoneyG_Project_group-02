@@ -46,7 +46,7 @@ const ModalLogOut = ({ isOpen, onClose, onLogout }) => {
 
         <div className={styles.logoutLogoContainer}>
           <img
-            src="/dashboard_images/dashboard.svg"
+            src="/public/MGlogo.svg"
             alt="Money Guard Logo"
             width="28"
             height="35"

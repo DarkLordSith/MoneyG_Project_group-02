@@ -23,7 +23,7 @@ const Header = ({ onLogout }) => {
           <div className={styles.logoContainer}>
             {/* Используем внешний SVG  */}
             <img
-              src="/dashboard_images/dashboard.svg"
+              src="/public/MGlogo.svg"
               alt="Money Guard Logo"
               width={
                 isDesktop ? "30" : isTablet ? "19" : isMobile ? "14" : "14"

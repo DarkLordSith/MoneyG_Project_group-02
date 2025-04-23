@@ -18,15 +18,15 @@
     height: 447px;
     backdrop-filter: blur(100px);
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    background: var(--color-form-bg);
+    border-radius: var(--radius-sm);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 60px;
     z-index: 21;
     /* Добавляем фоновое изображение для десктопа и планшета */
-    background-image: url('/dashboard_images/modallogtab.webp');
+    background-image: url('/src/assets/dashboard_images/modallogtab.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -48,20 +48,19 @@
 }
 
 .logoutLogoText {
-    font-family: var(--font-family);
+    font-family: var(--font-main);
     font-weight: 400;
     font-size: 26px;
-    color: #fbfbfb;
+    color: var(--color-white);
 }
 
 .logoutConfirmMessage {
-    font-family: var(--font-family);
+    font-family: var(--font-main);
     font-weight: 400;
     font-size: 18px;
     color: #fff;
     text-align: center;
     margin-bottom: 52px;
-    font-weight: 400;
 }
 
 .logoutButtonContainer {
@@ -78,10 +77,10 @@
     border: none;
     border-radius: 20px;
     box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
-    background: linear-gradient(167deg, #ffc727 0%, #9e40ba 61.46%, #7000ff 90.54%);
+    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
     color: white;
     font-size: 16px;
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-family: var(--font-main);
     font-weight: 500;
     letter-spacing: 1.8px;
     cursor: pointer;
@@ -101,7 +100,7 @@
     background-color: white;
     color: #e04b9a;
     font-size: 16px;
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-family: var(--font-main);
     font-weight: 500;
     letter-spacing: 1.8px;
     cursor: pointer;
@@ -119,7 +118,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(7px);
+    background: rgba(34, 13, 91, 0.23);
     z-index: 20;
 }
 
@@ -131,9 +131,9 @@
         height: 691px;
         backdrop-filter: blur(100px);
         box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--color-form-bg);
         /* Меняем фоновое изображение для мобильной версии */
-        background-image: url('/dashboard_images/modallogmob.webp');
+        background-image: url('/src/assets/dashboard_images/modallogmob.webp');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;

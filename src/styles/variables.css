@@ -10,6 +10,11 @@
   --color-success: #4caf50;
   --color-bg: #fafafa;
   --color-form-bg: rgba(255, 255, 255, 0.1);
+  /* Transaction Card Colors */
+  --color-transaction-bg: #4a338e;
+  --color-transaction-border: #5dd5d5;
+  --color-transaction-sum: #ff868d;
+  --color-transaction-delete: #ff868d;
 
   /* Fonts */
   --font-main: "Poppins", sans-serif;

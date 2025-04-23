@@ -7,7 +7,8 @@
     min-height: 100vh;
     /* Для відображення на всю сторінку */
     background-color: #101010;
-    color: #fbfbfb;
+    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
+    color: var(--color-white);
     position: relative;
     width: 100vw;
     /* Для відображення на всю сторінку */
@@ -16,6 +17,7 @@
     /* Этот трюк помогает правильно центрировать на всю ширину экрана */
     overflow-x: hidden;
     font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    /* Можно заменить на var(--font-main) */
 }
 
 /* Главный контейнер дэшборда с адаптивными стилями */
@@ -42,22 +44,26 @@
     background-position: center;
     background-repeat: no-repeat;
     background-color: #101010;
+    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 /* Версии фона для разных устройств */
 .mobileBg {
-    background-image: url('/dashboard_images/gradient_mobile.webp');
+    background-image: url('/src/assets/dashboard_images/gradient_mobile.webp');
     background-color: #101010;
+    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 .tabletBg {
-    background-image: url('/dashboard_images/gradient_tablet.webp');
+    background-image: url('/src/assets/dashboard_images/gradient_tablet.webp');
     background-color: #101010;
+    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 .desktopBg {
-    background-image: url('/dashboard_images/gradient_desktop.webp');
+    background-image: url('/src/assets/dashboard_images/gradient_desktop.webp');
     background-color: #101010;
+    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 /* Контейнер для вмісту (все крім Header) */
@@ -75,7 +81,7 @@
 /* Базові стилі для всіх версій */
 
 .balance .currency {
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
 }
 
 
@@ -97,7 +103,7 @@
 .mainContent {
     width: 100%;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
 }
 
 .divider {
@@ -224,7 +230,7 @@
         display: block;
         width: 1px;
         height: 641px;
-        background-color: rgba(255, 255, 255, 0.6);
+        background-color: var(--color-white-600);
         box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
     }
 

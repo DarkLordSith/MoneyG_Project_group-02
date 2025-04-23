@@ -3,8 +3,8 @@
     display: flex;
     width: 715px;
     max-height: calc(100vh - 110px);
-    border-radius: 10px;
-    /* padding: 10px; */
+    border-radius: var(--radius-sm);
+    padding: 10px;
 }
 
 /* Текст для отображения информационных сообщений */
@@ -31,7 +31,7 @@
 
 /* Стили для заголовка таблицы с закругленными углами */
 .tableDataContainer thead {
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
 }
 
 /* Изображение для пустого состояния без транзакций */
@@ -50,17 +50,18 @@
 
 /* Основные стили таблицы с транзакциями */
 .tableDataContainer {
-    color: var(--white);
+    color: var(--color-white);
     font-weight: 600;
+    font-family: var(--font-main);
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
 }
 
 /* Стили для ячеек таблицы с нижней границей */
 .tableDataContainer td {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.41);
+    border-bottom: 1px solid var(--color-white-400);
     font-size: 14px;
 }
 
@@ -68,7 +69,7 @@
 .tableHeader {
     position: sticky;
     top: 0;
-    background: rgba(82, 59, 126, 1);
+    background: var(--color-table-header);
     box-shadow: 0px 4px 60px 0px rgba(0, 0, 0, 0.25);
     font-size: 16px;
     font-style: normal;
@@ -78,7 +79,7 @@
 
 /* Подсветка строки при наведении */
 .tbody tr:hover {
-    background-color: #3d3a4e;
+    background-color: var(--color-table-hover);
 }
 
 /* Стили для колонки даты */
@@ -118,21 +119,96 @@
 
 /* Стиль ползунка скроллбара */
 .tableDataContainer tbody::-webkit-scrollbar-thumb {
-    background-color: #6b5e97;
+    background-color: var(--color-scrollbar-thumb);
     border-radius: 4px;
 }
 
 /* Стиль трека скроллбара */
 .tableDataContainer tbody::-webkit-scrollbar-track {
-    background-color: #2d2a40;
+    background-color: var(--color-scrollbar-track);
 }
 
 /* Стили скроллбара для Firefox */
 .tableDataContainer tbody {
     scrollbar-width: thin;
-    scrollbar-color: #6b5e97 #2d2a40;
+    scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
 
+/* Transaction Card Styles */
+.transaction-card {
+    background: var(--color-transaction-bg);
+    border: 2px solid var(--color-transaction-border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    color: var(--color-white);
+    font-family: var(--font-main);
+}
+
+.transaction-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--color-white-400);
+}
+
+.transaction-row:last-child {
+    border-bottom: none;
+}
+
+.transaction-label {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-white);
+}
+
+.transaction-value {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--color-white);
+}
+
+.transaction-sum {
+    color: var(--color-transaction-sum);
+    font-weight: 600;
+}
+
+.transaction-delete-btn {
+    background: var(--color-transaction-delete);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-btn);
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-main);
+}
+
+.transaction-delete-btn:hover {
+    opacity: 0.9;
+}
+
+.transaction-edit-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.transaction-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Media Queries */
 @media only screen and (max-width: 767px) {
 
     /* Мобильная версия контейнера */
@@ -169,7 +245,7 @@
     .tableDataContainer tbody tr {
         background: rgba(82, 59, 126, 0.6);
         margin-bottom: 8px;
-        border-radius: 0.5rem;
+        border-radius: var(--radius-sm);
         position: relative;
     }
 
@@ -209,5 +285,20 @@
         bottom: 0.5rem;
         right: 0.5rem;
     }
+}
 
+/* Стилі для планшетів (768px - 1279px) */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    .transactionsWrapper {
+        border-radius: var(--radius-sm);
+        width: 704px;
+        height: 56px;
+    }
+}
+
+/* Стилі для десктопів (1280px і більше) */
+@media screen and (min-width: 1280px) {
+    .transactionsWrapper {
+        padding: 0px;
+    }
 }
