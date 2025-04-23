@@ -1,11 +1,11 @@
 .passwordStrengthBar {
-    height: 6px;
+height: 6px;
     width: 100%;
     background-color: #dcdcdc;
     border-radius: 10px;
     overflow: hidden;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 15px;
+    margin-bottom: 40px;
 }
 
 .strengthFill {

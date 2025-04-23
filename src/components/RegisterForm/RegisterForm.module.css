@@ -2,14 +2,28 @@ a {
     text-decoration: none;
 }
 
+.conmobile {
+    margin-top: 100px;
+}
+
+@media only screen and (min-width: 768px) {
+    .conmobile {
+            margin-top: 0;
+        }
+}
+
+
+
+/* 123123123 - backdrob/фон @media - 123123123 */
+
 .backdrop {
     position: fixed;
     top: 0px;
     left: 0px;
     background-color: rgb(16, 16, 16);
-    background-image:
+    /* background-image:
         url("../LoginForm/images/login-modal-mob@1x.webp"),
-        url("../LoginForm/images/login-modal-circle-mob@1x.webp");
+        url("../LoginForm/images/login-modal-circle-mob@1x.webp"); */
     background-size: 50%, 30%;
     background-position:
         right bottom,
@@ -22,27 +36,13 @@ a {
     justify-content: center;
 }
 
-.wrapper {
-    position: fixed;
-    pointer-events: none;
-    z-index: -1;
-    width: 454px;
-    height: 454px;
-    border-radius: 454px;
-    transform: translate(50%, 50%);
-    bottom: 50%;
-    right: 50%;
-    background: rgba(47, 21, 176, 0.73);
-    filter: blur(100px);
-}
-
-@media only screen and (min-resolution: 192dpi) {
+/* @media only screen and (min-resolution: 192dpi) {
     .backdrop {
         background-image:
             url("../LoginForm/images/login-modal-mob@2x.webp"),
             url("../LoginForm/images/login-modal-circle-mob@2x.webp");
     }
-}
+} */
 
 @media only screen and (min-width: 768px) {
     .backdrop {
@@ -70,13 +70,46 @@ a {
     }
 }
 
+/* 123123123 - wrapper @media - 123123123 */
+
+.wrapper {
+position: fixed;
+    pointer-events: none;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    /* border-radius: 454px; */
+    /* transform: translate(50%, 50%); */
+    /* bottom: 50%; */
+    background-image: linear-gradient(to left top, #be72cf, #a05cba, #8247a5, #643290, #461f7c, 
+    #461f7c, #461f7c, #461f7c, #643290, #8247a5, #a05cba, #be72cf);
+    /* right: 50%; */
+    /* background: rgba(47, 21, 176, 0.73); */
+    filter: blur(50px);
+}
+
+@media only screen and (min-width: 768px) {
+    .wrapper {
+        background-image: none;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .wrapper {
+        background-image: none;
+    }
+}
+
+/* 123123123 - modal/Form @media - 123123123 */
+
 .modal {
     display: flex;
     flex-direction: column;
     align-self: center;
     align-items: center;
     width: 100%;
-    padding: 98px 20px;
+    height: 100%;
+    padding: 23px;
     background-repeat: no-repeat;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 60px 0px;
 }
@@ -86,30 +119,32 @@ a {
         border-radius: 8px;
         box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
         width: 533px;
-        /* height: 570px; */
+        height: 644px;
         padding: 40px 62px;
         background-position: -60px -60px;
         background-size: 125% 125%;
         background-image:
-            url("../LoginForm/images/login-modal-desk@1x.webp"),
+            url("./images/nodal_bg_tab1x.png"),
             url("../LoginForm/images/login-modal-circle-desk@1x.webp");
     }
 }
 
 @media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
+    
     .modal {
+                margin-top: 120px;
         background-image:
-            url("../LoginForm/images/login-modal-desk@2x.webp"),
+            url("./images/nodal_bg_tab1x.png"),
             url("../LoginForm/images/login-modal-circle-desk@2x.webp");
     }
 }
+
+/* 123123123 - input/s @media - 123123123 */
 
 .inputs {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
-    gap: 20px;
-    margin: 52px 0;
 }
 
 .btns {
@@ -125,6 +160,18 @@ a {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-size: 18px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 40px;
+}
+
+.inputIcon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 24px;
+    font-size: 20px;
     color: rgba(255, 255, 255, 0.4);
 }
 
@@ -150,56 +197,7 @@ a {
     }
 }
 
-.inputIcon {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    width: 25px;
-    height: 24px;
-    font-size: 20px;
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.eyeIcon {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 20px;
-    color: rgba(255, 255, 255, 0.4);
-    z-index: 3;
-}
-
-.error {
-    color: rgba(250, 104, 0, 0.853);
-    position: absolute;
-    top: 40px;
-    font-size: 0.7em;
-    padding-left: 50px;
-    z-index: 4;
-}
-
-.underline {
-    position: absolute;
-
-    bottom: -4px;
-
-    width: calc(100%);
-    height: 1px;
-    background-color: rgba(255, 255, 255, 0.4);
-    transition:
-        background-color 0.3s ease,
-        transform 0.3s ease;
-    transform: scaleX(1);
-    transform-origin: left;
-    z-index: 1;
-}
-
-.progressBarComponent {
-    width: auto;
-}
+/* 123123123 - Logo with Media@ - 123123123 */
 
 .logo {
     display: flex;
@@ -233,4 +231,47 @@ a {
             height: 36px;
         }
     }
+}
+
+
+
+
+/* 123123123123123 --- staff --- 123123123123123  */
+
+.eyeIcon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    z-index: 3;
+}
+
+.progressBarComponent {
+    width: auto;
+}
+
+.error {
+    color: rgba(250, 104, 0, 0.853);
+    position: absolute;
+    top: 40px;
+    font-size: 0.7em;
+    padding-left: 50px;
+    z-index: 4;
+}
+
+.underline {
+    position: absolute;
+    bottom: -4px;
+    width: calc(100%);
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.4);
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+    transform: scaleX(1);
+    transform-origin: left;
+    z-index: 1;
 }
