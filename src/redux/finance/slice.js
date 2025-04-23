@@ -1,4 +1,3 @@
-// src/redux/finance/slice.js
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchBalance } from "./operations";
 
