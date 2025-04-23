@@ -1,0 +1,144 @@
+/* @import "./index.css" */
+
+/* General styles */
+.container {
+  height: 100%;
+  background-color: rgba(74, 86, 226, 0.1);
+  backdrop-filter: blur(100px);
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.componentWrapper {
+  height: 100%;
+  overflow: hidden;
+}
+
+.mainRow {
+  text-align: left;
+}
+
+.th {
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.td {
+  text-align: center;
+  font-weight: 400;
+}
+
+.image {
+  display: block;
+  width: 100%;
+}
+
+/* Desktop styles */
+@media screen and (min-width: 1280px) {
+  .th {
+    padding: 16px 0 16px;
+    font-family: var(--second-family);
+  }
+
+  .td {
+    padding-top: 24px;
+  }
+
+  .th:first-child,
+  .td:first-child {
+    padding-left: 62px;
+  }
+  .th:last-child,
+  .td:last-child {
+    text-align: right;
+    padding-right: 130px;
+  }
+
+  .graphicHolder {
+    position: absolute;
+    bottom: 0;
+    height: 50%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .graphic {
+    position: relative;
+  }
+
+  .rate {
+    position: absolute;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--dashboard-text);
+  }
+
+  .usdRate {
+    top: 5px;
+    left: 47px;
+  }
+  .eurRate {
+    top: -30px;
+    right: 96px;
+  }
+}
+
+/* Tablet styles */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .td {
+    padding: 8px 20px 4px;
+  }
+
+  .th:first-child,
+  .td:first-child {
+    padding-left: 20px;
+    text-align: left;
+  }
+  .th:last-child,
+  .td:last-child {
+    padding-right: 20px;
+    text-align: right;
+  }
+
+  .image {
+    margin-top: 4px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    width: 320px;
+    height: 214px;
+    margin-top: 24px;
+  }
+
+  .th {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    font-family: var(--font-family);
+  }
+
+  .td {
+    padding: 8px 20px 4px;
+  }
+
+  .th:first-child,
+  .td:first-child {
+    padding-left: 20px;
+    text-align: left;
+  }
+  .th:last-child,
+  .td:last-child {
+    padding-right: 20px;
+    text-align: right;
+  }
+}
