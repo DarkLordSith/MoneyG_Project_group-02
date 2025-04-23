@@ -64,11 +64,11 @@ a {
     }
 }
 
-@media only screen and (min-width: 1440px) and (min-resolution: 192dpi) {
+/* @media only screen and (min-width: 1440px) and (min-resolution: 192dpi) {
     .backdrop {
         background-image: url("./images/bg_desktop_2x.png");
     }
-}
+} */
 
 /* 123123123 - wrapper @media - 123123123 */
 
@@ -132,10 +132,16 @@ position: fixed;
 @media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
     
     .modal {
-                margin-top: 120px;
+        margin-top: 0;
         background-image:
             url("./images/nodal_bg_tab1x.png"),
             url("../LoginForm/images/login-modal-circle-desk@2x.webp");
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .modal {
+        margin-top: 0;
     }
 }
 
