@@ -1,9 +1,7 @@
-// src/components/ModalLogOut/ModalLogOut.jsx
 import React, { useEffect } from "react";
 import styles from "./ModalLogOut.module.css";
 
 const ModalLogOut = ({ isOpen, onClose, onLogout }) => {
-  // Обработка нажатия клавиши Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.code === "Escape" && isOpen) {
@@ -13,7 +11,6 @@ const ModalLogOut = ({ isOpen, onClose, onLogout }) => {
 
     window.addEventListener("keydown", handleKeyDown);
 
-    // Блокируем прокрутку body при открытом модальном окне
     if (isOpen) {
       document.body.style.overflow = "hidden";
     }
@@ -24,16 +21,12 @@ const ModalLogOut = ({ isOpen, onClose, onLogout }) => {
     };
   }, [isOpen, onClose]);
 
-  // Если модальное окно не открыто, не рендерим его
   if (!isOpen) return null;
 
-  // Функция подтверждения выхода
   const confirmLogout = () => {
-    // Используем переданную функцию для логаута
     if (onLogout) {
       onLogout();
     } else {
-      // Для совместимости со старым кодом
       onClose();
     }
   };
@@ -41,12 +34,9 @@ const ModalLogOut = ({ isOpen, onClose, onLogout }) => {
   return (
     <div className={styles.modal}>
       <div className={styles.logoutModalContainer}>
-        {/* Фоновое изображение для десктоп/планшет будет добавлено через CSS */}
-        {/* Фоновое изображение для мобильной версии будет добавлено через CSS */}
-
         <div className={styles.logoutLogoContainer}>
           <img
-            src="/public/MGlogo.svg"
+            src="/MGlogo.svg"
             alt="Money Guard Logo"
             width="28"
             height="35"

@@ -21,7 +21,6 @@ import * as Yup from "yup";
 const LoginForm = () => {
   const dispatch = useDispatch();
 
-  // Стейт для видимости пароля
   const [showPassword, setShowPassword] = useState(false);
   const initialValues = {
     email: "",
@@ -30,7 +29,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (values, actions) => {
     try {
-      await dispatch(login(values)).unwrap(); // works with createAsyncThunk
+      await dispatch(login(values));
       actions.resetForm();
     } catch (error) {
       toast.error("User not found or wrong input details.");
@@ -46,7 +45,6 @@ const LoginForm = () => {
 
   return (
     <div className={s.backdrop}>
-      <Toaster position="top-right" reverseOrder={false} />
       <motion.div
         className={s.sectionLogin}
         initial={{ opacity: 0 }}

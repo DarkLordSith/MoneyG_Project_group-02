@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { setIsLoading } from "../global/slice"; // Імпорт дії для керування лоадером
+import { setIsLoading } from "../global/slice";
 
-axios.defaults.baseURL = "https://connections-api.goit.global";
+axios.defaults.baseURL = "https://money-guard-backend-lnfk.onrender.com";
+axios.defaults.withCredentials = true;
 
 const setAuthToken = (token) => {
   if (token) {
@@ -18,14 +19,14 @@ export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
-      thunkAPI.dispatch(setIsLoading(true)); // Показуємо лоадер перед запитом
-      const { data } = await axios.post("/users/signup", credentials);
-      setAuthToken(data.token);
-      return data;
+      thunkAPI.dispatch(setIsLoading(true));
+      const { data } = await axios.post("/auth/register", credentials);
+      setAuthToken(data.data.accessToken);
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     } finally {
-      thunkAPI.dispatch(setIsLoading(false)); // Ховаємо лоадер після запиту
+      thunkAPI.dispatch(setIsLoading(false));
     }
   }
 );
@@ -34,48 +35,70 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      thunkAPI.dispatch(setIsLoading(true)); // Показуємо лоадер перед запитом
-      const { data } = await axios.post("/users/login", credentials);
-      setAuthToken(data.token);
+      thunkAPI.dispatch(setIsLoading(true));
+      const { data } = await axios.post("/auth/login", credentials);
+      setAuthToken(data.data.accessToken);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     } finally {
-      thunkAPI.dispatch(setIsLoading(false)); // Ховаємо лоадер після запиту
+      thunkAPI.dispatch(setIsLoading(false));
     }
   }
 );
 
-export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
   try {
-    thunkAPI.dispatch(setIsLoading(true)); // Показуємо лоадер перед запитом
-    await axios.post("/users/logout");
+    thunkAPI.dispatch(setIsLoading(true));
+    await axios.post("/auth/logout");
     setAuthToken(null);
     return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   } finally {
-    thunkAPI.dispatch(setIsLoading(false)); // Ховаємо лоадер після запиту
+    thunkAPI.dispatch(setIsLoading(false));
   }
 });
 
 export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+  "/auth/refresh",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    let token = state.auth.token || localStorage.getItem("token");
-
+    let token = state.auth.token;
     if (!token) return thunkAPI.rejectWithValue("No token found");
 
     try {
-      thunkAPI.dispatch(setIsLoading(true)); // Показуємо лоадер перед запитом
-      setAuthToken(token);
-      const { data } = await axios.get("/users/current");
-      return data;
+      thunkAPI.dispatch(setIsLoading(true));
+      const { data } = await axios.post("/auth/refresh", null, {
+        withCredentials: true,
+      });
+
+      setAuthToken(data.data.accessToken);
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
-      thunkAPI.dispatch(setIsLoading(false)); // Ховаємо лоадер після запиту
+      thunkAPI.dispatch(setIsLoading(false));
+    }
+  }
+);
+
+export const getCurrentUser = createAsyncThunk(
+  "/auth/current",
+  async (_, thunkAPI) => {
+    setIsLoading(true);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return thunkAPI.rejectWithValue("No token found");
+    }
+    try {
+      setAuthToken(token);
+      const { data } = await axios.get("/auth/current");
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    } finally {
+      setIsLoading(false);
     }
   }
 );
