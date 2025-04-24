@@ -3,10 +3,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import styles from "./Header.module.css";
+import { selectUser } from "../../redux/auth/selectors";
 
 const Header = ({ onLogout }) => {
   // Получение данных пользователя из Redux store
-  const { user } = useSelector((state) => state.auth);
+  const user = useSelector(selectUser);
   const email = user?.email || "user@example.com";
   const userName = email.split("@")[0]; // Берем часть email до @
 
@@ -21,50 +22,18 @@ const Header = ({ onLogout }) => {
         {/* Логотип и название */}
         <div className={styles.logoWrapper}>
           <div className={styles.logoContainer}>
-            {/* SVG логотип Money Guard */}
-            <svg
+            {/* Используем внешний SVG  */}
+            <img
+              src="/public/MGlogo.svg"
+              alt="Money Guard Logo"
               width={
                 isDesktop ? "30" : isTablet ? "19" : isMobile ? "14" : "14"
               }
               height={
                 isDesktop ? "30" : isTablet ? "23" : isMobile ? "17" : "17"
               }
-              viewBox="0 0 19 23"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
               className={styles.logo}
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M14.0684 3.08869C12.4051 2.69093 10.7418 1.89542 9.49425 0.702148C8.24674 1.89542 6.58339 2.69093 4.92004 3.08869C5.33588 6.6685 6.58339 9.05504 9.49425 11.0438C12.4051 9.05504 14.0684 6.6685 14.0684 3.08869Z"
-                fill="#FFB627"
-              />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M12.405 17.8989L0.761597 4.77295V11.1371L9.91 21.081L12.405 17.8989Z"
-                fill="#FBFBFB"
-              />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M13.6528 16.7058L18.6428 11.1372V5.1709L10.7419 13.9215L13.6528 16.7058Z"
-                fill="#FBFBFB"
-              />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M14.0686 18.6948V22.2746L18.6428 17.1037V13.5239L14.0686 18.6948Z"
-                fill="#FBFBFB"
-              />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M5.3358 18.6948L0.761597 13.5239V17.1037L5.3358 22.2746V18.6948Z"
-                fill="#FBFBFB"
-              />
-            </svg>
+            />
           </div>
           <h1 className={styles.title}>Money Guard</h1>
         </div>

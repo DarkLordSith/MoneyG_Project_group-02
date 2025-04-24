@@ -1,0 +1,115 @@
+/* Основной контейнер для навигационных элементов */
+.navList {
+    display: flex;
+    justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    gap: 32px;
+}
+
+/* Базовый стиль для контейнера иконок */
+.navIconWrapper {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Базовый стиль для иконок (мобильная версия) */
+.navIcon {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    color: rgba(255, 255, 255, 0.4);
+    /* Полупрозрачный белый для неактивной иконки */
+}
+
+/* Эффект при наведении на элемент меню */
+.navItem:hover .navIcon {
+    color: #734aef;
+    /* Фиолетовый при наведении */
+}
+
+/* Стили для активного элемента */
+.activeLink .navIconWrapper {
+    background: #734aef;
+    /* Яркий фиолетовый фон для активной иконки */
+}
+
+.activeLink .navIcon {
+    color: #ffffff;
+    /* Белый цвет для активной иконки */
+    border-radius: 6px;
+}
+
+/* Стили для планшетов */
+@media screen and (min-width: 768px) {
+
+    /* Вертикальное расположение меню для планшетов */
+    .navList {
+        flex-direction: column;
+        padding-top: 40px;
+        padding-bottom: 28px;
+        gap: 12px;
+        margin-left: 16px;
+    }
+
+    /* Горизонтальное расположение иконки и текста на планшетах */
+    .navItem {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    /* Уменьшенный размер контейнера иконок на планшетах */
+    .navIconWrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Уменьшенный размер иконок на планшетах */
+    .navIcon {
+        width: 18px;
+        height: 18px;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Стили для текста навигации */
+    .navItemText {
+        font-size: 18px;
+        padding: 0 20px;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Стили для активного пункта меню */
+    .activeLink {
+        color: #fbfbfb;
+        font-weight: bold;
+    }
+
+    /* Отмена цветного фона для иконки на планшетах */
+    .activeLink .navIconWrapper {
+        background: transparent;
+    }
+
+    /* Цвет иконки активного пункта на планшетах */
+    .activeLink .navIcon {
+        color: #734aef;
+        /* Цвет для активной иконки на планшете */
+    }
+
+    /* Цвет текста активного пункта меню */
+    .activeLink .navItemText {
+        color: #fbfbfb;
+    }
+
+    /* Эффект при наведении на текст элемента */
+    .navItem:hover .navItemText {
+        color: #734aef;
+    }
+}
+
+/* Стили для десктопа */
+@media screen and (min-width: 1280px) {}

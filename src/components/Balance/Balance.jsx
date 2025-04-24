@@ -2,11 +2,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import styles from "./Balance.module.css";
+import { selectUser } from "../../redux/auth/selectors";
 
 const Balance = () => {
-  // Отримуємо баланс з Redux store
-  // Селектор вказує на шлях до балансу у Redux store
-  const balance = useSelector((state) => state.finance?.totalBalance || "0.00");
+  const user = useSelector(selectUser);
 
   return (
     <div className={styles.balanceWrapper}>
@@ -14,7 +13,7 @@ const Balance = () => {
         <p className={styles.balanceLabel}>YOUR BALANCE</p>
         <p className={styles.balanceAmount}>
           <span className={styles.balanceCurrency}>₴ </span>
-          <span className={styles.balanceValue}>{balance}</span>
+          <span className={styles.balanceValue}>{user?.balance}</span>
         </p>
       </div>
     </div>
