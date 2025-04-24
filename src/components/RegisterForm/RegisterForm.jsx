@@ -10,10 +10,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import clsx from "clsx";
 
-import api from "../../services/api";
+import { register as registerThunk } from "../../redux/auth/operations";
 import logo from "../LoginForm/images/logo.svg";
 import s from "./RegisterForm.module.css";
 import FormButton from "../common/FormButton/FormButton";
@@ -38,6 +39,7 @@ const schema = yup.object().shape({
 });
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -52,37 +54,33 @@ const RegisterForm = () => {
     resolver: yupResolver(schema),
   });
 
-const onSubmit = async (data) => {
-  if (data.password !== data.confirmPassword) {
-    toast.error("Паролі не збігаються");
-    return;
-  }
+  const onSubmit = async (data) => {
+    if (data.password !== data.confirmPassword) {
+      toast.error("Паролі не збігаються");
+      return;
+    }
 
-  const payload = {
-    name: data.name.trim(),
-    email: data.email.trim(),
-    password: data.password,
+    const payload = {
+      name: data.name.trim(),
+      email: data.email.trim(),
+      password: data.password,
+    };
+
+    try {
+      await dispatch(registerThunk(payload)).unwrap();
+      navigate("/dashboard");
+    } catch (error) {
+      const errorMsg = error?.message || "Щось пішло не так. Спробуйте ще раз.";
+      toast.error(errorMsg);
+    }
   };
-
-  try {
-    const response = await api.post("/auth/register", payload);
-
-    localStorage.setItem("token", response.data.token);
-    navigate("/dashboard");
-  } catch (error) {
-    console.error("Помилка реєстрації:", error.response?.data);
-    const errorMsg =
-      error.response?.data?.message || "Щось пішло не так. Спробуйте ще раз.";
-    toast.error(errorMsg);
-  }
-};
 
   const handleEmailBlur = (e) => {
     const trimmed = e.target.value.trim();
     setValue("email", trimmed);
   };
 
-   return (
+  return (
     <div className={s.backdrop}>
       <Toaster
         position="top-right"
@@ -93,103 +91,104 @@ const onSubmit = async (data) => {
         }}
       />
       <div className={s.wrapper}></div>
-       <div className={s.modal}>
-         <div className={s.conmobile}>
-         <div
-           style={{marginBottom: "40px"}}
-           className={clsx(s.logo)}>
-          <img src={logo} alt="Money Guard Logo" />
-          <h2 className={s.textLogo}>Money Guard</h2>
-        </div>
-        <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-          <div className={s.inputs}>
-            
-            <div className={s.inputGroup}>
-              <MdPerson className={s.inputIcon} />
-              <input
-                type="text"
-                placeholder="Name"
-                {...register("name")}
-                className={s.input}
-              />
-              <div className={s.underline}></div>
-              {errors.name && (
-                <span className={s.error}>{errors.name.message}</span>
-              )}
-            </div>
+      <div className={s.modal}>
+        <div className={s.conmobile}>
+          <div style={{ marginBottom: "40px" }} className={clsx(s.logo)}>
+            <img src={logo} alt="Money Guard Logo" />
+            <h2 className={s.textLogo}>Money Guard</h2>
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+            <div className={s.inputs}>
+              <div className={s.inputGroup}>
+                <MdPerson className={s.inputIcon} />
+                <input
+                  type="text"
+                  placeholder="Name"
+                  {...register("name")}
+                  className={s.input}
+                />
+                <div className={s.underline}></div>
+                {errors.name && (
+                  <span className={s.error}>{errors.name.message}</span>
+                )}
+              </div>
 
-            <div className={s.inputGroup}>
-              <MdOutlineMailOutline className={s.inputIcon} />
-              <input
-                type="email"
-                placeholder="E-mail"
-                {...register("email")}
-                onBlur={handleEmailBlur}
-                className={s.input}
-              />
-              <div className={s.underline}></div>
-              {errors.email && (
-                <span className={s.error}>{errors.email.message}</span>
-              )}
-            </div>
+              <div className={s.inputGroup}>
+                <MdOutlineMailOutline className={s.inputIcon} />
+                <input
+                  type="email"
+                  placeholder="E-mail"
+                  {...register("email")}
+                  onBlur={handleEmailBlur}
+                  className={s.input}
+                />
+                <div className={s.underline}></div>
+                {errors.email && (
+                  <span className={s.error}>{errors.email.message}</span>
+                )}
+              </div>
 
-            <div className={s.inputGroup}>
-              <MdLock className={s.inputIcon} />
-              <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                {...register("password")}
-                className={s.input}
-              />
-              <span
-                onClick={() => setShowPassword(!showPassword)}
-                className={s.eyeIcon}
-              >
-                {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-              </span>
-              <div className={s.underline}></div>
-              {errors.password && (
-                <span className={s.error}>{errors.password.message}</span>
-              )}
-            </div>
-
-            <div className={s.inputGroup} style={{ marginBottom: 0 }}>
-              <MdLock className={s.inputIcon} />
-              <input
-                type={showConfirm ? "text" : "password"}
-                placeholder="Confirm password"
-                {...register("confirmPassword")}
-                className={s.input}
-              />
-              <span
-                onClick={() => setShowConfirm(!showConfirm)}
-                className={s.eyeIcon}
-              >
-                {showConfirm ? <MdVisibilityOff /> : <MdVisibility />}
-              </span>
-              <div className={s.underline}></div>
-              {errors.confirmPassword && (
-                <span className={s.error}>
-                  {errors.confirmPassword.message}
+              <div className={s.inputGroup}>
+                <MdLock className={s.inputIcon} />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  {...register("password")}
+                  className={s.input}
+                />
+                <span
+                  onClick={() => setShowPassword(!showPassword)}
+                  className={s.eyeIcon}
+                >
+                  {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
                 </span>
-              )}
+                <div className={s.underline}></div>
+                {errors.password && (
+                  <span className={s.error}>{errors.password.message}</span>
+                )}
+              </div>
+
+              <div className={s.inputGroup} style={{ marginBottom: 0 }}>
+                <MdLock className={s.inputIcon} />
+                <input
+                  type={showConfirm ? "text" : "password"}
+                  placeholder="Confirm password"
+                  {...register("confirmPassword")}
+                  className={s.input}
+                />
+                <span
+                  onClick={() => setShowConfirm(!showConfirm)}
+                  className={s.eyeIcon}
+                >
+                  {showConfirm ? <MdVisibilityOff /> : <MdVisibility />}
+                </span>
+                <div className={s.underline}></div>
+                {errors.confirmPassword && (
+                  <span className={s.error}>
+                    {errors.confirmPassword.message}
+                  </span>
+                )}
+              </div>
+
+              <PasswordStrengthCustom password={watch("confirmPassword")} />
             </div>
 
-            <PasswordStrengthCustom password={watch("confirmPassword")} />
-          </div>
-
-          <div className={s.btns}>
-            <FormButton
-              type="submit"
-              text="Register"
-              variant="multiColorButtton"
-            />
-            <Link to="/login">
-              <FormButton type="button" text="Log In" variant="whiteButtton" />
-            </Link>
-          </div>
-           </form>
-           </div>
+            <div className={s.btns}>
+              <FormButton
+                type="submit"
+                text="Register"
+                variant="multiColorButtton"
+              />
+              <Link to="/login">
+                <FormButton
+                  type="button"
+                  text="Log In"
+                  variant="whiteButtton"
+                />
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

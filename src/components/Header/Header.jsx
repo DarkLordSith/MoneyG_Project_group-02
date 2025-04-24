@@ -3,10 +3,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import styles from "./Header.module.css";
+import { selectUser } from "../../redux/auth/selectors";
 
 const Header = ({ onLogout }) => {
   // Получение данных пользователя из Redux store
-  const { user } = useSelector((state) => state.auth);
+  const user = useSelector(selectUser);
   const email = user?.email || "user@example.com";
   const userName = email.split("@")[0]; // Берем часть email до @
 

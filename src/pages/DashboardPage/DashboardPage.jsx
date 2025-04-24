@@ -16,7 +16,7 @@ import TransactionList from "../../components/TransactionList/TransactionList";
 // Існуючі операції
 import { logout } from "../../redux/auth/operations";
 // НОВИЙ ІМПОРТ - операція для отримання балансу
-import { fetchBalance } from "../../redux/finance/operations";
+// import { fetchBalance } from "../../redux/finance/operations";
 
 import styles from "./DashboardPage.module.css";
 
@@ -40,7 +40,7 @@ const DashboardPage = () => {
   useEffect(() => {
     // Перевіряємо чи користувач авторизований перед запитом
     if (isLoggedIn && token) {
-      dispatch(fetchBalance()); // Відправляємо запит на отримання балансу
+      // dispatch(fetchBalance()); // Відправляємо запит на отримання балансу
     }
   }, [dispatch, isLoggedIn, token]); // Залежності: виконується при зміні цих значень
 
