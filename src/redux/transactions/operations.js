@@ -2,14 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { setIsLoading } from "../global/slice"; // Імпорт дії для керування лоадером
 
-axios.defaults.baseURL = "https://your-api-url.com/api";
-
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
   async (_, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true)); // Показуємо лоадер перед запитом
-      const response = await axios.get("/transactions");
+      const response = await axios.get("/transactions/");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -24,7 +22,7 @@ export const addTransaction = createAsyncThunk(
   async (transactionData, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true)); // Показуємо лоадер перед запитом
-      const response = await axios.post("/transactions", transactionData);
+      const response = await axios.post("/transactions/", transactionData);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
