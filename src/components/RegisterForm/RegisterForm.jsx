@@ -5,11 +5,11 @@ import {
   MdVisibilityOff,
   MdPerson,
 } from "react-icons/md";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import clsx from "clsx";
@@ -40,7 +40,6 @@ const schema = yup.object().shape({
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -81,14 +80,6 @@ const RegisterForm = () => {
 
   return (
     <div className={s.backdrop}>
-      <Toaster
-        position="top-right"
-        toastOptions={{
-          style: {
-            marginTop: "90px",
-          },
-        }}
-      />
       <div className={s.wrapper}></div>
       <div className={s.modal}>
         <div className={s.conmobile}>
