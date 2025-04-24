@@ -68,7 +68,6 @@ const RegisterForm = () => {
 
     try {
       await dispatch(registerThunk(payload)).unwrap();
-      navigate("/dashboard");
     } catch (error) {
       const errorMsg = error?.message || "Щось пішло не так. Спробуйте ще раз.";
       toast.error(errorMsg);
