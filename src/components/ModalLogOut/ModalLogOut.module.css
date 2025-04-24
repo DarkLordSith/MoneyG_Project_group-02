@@ -17,69 +17,74 @@
     width: 533px;
     height: 447px;
     backdrop-filter: blur(100px);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background: var(--color-form-bg);
+    border-radius: var(--radius-sm);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 30px;
+    padding: 60px;
     z-index: 21;
+    /* Добавляем фоновое изображение для десктопа и планшета */
+    background-image: url('/src/assets/dashboard_images/modallogtab.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .logoutLogoContainer {
     display: flex;
+    width: 182px;
+    height: 75px;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 52px;
 }
 
 .logoutLogoIcon {
-    width: 50px;
-    height: 50px;
+    width: 36px;
+    height: 36px;
     margin-bottom: 10px;
 }
 
 .logoutLogoText {
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
-    font-size: 24px;
-    color: #ffffff;
-    margin: 0;
-    font-weight: 500;
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--color-white);
 }
 
 .logoutConfirmMessage {
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
-    font-size: 22px;
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 40px;
+    font-family: var(--font-main);
     font-weight: 400;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 52px;
 }
 
 .logoutButtonContainer {
-    width: 100%;
-    max-width: 330px;
     display: flex;
+    width: 300px;
+    height: 50px;
     flex-direction: column;
     gap: 16px;
 }
 
 .logoutButton {
-    width: 100%;
-    height: 55px;
+    max-width: 300px;
+    min-height: 50px;
     border: none;
-    border-radius: 30px;
-    background: linear-gradient(to right, #f6b851, #e04b9a);
+    border-radius: 20px;
+    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
     color: white;
     font-size: 16px;
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-family: var(--font-main);
     font-weight: 500;
     letter-spacing: 1.8px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .logoutButton:hover {
@@ -88,14 +93,14 @@
 }
 
 .cancelLogoutButton {
-    width: 100%;
-    height: 55px;
+    max-width: 300px;
+    min-height: 50px;
     border: none;
-    border-radius: 30px;
+    border-radius: 20px;
     background-color: white;
     color: #e04b9a;
     font-size: 16px;
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-family: var(--font-main);
     font-weight: 500;
     letter-spacing: 1.8px;
     cursor: pointer;
@@ -105,7 +110,6 @@
 
 .cancelLogoutButton:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .backdrop {
@@ -114,7 +118,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(7px);
+    background: rgba(34, 13, 91, 0.23);
     z-index: 20;
 }
 
@@ -122,10 +127,20 @@
 @media screen and (max-width: 767px) {
     .logoutModalContainer {
         padding: 24px;
-        width: 90%;
-        max-width: 330px;
-        height: auto;
-        aspect-ratio: 533/447;
+        width: 320px;
+        height: 691px;
+        backdrop-filter: blur(100px);
+        box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+        background: var(--color-form-bg);
+        /* Меняем фоновое изображение для мобильной версии */
+        background-image: url('/src/assets/dashboard_images/modallogmob.webp');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .logoutLogoContainer {
+        display: none;
     }
 
     .logoutLogoIcon {
@@ -138,13 +153,24 @@
     }
 
     .logoutConfirmMessage {
+        width: 214px;
+        height: 54px;
         font-size: 18px;
-        margin-bottom: 30px;
+        margin-top: 239px;
     }
 
     .logoutButton,
     .cancelLogoutButton {
+        border-radius: 20px;
+        width: 280px;
         height: 50px;
-        font-size: 14px;
+    }
+
+    .logoutButtonContainer {
+        display: flex;
+        width: 280px;
+        height: 50px;
+        flex-direction: column;
+        gap: 20px;
     }
 }
