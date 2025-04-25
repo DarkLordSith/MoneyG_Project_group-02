@@ -1,5 +1,5 @@
 export const selectTransactions = (state) => state.transactions.items;
-export const selectStatistics = (state) => state.transactions.statistics;
+export const selectSummary = (state) => state.transactions.summary;
 export const selectCategories = (state) => state.transactions.categories;
 
 

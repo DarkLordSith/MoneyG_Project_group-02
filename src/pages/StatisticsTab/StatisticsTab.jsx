@@ -3,20 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import Chart from "../../components/Chart/Chart";
 import StatisticsDashboard from "../../components/StatisticsDashboard/StatisticsDashboard";
 import StatisticsTable from "../../components/StatisticsTable/StatisticsTable";
-import { fetchStatistics, fetchCategories } from "../../redux/transactions/operations";
-import { selectStatistics, selectCategories } from "../../redux/transactions/selectors";
+import { fetchSummary, fetchCategories } from "../../redux/transactions/operations";
+import { selectSummary, selectCategories } from "../../redux/transactions/selectors";
 
 
 import css from './StatisticsTab.module.css'
 
 const StatisticsTab = () => {
-  //const summary = useSelector(selectSummary);
   const dispatch = useDispatch();
-  const summary = useSelector(selectStatistics);
+  const summary = useSelector(selectSummary);
   const categories = useSelector(selectCategories);
 
   useEffect(() => {
-    dispatch(fetchStatistics());
+    dispatch(fetchSummary());
   }, [dispatch]);
 
   useEffect(() => {
