@@ -1,7 +1,7 @@
-// src/pages/DashboardPage/DashboardPage.jsx
+// DashboardPage.jsx;
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { useMediaQuery } from "react-responsive";
 
@@ -11,8 +11,11 @@ import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
 import Balance from "../../components/Balance/Balance";
 import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
+import Currency from "../../components/Currency/Currency";
+// import HomeTab from "../../components/HomeTab/HomeTab";
+// import StatisticsTab from "../../components/StatisticsTab/StatisticsTab";
+// import CurrencyTab from "../../components/CurrencyTab/CurrencyTab";
 import TransactionList from "../../components/TransactionList/TransactionList";
-import Currency from "../../components/Currency/Currency"; // Додано імпорт Currency
 
 // Операції
 import { logout } from "../../redux/auth/operations";
@@ -21,7 +24,6 @@ import styles from "./DashboardPage.module.css";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { token, isLoggedIn } = useSelector((state) => state.auth);
 
@@ -51,7 +53,6 @@ const DashboardPage = () => {
       setIsLoading(true);
       await dispatch(logout()).unwrap();
       handleCloseLogoutModal();
-      navigate("/login");
     } catch (error) {
       console.error("Помилка при виході з системи:", error);
       toast.error("Помилка при виході з системи. Спробуйте ще раз.");
@@ -102,7 +103,7 @@ const DashboardPage = () => {
                   </div>
                 </div>
                 <div className={styles.currency}>
-                  <Currency /> {/* Замінено на компонент Currency */}
+                  <Currency />
                 </div>
               </div>
             </div>
@@ -120,7 +121,7 @@ const DashboardPage = () => {
                     <Balance />
                   </div>
                   <div className={styles.currency}>
-                    <Currency /> {/* Замінено на компонент Currency */}
+                    <Currency />
                   </div>
                 </div>
               </div>
@@ -129,8 +130,26 @@ const DashboardPage = () => {
           )}
 
           <div className={styles.mainContent}>
-            <TransactionList />
-            <Outlet />
+            <Routes>
+              <Route index element={<Navigate to="home" />} />
+              <Route path="home" element={<TransactionList />} />{" "}
+              {/* Замість <div>Home Tab (в разработке)</div> */}
+              {/* <Route path="home" element={<HomeTab />} /> */}
+              {/* <Route path="statistics" element={<StatisticsTab />} /> */}
+              {/* {isMobile && <Route path="currency" element={<CurrencyTab />} />} */}
+              {/* Временные заглушки */}
+              <Route path="home" element={<div>Home Tab (в разработке)</div>} />
+              <Route
+                path="statistics"
+                element={<div>Statistics Tab (в разработке)</div>}
+              />
+              {isMobile && (
+                <Route
+                  path="currency"
+                  element={<div>Currency Tab (в разработке)</div>}
+                />
+              )}
+            </Routes>
           </div>
         </div>
       </div>
@@ -142,8 +161,6 @@ const DashboardPage = () => {
           onLogout={handleLogout}
         />
       )}
-
-      {/* <ButtonAddTransactions /> */}
     </div>
   );
 };
