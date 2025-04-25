@@ -61,3 +61,17 @@ export const fetchStatistics = createAsyncThunk(
     }
   }
 );
+export const fetchCategories = createAsyncThunk(
+  "transactions/fetchCategories",
+  async (_, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(setIsLoading(true));
+      const response = await axios.get("/categories");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
+    }
+  }
+);

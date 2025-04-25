@@ -4,11 +4,13 @@ import {
   addTransaction,
   deleteTransaction,
   fetchStatistics,
+  fetchCategories,
 } from "./operations";
 
 const initialState = {
   items: [],
   statistics: [],
+  categories: [],
   isLoading: false,
   error: null,
 };
@@ -40,7 +42,11 @@ const transactionsSlice = createSlice({
       })
       .addCase(fetchStatistics.fulfilled, (state, action) => {
         state.statistics = action.payload;
+      })
+     .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.categories = action.payload;
 })
+
 
   },
 });
