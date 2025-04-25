@@ -28,8 +28,8 @@ const StatisticsTable = ({ summary, categories, income, expenses }) => {
 
                             return (
                                 <tr key={item.categoryId}>
-                                    <td >
-                                        <span style={{backgroundColor: color}} />
+                                    <td className={css.restangle}>
+                                        <span className={css.colorRes} style={{backgroundColor: color}} />
                                     </td>
                                     <td>{categoryName}</td>
                                     <td>{item.EXPENSE.toFixed(2)}</td>
@@ -38,14 +38,15 @@ const StatisticsTable = ({ summary, categories, income, expenses }) => {
                         })}
                 </tbody>
             </table>
-
-            <div >
-                <span>Expenses:</span>
-                <span>{expenses.toFixed(2)}</span>
+            <div className={css.reseme}>
+            <div className={css.expenses}>
+                <span className={css.title}>Expenses:</span>
+                <span className={css.total}>{expenses.toFixed(2)}</span>
             </div>
-            <div>
-                <span>Income:</span>
-                <span>{income.toFixed(2)}</span>
+            <div className={css.income}>
+                <span className={css.title}>Income:</span>
+                <span className={css.total}>{income.toFixed(2)}</span>
+                </div>
             </div>
         </div>
     );

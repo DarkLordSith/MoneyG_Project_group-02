@@ -6,7 +6,7 @@
     width: 100%;
     border-collapse: collapse;
     table-layout: auto;
-    justify-content: space-between;
+
 } 
 
 .tableHeader {
@@ -53,14 +53,64 @@
     opacity: 0.5;
 }
 
+.restangle {
+    width: 56px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.colorRes {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+}
+
+
+.expenses {
+    margin-top: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--dashboard-text);
+    display: flex;
+    justify-content: space-between;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+.income {
+    margin-top: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--yellow);
+    display: flex;
+    justify-content: space-between;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+.title {
+    color: var(--white);
+}
+ 
 @media (min-width: 768px) {
     .tableHeader {
         width: 336px;
     }
+
+    .reseme{
+     width: 336px;
+
+} 
 }
 
 @media (min-width: 1280px) {
     .tableHeader {
         width: 395px;
     }
+
+    .reseme{
+    width: 395px;}
 }
