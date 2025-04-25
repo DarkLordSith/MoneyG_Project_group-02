@@ -66,8 +66,8 @@ const TransactionList = () => {
       {/* {isError && <p className={s.messageText}>Oops, something went wrong...</p>} */}
       {!isLoading && transactions.length === 0 ? (
         <div className={s.container}>
-          <p>No transactions available yet.</p>
-          <p>Let's add your first transaction:</p>
+          <p>No transactions available.</p>
+          <p>Add transaction</p>
           <FormButton
             type="button"
             text={"Add transaction"}

@@ -14,6 +14,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
 }
 
 /* Базовый стиль для иконок (мобильная версия) */
@@ -22,25 +24,26 @@
     height: 38px;
     object-fit: contain;
     color: rgba(255, 255, 255, 0.4);
-    /* Полупрозрачный белый для неактивной иконки */
+    transition: color 0.3s ease;
 }
 
 /* Эффект при наведении на элемент меню */
-.navItem:hover .navIcon {
-    color: #734aef;
-    /* Фиолетовый при наведении */
+.navItem:hover .navIconWrapper {
+    background-color: #ffffff;
+    box-shadow: 0 3px 10px 0 rgba(115, 74, 239, 0.3);
 }
 
-/* Стили для активного элемента - теперь только цвет иконки фиолетовый, без фона */
+.navItem:hover .navIcon {
+    color: #734aef;
+}
+
+/* Стили для активного элемента */
 .activeLink .navIconWrapper {
-    background: transparent;
-    /* Прозрачный фон вместо фиолетового */
+    background-color: #ffffff;
 }
 
 .activeLink .navIcon {
     color: #734aef;
-    /* Фиолетовый цвет для активной иконки, как на планшетах */
-    border-radius: 6px;
 }
 
 /* Стили для планшетов */
@@ -73,43 +76,26 @@
     .navIcon {
         width: 18px;
         height: 18px;
-        color: rgba(255, 255, 255, 0.4);
     }
 
     /* Стили для текста навигации */
     .navItemText {
         font-size: 18px;
         padding: 0 20px;
-        color: rgba(255, 255, 255, 0.4);
+        font-weight: 400;
+        color: #fbfbfb;
     }
 
     /* Стили для активного пункта меню */
-    .activeLink {
+    .activeLink .navItemText {
         color: #fbfbfb;
         font-weight: bold;
     }
 
-    /* Отмена цветного фона для иконки на планшетах */
-    .activeLink .navIconWrapper {
-        background: transparent;
-    }
-
-    /* Цвет иконки активного пункта на планшетах */
-    .activeLink .navIcon {
-        color: #734aef;
-        /* Цвет для активной иконки на планшете */
-    }
-
-    /* Цвет текста активного пункта меню */
-    .activeLink .navItemText {
-        color: #fbfbfb;
-    }
-
     /* Эффект при наведении на текст элемента */
     .navItem:hover .navItemText {
-        color: #734aef;
+        font-weight: 700;
+        font-size: 18px;
+        color: #fbfbfb;
     }
 }
-
-/* Стили для десктопа */
-@media screen and (min-width: 1280px) {}
