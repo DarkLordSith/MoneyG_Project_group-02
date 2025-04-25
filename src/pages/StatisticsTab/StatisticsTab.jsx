@@ -15,6 +15,8 @@ import {
   selectBalance,
   selectSelectedMonth,
   selectSelectedYear,
+  selectIsLoading,
+  selectError
 } from "../../redux/transactions/selectors";
 
 
@@ -30,6 +32,8 @@ const StatisticsTab = () => {
   const balance = useSelector(selectBalance);
   const month = useSelector(selectSelectedMonth);
   const year = useSelector(selectSelectedYear);
+  const loading = useSelector(selectIsLoading); 
+  const error = useSelector(selectError);
 
 
    
@@ -37,14 +41,17 @@ const StatisticsTab = () => {
    useEffect(() => {
     if (month !== null && year !== null) {
       dispatch(fetchSummary({ month, year }));
-    }
-   }, [dispatch, month, year]);
-  
-  useEffect(() => {
-    if (month !== null && year !== null) {
       dispatch(fetchCategories({ month, year }));
     }
-   }, [dispatch, month, year]);
+  }, [dispatch, month, year]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
     
  

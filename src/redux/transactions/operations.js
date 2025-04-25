@@ -75,7 +75,7 @@ export const fetchSummary = createAsyncThunk(
   'transactions/fetchSummary',
   async ({ month, year }, thunkAPI) => {
     const state = thunkAPI.getState();
-    setAuthToken(state); 
+    setAuthToken(state.auth.token); 
     try {
       thunkAPI.dispatch(setIsLoading(true));
       const response = await axios.get('/transactions/summary', {
@@ -93,7 +93,7 @@ export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
   async ({ month, year }, thunkAPI) => {
     const state = thunkAPI.getState();
-    setAuthToken(state); 
+    setAuthToken(state.auth.token); 
 
     try {
       thunkAPI.dispatch(setIsLoading(true));

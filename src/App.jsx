@@ -3,6 +3,7 @@ import { Suspense, useEffect, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn, selectIsRefreshing } from "./redux/auth/selectors";
 import { getCurrentUser, refreshUser } from "./redux/auth/operations";
+import { setAuthToken } from "./redux/auth/operations";
 
 import Layout from "./components/Layout/Layout";
 import Loader from "./components/Loader/Loader";
@@ -25,6 +26,8 @@ const App = () => {
 
   useEffect(() => {
     const verifyAuth = async () => {
+    const token = localStorage.getItem("token");
+    if (token) setAuthToken(token);
       try {
         await dispatch(refreshUser()).unwrap();
         await dispatch(getCurrentUser()).unwrap();

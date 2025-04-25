@@ -6,6 +6,7 @@ axios.defaults.baseURL = "https://money-guard-backend-lnfk.onrender.com";
 axios.defaults.withCredentials = true;
 
 export const setAuthToken = (token) => {
+  console.log("TOKEN:", token);
   if (token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     localStorage.setItem("token", token);
