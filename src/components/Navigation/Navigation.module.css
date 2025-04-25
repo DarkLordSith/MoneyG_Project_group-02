@@ -16,6 +16,8 @@
     align-items: center;
     border-radius: 6px;
     transition: background-color 0.3s ease;
+
+
 }
 
 /* Базовый стиль для иконок (мобильная версия) */
@@ -30,11 +32,13 @@
 /* Эффект при наведении на элемент меню */
 .navItem:hover .navIconWrapper {
     background-color: #ffffff;
-    box-shadow: 0 3px 10px 0 rgba(115, 74, 239, 0.3);
+
+
 }
 
 .navItem:hover .navIcon {
     color: #734aef;
+    /* box-shadow: 0 3px 10px 0 rgba(74, 86, 226, 0.5); */
 }
 
 /* Стили для активного элемента */
@@ -44,6 +48,11 @@
 
 .activeLink .navIcon {
     color: #734aef;
+}
+
+.navItem:hover .navIconWrapper {
+    background-color: #ffffff;
+    box-shadow: 0 3px 10px 0 rgba(115, 74, 239, 0.3);
 }
 
 /* Стили для планшетов */
@@ -90,6 +99,8 @@
     .activeLink .navItemText {
         color: #fbfbfb;
         font-weight: bold;
+        width: 18px;
+        height: 18px;
     }
 
     /* Эффект при наведении на текст элемента */
