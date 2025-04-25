@@ -7,7 +7,8 @@
   min-height: 100vh;
   /* Для відображення на всю сторінку */
   background-color: #101010;
-  color: #fbfbfb;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
+  color: var(--color-white);
   position: relative;
   width: 100vw;
   /* Для відображення на всю сторінку */
@@ -16,6 +17,7 @@
   /* Этот трюк помогает правильно центрировать на всю ширину экрана */
   overflow-x: hidden;
   font-family: "Poppins-Regular", Helvetica, sans-serif;
+  /* Можно заменить на var(--font-main) */
 }
 
 /* Главный контейнер дэшборда с адаптивными стилями */
@@ -32,84 +34,36 @@
   height: 60px;
 }
 
-/* Фонові елементи (подібні до тих, що в Login) */
+/* Фонові елементи - используем изображения */
 .backgroundElements {
   position: absolute;
   inset: 0;
   overflow: hidden;
   z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
-.purpleGradient1 {
-  position: absolute;
-  width: 595px;
-  height: 595px;
-  top: 294px;
-  right: 0;
-  border-radius: 50%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(109, 84, 235, 1),
-    rgba(101, 35, 146, 1)
-  );
-  filter: blur(200px);
-  z-index: -1;
+/* Версии фона для разных устройств */
+.mobileBg {
+  background-image: url("/src/assets/dashboard_images/gradient_mobile.webp");
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
-.purpleGradient2 {
-  position: absolute;
-  width: 284px;
-  height: 284px;
-  top: 196px;
-  right: 60px;
-  border-radius: 50%;
-  background-color: #2f2d8e;
-  filter: blur(150px);
-  z-index: -1;
+.tabletBg {
+  background-image: url("/src/assets/dashboard_images/gradient_tablet.webp");
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
-.purpleGradient3 {
-  position: absolute;
-  width: 220px;
-  height: 220px;
-  bottom: 100px;
-  left: 85px;
-  border-radius: 50%;
-  background-color: #6c1c77;
-  filter: blur(150px);
-  z-index: -1;
-}
-
-.purpleGradient4 {
-  position: absolute;
-  width: 713px;
-  height: 713px;
-  top: 0;
-  left: 0;
-  border-radius: 50%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(109, 84, 235, 0.73),
-    rgba(101, 35, 146, 0.73)
-  );
-  filter: blur(200px);
-  z-index: -1;
-}
-
-.purpleGradient5 {
-  position: absolute;
-  width: 284px;
-  height: 284px;
-  top: 196px;
-  left: 103px;
-  border-radius: 50%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(142, 46, 121, 0.68),
-    rgba(171, 51, 173, 0.68)
-  );
-  filter: blur(100px);
-  z-index: -1;
+.desktopBg {
+  background-image: url("/src/assets/dashboard_images/gradient_desktop.webp");
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 /* Контейнер для вмісту (все крім Header) */
@@ -122,23 +76,20 @@
   position: relative;
   z-index: 1;
   flex-direction: column;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  flex-direction: column;
 }
 
 /* Базові стилі для всіх версій */
-.navigation,
-.balance,
-.currency {
-  border-radius: 8px;
-}
 
-.navigation {
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(50px);
-}
-
-.currency {
-  background-color: rgba(81, 59, 126, 0.6);
-  box-shadow: 1px 9px 20px rgba(0, 0, 0, 0.25);
+.balance .currency {
+  border-radius: var(--radius-sm);
 }
 
 /* Лівий сайдбар (для мобільної і десктопної версій) */
@@ -157,39 +108,22 @@
 .mainContent {
   width: 100%;
   padding: 12px;
-  backdrop-filter: blur(50px);
-  background-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 4px 60px 0px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 .divider {
   display: none;
 }
 
-/* Загальний синій фон для мобильных */
-.blueGlow {
-  position: absolute;
-  width: 454px;
-  height: 454px;
-  top: 57px;
-  left: 0;
-  background-color: rgba(46, 21, 176, 0.73);
-  border-radius: 227px;
-  filter: blur(100px);
-  z-index: -1;
-}
-
 /* Стилі для мобільної версії (за замовчуванням) */
 .navigation {
   width: 320px;
-  height: 96px;
+  /* height: 96px; */
 }
 
 .balance {
   width: 280px;
   height: 80px;
-  margin: 12px 0;
 }
 
 .currency {
@@ -210,8 +144,6 @@
   .contentWrapper {
     max-width: 768px;
     padding-top: 0px;
-    padding-left: 32px;
-    padding-right: 32px;
   }
 
   /* Спеціальні стилі для планшетної версії */
@@ -225,23 +157,19 @@
 
   .tabletTopSection {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 32px;
   }
 
   .navigation {
     width: 336px;
     height: 66px;
-    margin-top: 40px;
     margin-bottom: 28px;
-    /* height: 214px; */
-    /* padding: 20px; */
   }
 
   .balance {
     width: 336px;
     height: 80px;
-    /* margin: 0; */
   }
 
   .currency {
@@ -255,31 +183,6 @@
     width: 704px;
     height: 312px;
     padding: 20px;
-  }
-
-  /* Фонові елементи для планшета */
-  .purpleGradient1 {
-    width: 713px;
-    height: 713px;
-    top: -204px;
-    left: -366px;
-    border-radius: 356.5px;
-  }
-
-  .purpleGradient2 {
-    width: 284px;
-    height: 284px;
-    top: -8px;
-    left: -263px;
-    border-radius: 142px;
-  }
-
-  .purpleGradient5 {
-    width: 595px;
-    height: 595px;
-    bottom: -400px;
-    right: -300px;
-    border-radius: 297.5px;
   }
 }
 
@@ -299,26 +202,21 @@
     max-width: 1280px;
     height: 721px;
     gap: 0;
-    /* Убираем gap */
-    /* padding-top: 10px; */
   }
 
   .dashboardData {
     display: flex;
     flex-direction: column;
-    gap: 33px;
   }
 
   .navigation {
     width: 480px;
-    /* height: 133px; */
-    padding: 20px;
   }
 
   .balance {
     width: 480px;
     height: 80px;
-    margin: 0;
+    margin-bottom: 32px;
   }
 
   .currency {
@@ -336,8 +234,7 @@
     display: block;
     width: 1px;
     height: 641px;
-
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: var(--color-white-600);
     box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
   }
 
@@ -347,6 +244,5 @@
     flex-grow: 1;
     padding: 20px;
     margin-left: 69px;
-    /* Добавляем отступ только для mainContent */
   }
 }

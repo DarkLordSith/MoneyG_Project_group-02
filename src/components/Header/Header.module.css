@@ -36,12 +36,12 @@
 .logo {
     width: 19px;
     height: 23px;
-    color: #fbfbfb;
+    color: var(--color-white);
 }
 
 .title {
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
-    color: #fbfbfb;
+    font-family: var(--font-main);
+    color: var(--color-white);
     margin: 0;
     font-weight: 400;
 }
@@ -52,7 +52,7 @@
 }
 
 .userName {
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-family: var(--font-main);
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -84,9 +84,9 @@
 }
 
 .exitText {
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
+    font-family: var(--font-main);
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--color-white-600);
 }
 
 /* Адаптивные стили для мобильных */
@@ -111,7 +111,7 @@
     }
 
     .title {
-        font-size: 14px;
+        font-size: 12px;
     }
 
     .userName {
