@@ -1,6 +1,22 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { setIsLoading } from "../global/slice"; // Імпорт дії для керування лоадером
+import { selectToken } from "../auth/selectors";
+
+axios.defaults.baseURL = "https://money-guard-backend-lnfk.onrender.com";
+axios.defaults.withCredentials = true;
+
+const setAuthHeader = (state) => {
+  const token = selectToken(state);
+  if (token) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    localStorage.setItem("token", token);
+  } else {
+    delete axios.defaults.headers.common.Authorization;
+    localStorage.removeItem("token");
+  }
+};
+
 
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
@@ -50,6 +66,8 @@ export const deleteTransaction = createAsyncThunk(
 export const fetchSummary = createAsyncThunk(
   'transactions/fetchSummary',
   async ({ month, year }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    setAuthHeader(state); 
     try {
       thunkAPI.dispatch(setIsLoading(true));
       const response = await axios.get('/transactions/summary', {
@@ -66,6 +84,9 @@ export const fetchSummary = createAsyncThunk(
 export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
   async ({ month, year }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    setAuthHeader(state); 
+
     try {
       thunkAPI.dispatch(setIsLoading(true));
       const response = await axios.get("/transactions/categories", {

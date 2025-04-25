@@ -13,7 +13,7 @@
 }
 
 
-/* Заголовок */
+
 .headerStat {
   font-size: 24px;
   font-weight: bold;
@@ -21,7 +21,7 @@
   text-align: center;
 }
 
-/* Секция графика + таблицы */
+
 .chartSection {
   width: 100%;
   display: grid;
@@ -29,7 +29,7 @@
   gap: 2rem;
 }
 
-/* Планшет */
+
 @media (min-width: 768px) {
   .chartSection {
     grid-template-columns: 1fr 1fr;
@@ -42,7 +42,7 @@
   }
 }
 
-/* Десктоп */
+
 @media (min-width: 1280px) {
   .statisticsTab {
     flex-direction: row;

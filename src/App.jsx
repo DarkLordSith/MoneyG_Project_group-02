@@ -42,14 +42,10 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={
-              <PrivateRoute>
-                <DashboardPage />
-              </PrivateRoute>
-            }
-          />
+          <Route index element={<PrivateRoute> <DashboardPage /> </PrivateRoute>}/>
+          <Route path="statistics" element={<StatisticsTab />} />
+          
+          
           <Route
             path="/login"
             element={

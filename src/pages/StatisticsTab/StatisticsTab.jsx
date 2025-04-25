@@ -31,6 +31,8 @@ const StatisticsTab = () => {
   const month = useSelector(selectSelectedMonth);
   const year = useSelector(selectSelectedYear);
 
+
+   
   
    useEffect(() => {
     if (month !== null && year !== null) {

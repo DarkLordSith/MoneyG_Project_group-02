@@ -1,26 +1,39 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
-import { useDispatch } from 'react-redux';
-import { fetchTransactionStats } from '../../redux/statistics/operations';
+import React, { Fragment } from "react";
+import { Listbox, Transition } from "@headlessui/react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSelectedMonth,
+  setSelectedYear,
+} from "../../redux/transactions/slice";
+import {
+  selectSelectedMonth,
+  selectSelectedYear,
+} from "../../redux/transactions/selectors";
+
 import css from './StatisticsDashboard.module.css';
 
 const months = ['All month', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const years = Array.from({ length: 11 }, (_, i) => 2025 + i);
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 11 }, (_, i) => currentYear + i);
 
 const StatisticsDashboard = () => {
   const dispatch = useDispatch();
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const selectedMonth = useSelector(selectSelectedMonth) ?? 0;
+  const selectedYear = useSelector(selectSelectedYear) ?? currentYear;
 
-  useEffect(() => {
-    dispatch(fetchTransactionStats({ month: selectedMonth === 0 ? null : selectedMonth, year: selectedYear }));
-  }, [selectedMonth, selectedYear, dispatch]);
+  const handleMonthChange = (monthIndex) => {
+    dispatch(setSelectedMonth(monthIndex === 0 ? null : monthIndex));
+  };
+
+  const handleYearChange = (year) => {
+    dispatch(setSelectedYear(year));
+  };
 
   return (
     <div className={css.wrapper}>
       {/* Month Listbox */}
       <div className={css.selectWrapper}>
-        <Listbox value={selectedMonth} onChange={setSelectedMonth}>
+        <Listbox value={selectedMonth} onChange={handleMonthChange}>
           <div className={css.listboxContainer}>
             <Listbox.Button className={css.select}>
               <span>{months[selectedMonth]}</span>
@@ -42,7 +55,7 @@ const StatisticsDashboard = () => {
 
       {/* Year Listbox */}
       <div className={css.selectWrapper}>
-        <Listbox value={selectedYear} onChange={setSelectedYear}>
+        <Listbox value={selectedYear} onChange={handleYearChange}>
           <div className={css.listboxContainer}>
             <Listbox.Button className={css.select}>
               <span>{selectedYear}</span>

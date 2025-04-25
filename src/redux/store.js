@@ -6,9 +6,6 @@ import { combineReducers } from "redux";
 
 import { authReducer } from "./auth/slice";
 import transactionsReducer from "./transactions/slice";
-
-//import { statisticsReducer } from "./statistics/slice"; 
-
 import { globalReducer } from "./global/slice";
 // import { financeReducer } from "./finance/slice"; // НОВИЙ ІМПОРТ - редюсер для фінансових даних
 
@@ -22,9 +19,6 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   transactions: transactionsReducer,
-
- // statistics: statisticsReducer
-
   global: globalReducer,
   // finance: financeReducer,
 
