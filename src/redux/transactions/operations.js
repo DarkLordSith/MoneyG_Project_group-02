@@ -1,21 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { setIsLoading } from "../global/slice"; // Імпорт дії для керування лоадером
-import { selectToken } from "../auth/selectors";
+import { setAuthToken } from "../auth/operations"; 
+//import { selectToken } from "../auth/selectors";
 
-axios.defaults.baseURL = "https://money-guard-backend-lnfk.onrender.com";
-axios.defaults.withCredentials = true;
+//axios.defaults.baseURL = "https://money-guard-backend-lnfk.onrender.com";
+//axios.defaults.withCredentials = true;
 
-const setAuthHeader = (state) => {
-  const token = selectToken(state);
-  if (token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    localStorage.setItem("token", token);
-  } else {
-    delete axios.defaults.headers.common.Authorization;
-    localStorage.removeItem("token");
-  }
-};
+
+
+//const setAuthHeader = (state) => {
+ // const token = selectToken(state);
+// if (token) {
+ //  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+ //   localStorage.setItem("token", token);
+//  } else {
+//    delete axios.defaults.headers.common.Authorization;
+//    localStorage.removeItem("token");
+//  }
+//};
+
 
 
 export const fetchTransactions = createAsyncThunk(
@@ -36,6 +41,9 @@ export const fetchTransactions = createAsyncThunk(
 export const addTransaction = createAsyncThunk(
   "transactions/add",
   async (transactionData, thunkAPI) => {
+    const state = thunkAPI.getState();
+setAuthToken(state);
+
     try {
       thunkAPI.dispatch(setIsLoading(true)); // Показуємо лоадер перед запитом
       const response = await axios.post("/transactions/", transactionData);
@@ -67,7 +75,7 @@ export const fetchSummary = createAsyncThunk(
   'transactions/fetchSummary',
   async ({ month, year }, thunkAPI) => {
     const state = thunkAPI.getState();
-    setAuthHeader(state); 
+    setAuthToken(state); 
     try {
       thunkAPI.dispatch(setIsLoading(true));
       const response = await axios.get('/transactions/summary', {
@@ -85,7 +93,7 @@ export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
   async ({ month, year }, thunkAPI) => {
     const state = thunkAPI.getState();
-    setAuthHeader(state); 
+    setAuthToken(state); 
 
     try {
       thunkAPI.dispatch(setIsLoading(true));

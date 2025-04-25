@@ -5,7 +5,7 @@ import { setIsLoading } from "../global/slice";
 axios.defaults.baseURL = "https://money-guard-backend-lnfk.onrender.com";
 axios.defaults.withCredentials = true;
 
-const setAuthToken = (token) => {
+export const setAuthToken = (token) => {
   if (token) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     localStorage.setItem("token", token);
