@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { ClipLoader } from "react-spinners";
 import css from "./Currency.module.css";
 import currencyGraph from "./images/currency-graph.svg";
 
@@ -14,7 +15,12 @@ function Currency() {
       setError(false);
       setLoading(true);
 
-      const response = await axios.get("https://api.monobank.ua/bank/currency");
+      const response = await axios.get(
+        "https://api.monobank.ua/bank/currency",
+        {
+          withCredentials: false,
+        }
+      );
       const usdCurrency = response.data.find(
         (item) => item.currencyCodeA === 840 && item.currencyCodeB === 980
       );
@@ -74,9 +80,28 @@ function Currency() {
 
   const isDesktop = useMediaQuery({ minWidth: 1280 });
 
+  // Loader for currency
+  const loader = () => {
+    return (
+      <div className={css.loaderBackdrop}>
+        <div className={css.spinnerWrapper}>
+          <ClipLoader
+            color="#e15b64"
+            loading={true}
+            size={80}
+            aria-label="Loading Spinner"
+            speedMultiplier={0.8}
+            cssOverride={{
+              borderWidth: "10px",
+            }}
+          />
+        </div>
+      </div>
+    );
+  };
   return (
-    <div>
-      {loading && <p>Loading currency rates...</p>}
+    <div className={css.container}>
+      {loading && <div>{loader}</div>}
       {error && <p>{error}</p>}
 
       {!loading && !error && isCurrencyLoaded && (

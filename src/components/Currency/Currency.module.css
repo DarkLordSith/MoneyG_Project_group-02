@@ -1,12 +1,25 @@
-/* @import "./index.css" */
-
 /* General styles */
 .container {
-  height: 100%;
   background-color: rgba(74, 86, 226, 0.1);
   backdrop-filter: blur(100px);
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
 }
+
+.loaderBackdrop {
+  width: 480px;
+  height: 395px;
+  background: linear-gradient(220deg, #6d54eb 28.31%, #652392 66.76%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.spinnerWrapper {
+  width: 80px;
+  height: 80px;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -39,6 +52,9 @@
 
 /* Desktop styles */
 @media screen and (min-width: 1280px) {
+  .container {
+    height: 395px;
+  }
   .th {
     padding: 16px 0 16px;
     font-family: var(--second-family);
@@ -61,7 +77,7 @@
   .graphicHolder {
     position: absolute;
     bottom: 0;
-    height: 50%;
+    left: 0;
     width: 100%;
     object-fit: cover;
   }
@@ -74,7 +90,7 @@
     position: absolute;
     font-weight: 400;
     font-size: 12px;
-    color: var(--dashboard-text);
+    color: #ff868d;
   }
 
   .usdRate {
@@ -89,6 +105,10 @@
 
 /* Tablet styles */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
+  .container {
+    height: 214px;
+  }
+
   .th {
     padding-top: 12px;
     padding-bottom: 12px;
