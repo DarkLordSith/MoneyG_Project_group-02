@@ -22,7 +22,7 @@ export const register = createAsyncThunk(
       thunkAPI.dispatch(setIsLoading(true));
       const { data } = await axios.post("/auth/register", credentials);
       setAuthToken(data.data.accessToken);
-      return data;
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     } finally {
