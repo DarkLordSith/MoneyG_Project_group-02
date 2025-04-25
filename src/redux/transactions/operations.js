@@ -46,3 +46,18 @@ export const deleteTransaction = createAsyncThunk(
     }
   }
 );
+
+export const fetchStatistics = createAsyncThunk(
+  'transactions/fetchStatistics',
+  async (_, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(setIsLoading(true));
+      const response = await axios.get('/transactions/summary');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
+    }
+  }
+);

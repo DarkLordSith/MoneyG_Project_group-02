@@ -3,10 +3,12 @@ import {
   fetchTransactions,
   addTransaction,
   deleteTransaction,
+  fetchStatistics,
 } from "./operations";
 
 const initialState = {
   items: [],
+  statistics: [],
   isLoading: false,
   error: null,
 };
@@ -35,7 +37,11 @@ const transactionsSlice = createSlice({
 
       .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
-      });
+      })
+      .addCase(fetchStatistics.fulfilled, (state, action) => {
+        state.statistics = action.payload;
+})
+
   },
 });
 
