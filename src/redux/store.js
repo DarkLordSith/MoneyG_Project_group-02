@@ -7,8 +7,6 @@ import { combineReducers } from "redux";
 import { authReducer } from "./auth/slice";
 import transactionsReducer from "./transactions/slice";
 import { globalReducer } from "./global/slice";
-// import { financeReducer } from "./finance/slice"; // НОВИЙ ІМПОРТ - редюсер для фінансових даних
-
 
 const persistConfig = {
   key: "root",
@@ -20,8 +18,6 @@ const rootReducer = combineReducers({
   auth: authReducer,
   transactions: transactionsReducer,
   global: globalReducer,
-  // finance: financeReducer,
-
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -29,9 +25,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export const persistor = persistStore(store);

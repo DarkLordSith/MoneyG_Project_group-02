@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Suspense, useEffect, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn, selectIsRefreshing } from "./redux/auth/selectors";
-import { getCurrentUser, refreshUser } from "./redux/auth/operations";
-import { setAuthToken, getAuthToken } from "./utils/authToken";
+
+import { selectToken, selectIsRefreshing } from "./redux/auth/selectors";
+import { refreshUser, getCurrentUser } from "./redux/auth/operations";
+import { getAuthToken } from "./utils/authToken";
 
 import Layout from "./components/Layout/Layout";
 import Loader from "./components/Loader/Loader";
@@ -16,31 +17,52 @@ const DashboardPage = lazy(() => import("./pages/DashboardPage/DashboardPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 
 const App = () => {
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const verifyAuth = async () => {
       const token = getAuthToken();
-      if (token) setAuthToken(token);
+
+      if (!token) {
+        console.log("Нет токена — не отправляем refresh и current");
+        return;
+      }
 
       try {
         await dispatch(refreshUser()).unwrap();
         await dispatch(getCurrentUser()).unwrap();
       } catch (error) {
-        console.error("Authentication failed:", error);
+        console.error("Ошибка при верификации токена:", error);
       }
     };
 
     verifyAuth();
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch]);
 
-  if (isRefreshing) return null;
+  if (isRefreshing) {
+    return <Loader />; // Можно пока показывать loader
+  }
 
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
+        <Route
+          path="/login"
+          element={
+            <RestrictedRoute>
+              <LoginPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <RestrictedRoute>
+              <RegisterPage />
+            </RestrictedRoute>
+          }
+        />
         <Route path="/" element={<Layout />}>
           <Route
             index
@@ -56,22 +78,6 @@ const App = () => {
               <PrivateRoute>
                 <DashboardPage />
               </PrivateRoute>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <RestrictedRoute>
-                <LoginPage />
-              </RestrictedRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <RestrictedRoute>
-                <RegisterPage />
-              </RestrictedRoute>
             }
           />
           <Route path="*" element={<NotFoundPage />} />

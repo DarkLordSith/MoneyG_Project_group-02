@@ -1,3 +1,4 @@
+// src/redux/auth/slice.js
 import { createSlice } from "@reduxjs/toolkit";
 import {
   register,
@@ -25,14 +26,13 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
       })
       .addCase(login.fulfilled, (state, { payload }) => {
-        state.token = payload.data.accessToken;
+        state.token = payload.accessToken;
         state.isLoggedIn = true;
       })
       .addCase(logout.fulfilled, (state) => {
-        state.user = { name: "", email: "" };
+        state.user = { name: "", email: "", balance: 0, avatar: "" };
         state.token = null;
         state.isLoggedIn = false;
-        localStorage.removeItem("persist:root");
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
