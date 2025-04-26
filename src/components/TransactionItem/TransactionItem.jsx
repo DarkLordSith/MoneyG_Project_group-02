@@ -8,18 +8,21 @@ import s from "./TransactionItem.module.css";
 import { LuPencil } from "react-icons/lu";
 // import { getBalanceThunk } from "../../redux/auth/operations";
 
-const getTransactionCategory = (categoryId, categories) => {
-  const transactionCategory = categories.find((item) => item.id === categoryId);
-  if (!transactionCategory) return;
-  return transactionCategory.name;
+// Отримання категорії за ідентифікатором
+const retrieveCategory = (catId, categoriesList) => {
+  const foundCategory = categoriesList.find((element) => element.id === catId);
+  if (!foundCategory) return;
+  return foundCategory.name;
 };
 
-const formatDate = (dateString) => {
-  const options = { day: "2-digit", month: "2-digit", year: "2-digit" };
-  return new Date(dateString).toLocaleDateString("uk-UA", options);
+// Форматування дати в локальний формат
+const formatLocalDate = (isoDate) => {
+  const settings = { day: "2-digit", month: "2-digit", year: "2-digit" };
+  return new Date(isoDate).toLocaleDateString("uk-UA", settings);
 };
 
-const mockCategories = [
+// Тестові дані категорій
+const sampleCategories = [
   { id: "1", name: "Other" },
   { id: "2", name: "Income" },
   { id: "3", name: "Car" },
@@ -27,87 +30,94 @@ const mockCategories = [
 ];
 
 function TransactionItem({ transaction }) {
-  const sum = Math.abs(transaction.amount);
-  const formSum = new Intl.NumberFormat().format(sum);
-  const categories = mockCategories;
-  const category = getTransactionCategory(transaction.categoryId, categories);
+  // Обчислення суми та форматування
+  const absoluteSum = Math.abs(transaction.amount);
+  const formattedSum = new Intl.NumberFormat().format(absoluteSum);
+
+  // Використання тестових категорій
+  const categoriesList = sampleCategories;
+  const categoryName = retrieveCategory(transaction.categoryId, categoriesList);
+
+  // Адаптивний хук
   const { isMobile } = useMedia();
 
-  const onEdit = () => {
+  // Обробник редагування
+  const handleEdit = () => {
     // dispatch(addEditId(transaction.id));
     // dispatch(openEditModal());
   };
 
-  const onDelete = async () => {
+  // Обробник видалення
+  const handleRemove = async () => {
     // await dispatch(deleteTransaction(transaction.id));
     // dispatch(getBalanceThunk());
   };
 
+  // Десктопна версія
   return !isMobile ? (
-    <tr className={s.transactionRow}>
-      <td className={s.columnDate}>
-        {formatDate(transaction.transactionDate)}
+    <tr className={s.recordLine}>
+      <td className={s.timeCell}>
+        {formatLocalDate(transaction.transactionDate)}
       </td>
-      <td className={s.columnType}>
+      <td className={s.kindCell}>
         {transaction.type === "INCOME" ? "+" : "-"}
       </td>
-      <td className={s.columnCategory}>{category}</td>
-      <td className={s.columnDescription}>{transaction.comment}</td>
+      <td className={s.groupCell}>{categoryName}</td>
+      <td className={s.remarkCell}>{transaction.comment}</td>
       <td
         className={
-          transaction.type === "INCOME" ? s.profitAmount : s.lossAmount
+          transaction.type === "INCOME" ? s.incomeValue : s.outflowValue
         }
       >
-        {formSum}
+        {formattedSum}
       </td>
-      <td className={s.controlsCell}>
-        <button type="button" className={s.modifyButton} onClick={onEdit}>
+      <td className={s.manageCell}>
+        <button type="button" className={s.modifyBtn} onClick={handleEdit}>
           <LuPencil style={{ width: "14px", height: "14px" }} />
         </button>
-        <button type="button" className={s.removeButton} onClick={onDelete}>
+        <button type="button" className={s.eraseBtn} onClick={handleRemove}>
           Delete
         </button>
       </td>
     </tr>
   ) : (
+    // Мобільна версія
     <tr
       className={
-        transaction.type === "INCOME"
-          ? s.transactionRow
-          : s.transactionRowExpense
+        transaction.type === "INCOME" ? s.recordLine : s.recordLineNegative
       }
     >
-      <td className={s.columnDate}>
-        <span className={s.labelDate}>Date</span>
-        {formatDate(transaction.transactionDate)}
+      <td className={s.timeCell}>
+        <span className={s.timeLabel}>Date</span>
+        {formatLocalDate(transaction.transactionDate)}
       </td>
-      <td className={s.columnType}>
-        <span className={s.labelType}>Type</span>
+      <td className={s.kindCell}>
+        <span className={s.kindLabel}>Type</span>
         {transaction.type === "INCOME" ? "+" : "-"}
       </td>
-      <td className={s.columnCategory}>
-        <span className={s.labelCategory}>Category</span>
-        {category}
+      <td className={s.groupCell}>
+        <span className={s.groupLabel}>Category</span>
+        {categoryName}
       </td>
-      <td className={s.columnDescription}>
-        <span className={s.labelDescription}>Comment</span>
+      <td className={s.remarkCell}>
+        <span className={s.remarkLabel}>Comment</span>
         <p>{transaction.comment}</p>
       </td>
       <td
         className={
-          transaction.type === "INCOME" ? s.profitAmount : s.lossAmount
+          transaction.type === "INCOME" ? s.incomeValue : s.outflowValue
         }
       >
-        <span className={s.labelAmount}>Sum</span>
-        {formSum}
+        <span className={s.sumLabel}>Sum</span>
+        {formattedSum}
       </td>
-      <td className={s.controlsCell}>
-        <button type="button" className={s.removeButton} onClick={onDelete}>
+      <td className={s.manageCell}>
+        <button type="button" className={s.eraseBtn} onClick={handleRemove}>
           Delete
         </button>
-        <button type="button" className={s.modifyButton} onClick={onEdit}>
+        <button type="button" className={s.modifyBtn} onClick={handleEdit}>
           <LuPencil style={{ width: "14px", height: "14px" }} />
-          Edit
+          <span className={s.mobileEditText}>Edit</span>
         </button>
       </td>
     </tr>

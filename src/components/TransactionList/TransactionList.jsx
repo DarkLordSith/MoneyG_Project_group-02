@@ -3,7 +3,8 @@ import useMedia from "../../hooks/useMedia";
 import s from "./TransactionList.module.css";
 import FormButton from "../common/FormButton/FormButton";
 
-const mockTransactions = [
+// Тестовий набір операцій
+const sampleOperations = [
   {
     id: "1",
     transactionDate: "2023-01-04",
@@ -48,62 +49,66 @@ const mockTransactions = [
 
 const TransactionList = () => {
   // const dispatch = useDispatch();
-  const transactions = mockTransactions;
-  // const isLoading = useSelector(selectTransactionsLoading);
-  // const isError = useSelector(selectTransactionsError);
-  const isLoading = false;
-  // const isError = false;
 
-  const sortedTransactions = [...transactions].sort(
-    (a, b) => new Date(a.transactionDate) - new Date(b.transactionDate)
+  // Використання тестових даних
+  const operationsData = sampleOperations;
+  // const loadingState = useSelector(selectTransactionsLoading);
+  // const errorState = useSelector(selectTransactionsError);
+  const loadingState = false;
+  // const errorState = false;
+
+  // Сортування за датою
+  const sortedOperations = [...operationsData].sort(
+    (prev, next) =>
+      new Date(prev.transactionDate) - new Date(next.transactionDate)
   );
 
+  // Адаптивний хук
   const { isMobile } = useMedia();
 
   return (
     <>
-      {/* {isLoading && <Loader />} */}
-      {/* {isError && <p className={s.messageText}>Oops, something went wrong...</p>} */}
-      {!isLoading && transactions.length === 0 ? (
-        <div className={s.container}>
-          <p>No transactions available yet.</p>
-          <p>Let's add your first transaction:</p>
+      {/* {loadingState && <Loader />} */}
+      {/* {errorState && <p className={s.notificationBlock}>Щось пішло не так...</p>} */}
+      {!loadingState && operationsData.length === 0 ? (
+        <div className={s.emptyContainer}>
+          <p>Немає доступних записів.</p>
+          <p>Додайте операцію</p>
           <FormButton
             type="button"
-            text={"Add transaction"}
+            text={"Додати запис"}
             variant={"multiColorButton"}
             // handlerFunction={() => dispatch(openAddModal())}
           />
         </div>
       ) : (
-        <div className={s.transactionsWrapper}>
-          <table className={s.tableDataContainer}>
+        <div className={s.operationsPanel}>
+          <table className={s.dataGrid}>
             {!isMobile && (
-              <thead className={s.tableHeader}>
-                <tr className={s.tr}>
-                  <th className={s.dateColumn}>Date</th>
-                  <th className={s.typeColumn}>Type</th>
-                  <th className={s.categoryColumn}>Category</th>
-                  <th className={s.commentColumn}>Comment</th>
+              <thead className={s.gridHeader}>
+                <tr className={s.headRow}>
+                  <th className={s.dateSection}>Date</th>
+                  <th className={s.typeSection}>Type</th>
+                  <th className={s.categorySection}>Category</th>
+                  <th className={s.noteSection}>Comment</th>
                   <th
                     className={
-                      transactions.length === 0
-                        ? s.hiddenActions
-                        : s.amountColumn
+                      operationsData.length === 0
+                        ? s.hiddenControls
+                        : s.valueSection
                     }
                   >
                     Sum
                   </th>
-                  {transactions.length !== 0 && <th className={s.actions}></th>}
+                  {operationsData.length !== 0 && (
+                    <th className={s.controlsSection}></th>
+                  )}
                 </tr>
               </thead>
             )}
-            <tbody className={s.th}>
-              {sortedTransactions.map((transaction) => (
-                <TransactionItem
-                  key={transaction.id}
-                  transaction={transaction}
-                />
+            <tbody className={s.gridBody}>
+              {sortedOperations.map((operation) => (
+                <TransactionItem key={operation.id} transaction={operation} />
               ))}
             </tbody>
           </table>

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, useEffect, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn, selectIsRefreshing } from "./redux/auth/selectors";
@@ -15,19 +15,13 @@ const RegisterPage = lazy(() => import("./pages/RegisterPage/RegisterPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage/DashboardPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
 
-const StatisticsTab = lazy(() => import("./pages/StatisticsTab/StatisticsTab"));
-
-
 const App = () => {
-
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     const verifyAuth = async () => {
-    const token = localStorage.getItem("token");
-    if (token) setAuthToken(token);
       try {
         await dispatch(refreshUser()).unwrap();
         await dispatch(getCurrentUser()).unwrap();
@@ -45,10 +39,22 @@ const App = () => {
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<PrivateRoute> <DashboardPage /> </PrivateRoute>}/>
-          <Route path="statistics" element={<StatisticsTab />} />
-          
-          
+          <Route
+            index
+            element={
+              <PrivateRoute>
+                <Navigate to="/dashboard" replace />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard/*"
+            element={
+              <PrivateRoute>
+                <DashboardPage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/login"
             element={
@@ -69,7 +75,6 @@ const App = () => {
         </Route>
       </Routes>
     </Suspense>
-
   );
 };
 

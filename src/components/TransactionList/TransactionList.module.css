@@ -1,141 +1,140 @@
-/* Основной контейнер для таблицы транзакций */
-.transactionsWrapper {
+/* Контейнер обгортка для журналу записів */
+.operationsPanel {
     display: flex;
     width: 715px;
-    max-height: calc(100vh - 110px);
+    max-height: calc(100dvh - 110px);
     border-radius: var(--radius-sm);
     padding: 10px;
 }
 
-/* Текст для отображения информационных сообщений */
-.messageText {
+/* Текст для системних повідомлень */
+.notificationBlock {
     text-align: center;
-    margin: 24px auto;
+    margin-block: 24px;
+    margin-inline: auto;
 }
 
-/* Стили для прокручиваемого контейнера тела таблицы */
-.tableDataContainer tbody {
+/* Стилі для області прокрутки даних */
+.dataGrid tbody {
     display: block;
-    width: 100%;
-    max-height: calc(100vh - 170px);
+    inline-size: 100%;
+    max-block-size: calc(100dvh - 170px);
     overflow-y: auto;
 }
 
-/* Выравнивание заголовка и строк таблицы */
-.tableDataContainer thead,
-.tableDataContainer tbody tr {
+/* Вирівнювання шапки та рядків даних */
+.dataGrid thead,
+.dataGrid tbody tr {
     display: table;
-    width: 100%;
+    inline-size: 100%;
     table-layout: fixed;
 }
 
-/* Стили для заголовка таблицы с закругленными углами */
-.tableDataContainer thead {
+/* Закруглення кутів для шапки */
+.dataGrid thead {
     border-radius: var(--radius-sm);
 }
 
-/* Изображение для пустого состояния без транзакций */
-.emptyStateVisual {
-    width: 100%;
-    height: auto;
+/* Зображення для порожнього стану */
+.blankStateImage {
+    inline-size: 100%;
+    block-size: auto;
     display: flex;
 }
 
-/* Центрирование изображения пустого состояния */
-.emptyStateGraphic {
+/* Центрування графіки порожнього стану */
+.emptyScreenArt {
     display: flex;
-    margin: 0 auto;
+    margin-inline: auto;
     padding: 0;
 }
 
-/* Основные стили таблицы с транзакциями */
-.tableDataContainer {
+/* Базові стилі для таблиці даних */
+.dataGrid {
     color: var(--color-white);
     font-weight: 600;
     font-family: var(--font-main);
-    width: 100%;
+    inline-size: 100%;
     border-collapse: separate;
     border-spacing: 0;
     border-radius: var(--radius-sm);
 }
 
-/* Стили для ячеек таблицы с нижней границей */
-.tableDataContainer td {
-    border-bottom: 1px solid var(--color-white-400);
-    font-size: 14px;
+/* Стилі комірок з нижньою лінією */
+.dataGrid td {
+    border-block-end: 1px solid var(--color-white-400);
+    font-size: 0.875rem;
 }
 
-/* Фиксированный заголовок с фиолетовым фоном и тенью */
-.tableHeader {
+/* Фіксована шапка з фіолетовим градієнтом */
+.gridHeader {
     position: sticky;
-    top: 0;
-    background: var(--color-table-header);
-    box-shadow: 0px 4px 60px 0px rgba(0, 0, 0, 0.25);
-    font-size: 16px;
+    inset-block-start: 0;
+    background: color-mix(in srgb, #523b7e 60%, transparent);
+    box-shadow: 0px 4px 60px 0px rgb(0 0 0 / 0.25);
+    font-size: 1rem;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
 }
 
-/* Подсветка строки при наведении */
-.tbody tr:hover {
+/* Підсвічування рядка на ховері */
+tbody tr:hover {
     background-color: var(--color-table-hover);
 }
 
-/* Стили для колонки даты */
-.dateColumn {
-    text-align: left;
-    padding: 16px 0;
-    padding-left: 20px;
+/* Колонка для дат */
+.dateSection {
+    text-align: start;
+    padding-block: 16px;
+    padding-inline-start: 20px;
 }
 
-/* Стили для колонки типа транзакции */
-.typeColumn {
-    text-align: left;
-    width: auto;
+/* Колонка типу операції */
+.typeSection {
+    text-align: start;
+    inline-size: auto;
 }
 
-/* Стили для колонок категории и комментария */
-.categoryColumn,
-.commentColumn {
-    text-align: left;
+/* Секції категорії та коментаря */
+.categorySection,
+.noteSection {
+    text-align: start;
 }
 
-/* Стили для колонки суммы с правым выравниванием */
-.amountColumn {
-    text-align: right;
-    padding-right: 22px;
+/* Колонка суми з правим вирівнюванням */
+.valueSection {
+    text-align: end;
+    padding-inline-end: 22px;
 }
 
-/* Скрытие колонки действий */
-.hiddenActions {
+/* Приховані елементи керування */
+.hiddenControls {
     display: none;
 }
 
-/* Стили для скроллбара webkit */
-.tableDataContainer tbody::-webkit-scrollbar {
-    width: 10px;
+/* Кастомізація скролбара */
+.dataGrid tbody::-webkit-scrollbar {
+    inline-size: 10px;
 }
 
-/* Стиль ползунка скроллбара */
-.tableDataContainer tbody::-webkit-scrollbar-thumb {
+.dataGrid tbody::-webkit-scrollbar-thumb {
     background-color: var(--color-scrollbar-thumb);
     border-radius: 4px;
 }
 
-/* Стиль трека скроллбара */
-.tableDataContainer tbody::-webkit-scrollbar-track {
+.dataGrid tbody::-webkit-scrollbar-track {
     background-color: var(--color-scrollbar-track);
 }
 
-/* Стили скроллбара для Firefox */
-.tableDataContainer tbody {
+/* Firefox скролбар */
+.dataGrid tbody {
     scrollbar-width: thin;
     scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }
 
-/* Transaction Card Styles */
-.transaction-card {
+/* Стилі картки запису */
+.recordCard {
     background: var(--color-transaction-bg);
     border: 2px solid var(--color-transaction-border);
     border-radius: var(--radius-sm);
@@ -144,53 +143,53 @@
     font-family: var(--font-main);
 }
 
-.transaction-row {
+.itemRow {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--color-white-400);
+    padding-block: 12px;
+    border-block-end: 1px solid var(--color-white-400);
 }
 
-.transaction-row:last-child {
-    border-bottom: none;
+.itemRow:last-child {
+    border-block-end: none;
 }
 
-.transaction-label {
-    font-size: 18px;
+.fieldLabel {
+    font-size: 1.125rem;
     font-weight: 400;
     color: var(--color-white);
 }
 
-.transaction-value {
-    font-size: 18px;
+.fieldValue {
+    font-size: 1.125rem;
     font-weight: 400;
     color: var(--color-white);
 }
 
-.transaction-sum {
+.highlightAmount {
     color: var(--color-transaction-sum);
     font-weight: 600;
 }
 
-.transaction-delete-btn {
+.removeAction {
     background: var(--color-transaction-delete);
     color: var(--color-white);
     border: none;
     border-radius: var(--radius-btn);
     padding: 12px 32px;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     font-family: var(--font-main);
 }
 
-.transaction-delete-btn:hover {
+.removeAction:hover {
     opacity: 0.9;
 }
 
-.transaction-edit-btn {
+.editAction {
     background: transparent;
     border: none;
     color: var(--color-white);
@@ -201,104 +200,104 @@
     justify-content: center;
 }
 
-.transaction-footer {
+.cardFooter {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
+    margin-block-start: 20px;
 }
 
-/* Media Queries */
+/* Медіа запити */
 @media only screen and (max-width: 767px) {
 
-    /* Мобильная версия контейнера */
-    .transactionsWrapper {
-        margin: 0 auto;
-        width: 280px;
+    /* Мобільний контейнер */
+    .operationsPanel {
+        margin-inline: auto;
+        inline-size: 280px;
         padding: 0;
-        max-height: 60vh;
+        max-block-size: 60vh;
         overflow-y: scroll;
         scrollbar-width: none;
     }
 
-    /* Блочное отображение для мобильных устройств */
-    .tableDataContainer,
-    .tableDataContainer tbody,
-    .tableDataContainer tr,
-    .tableDataContainer td {
+    /* Блочне відображення */
+    .dataGrid,
+    .dataGrid tbody,
+    .dataGrid tr,
+    .dataGrid td {
         display: block;
     }
 
-    /* Сброс ограничения высоты для мобильной версии */
-    .tableDataContainer tbody {
-        max-height: none;
+    /* Скидання обмежень висоти */
+    .dataGrid tbody {
+        max-block-size: none;
     }
 
-    /* Центрирование заголовка для мобильной версии */
-    .tableDataContainer thead {
+    /* Центрування заголовка */
+    .dataGrid thead {
         display: flex;
         justify-content: center;
         align-items: baseline;
     }
 
-    /* Карточка транзакции для мобильной версии */
-    .tableDataContainer tbody tr {
-        background: rgba(82, 59, 126, 0.6);
-        margin-bottom: 8px;
+    /* Картки для мобільних */
+    .dataGrid tbody tr {
+        background: color-mix(in srgb, #523b7e 60%, transparent);
+        margin-block-end: 8px;
         border-radius: var(--radius-sm);
         position: relative;
     }
 
-    /* Стили ячеек для мобильной версии */
-    .tableDataContainer td {
-        font-size: 16px;
+    /* Стилі комірок */
+    .dataGrid td {
+        font-size: 1rem;
         font-weight: 400;
-        text-align: right;
+        text-align: end;
         position: relative;
         display: flex;
         align-items: center;
     }
 
-    /* Убираем границу у последней ячейки */
-    .tableDataContainer td:last-child {
-        border-bottom: none;
+    /* Видалення лінії у останньої комірки */
+    .dataGrid td:last-child {
+        border-block-end: none;
     }
 
-    /* Стили для кнопок действий в мобильной версии */
-    .tableDataContainer .actionBtn {
-        border-bottom: none;
+    /* Кнопки дій */
+    .dataGrid .actionButtons {
+        border-block-end: none;
     }
 
-    /* Добавление меток для мобильной версии */
-    .tableDataContainer td::before {
+    /* Додавання міток */
+    .dataGrid td::before {
         content: attr(data-label);
         position: absolute;
-        left: 6px;
-        width: 45%;
-        text-align: left;
+        inset-inline-start: 6px;
+        inline-size: 45%;
+        text-align: start;
         font-weight: bold;
     }
 
-    /* Позиционирование кнопок действий внизу карточки */
-    .tableDataContainer .action-buttons {
+    /* Позиціонування кнопок */
+    .dataGrid .controlGroup {
         position: absolute;
-        bottom: 0.5rem;
-        right: 0.5rem;
+        inset-block-end: 0.5rem;
+        inset-inline-end: 0.5rem;
     }
 }
 
-/* Стилі для планшетів (768px - 1279px) */
+/* Планшети (768px - 1279px) */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
-    .transactionsWrapper {
+    .operationsPanel {
         border-radius: var(--radius-sm);
-        width: 704px;
-        height: 56px;
+        inline-size: 704px;
+        block-size: 56px;
     }
 }
 
-/* Стилі для десктопів (1280px і більше) */
+/* Десктопи (1280px і більше) */
 @media screen and (min-width: 1280px) {
-    .transactionsWrapper {
+    .operationsPanel {
         padding: 0px;
     }
 }
