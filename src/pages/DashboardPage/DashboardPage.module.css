@@ -2,124 +2,132 @@
 
 /* Основной контейнер для Dashboard */
 .dashboardContainer {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    /* Для відображення на всю сторінку */
-    background-color: #101010;
-    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
-    color: var(--color-white);
-    position: relative;
-    width: 100vw;
-    /* Для відображення на всю сторінку */
-    /* Исправляем горизонтальное центрирование */
-    margin-left: calc(-50vw + 50%);
-    /* Этот трюк помогает правильно центрировать на всю ширину экрана */
-    overflow-x: hidden;
-    font-family: 'Poppins-Regular', Helvetica, sans-serif;
-    /* Можно заменить на var(--font-main) */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Для відображення на всю сторінку */
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
+  color: var(--color-white);
+  position: relative;
+  width: 100vw;
+  /* Для відображення на всю сторінку */
+  /* Исправляем горизонтальное центрирование */
+  margin-left: calc(-50vw + 50%);
+  /* Этот трюк помогает правильно центрировать на всю ширину экрана */
+  overflow-x: hidden;
+  font-family: "Poppins-Regular", Helvetica, sans-serif;
+  /* Можно заменить на var(--font-main) */
 }
 
 /* Главный контейнер дэшборда с адаптивными стилями */
 .dashboardPage {
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
 }
 
 /* Стили для хедера */
 .header {
-    width: 320px;
-    height: 60px;
+  width: 320px;
+  height: 60px;
 }
 
 /* Фонові елементи - используем изображения */
 .backgroundElements {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: #101010;
-    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 /* Версии фона для разных устройств */
 .mobileBg {
-    background-image: url('/src/assets/dashboard_images/gradient_mobile.webp');
-    background-color: #101010;
-    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
+  background-image: url("/src/assets/dashboard_images/gradient_mobile.webp");
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 .tabletBg {
-    background-image: url('/src/assets/dashboard_images/gradient_tablet.webp');
-    background-color: #101010;
-    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
+  background-image: url("/src/assets/dashboard_images/gradient_tablet.webp");
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 .desktopBg {
-    background-image: url('/src/assets/dashboard_images/gradient_desktop.webp');
-    background-color: #101010;
-    /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
+  background-image: url("/src/assets/dashboard_images/gradient_desktop.webp");
+  background-color: #101010;
+  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 /* Контейнер для вмісту (все крім Header) */
 .contentWrapper {
-    display: flex;
-    flex: 1;
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-    flex-direction: column;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  flex-direction: column;
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  flex-direction: column;
 }
 
 /* Базові стилі для всіх версій */
 
 .balance .currency {
-    border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm);
 }
 
 /* Лівий сайдбар (для мобільної і десктопної версій) */
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 12px;
 }
 
 .dashboardData {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .mainContent {
-    width: 100%;
+  width: 100%;
 
-    border-radius: var(--radius-sm);
+  border-radius: var(--radius-sm);
 }
 
 .divider {
-    display: none;
+  display: none;
 }
 
 /* Стилі для мобільної версії (за замовчуванням) */
 .navigation {
-    width: 320px;
-    /* height: 96px; */
+  width: 320px;
+  /* height: 96px; */
 }
 
 .balance {
-    width: 280px;
-    height: 80px;
+  width: 280px;
+  height: 80px;
 }
 
 .currency {
-    display: none;
+  display: none;
 }
 
 /* Стилі для кнопки додавання транзакцій */
@@ -134,63 +142,61 @@
 
 /* Стилі для планшетів (768px - 1279px) */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
-    .dashboardPage {
-        width: 768px;
-        height: 1024px;
+  .dashboardPage {
+    width: 768px;
+    height: 1024px;
+  }
 
-    }
+  .header {
+    width: 768px;
+    height: 80px;
+  }
 
-    .header {
-        width: 768px;
-        height: 80px;
-    }
+  .contentWrapper {
+    max-width: 768px;
+    padding-top: 0px;
+  }
 
-    .contentWrapper {
-        max-width: 768px;
-        padding-top: 0px;
-    }
+  /* Спеціальні стилі для планшетної версії */
+  .tabletLayout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-bottom: 28px;
+  }
 
-    /* Спеціальні стилі для планшетної версії */
-    .tabletLayout {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 28px;
-        margin-bottom: 28px;
-    }
+  .tabletTopSection {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+  }
 
-    .tabletTopSection {
-        display: flex;
-        justify-content: center;
-        gap: 32px;
-    }
+  .navigation {
+    width: 336px;
+    height: 66px;
+    margin-bottom: 28px;
+  }
 
-    .navigation {
-        width: 336px;
-        height: 66px;
-        margin-bottom: 28px;
-    }
+  .balance {
+    width: 336px;
+    height: 80px;
+  }
 
-    .balance {
-        width: 336px;
-        height: 80px;
-    }
+  .currency {
+    display: block;
+    width: 336px;
+    height: 214px;
+  }
 
-    .currency {
-        display: block;
-        width: 336px;
-        height: 214px;
-        padding: 20px;
-    }
+  .mainContent {
+    width: 704px;
+    height: 312px;
+    padding: 20px;
+  }
 
-    .mainContent {
-        width: 704px;
-        height: 312px;
-        padding: 20px;
-    }
-
-    /* Позиціонування кнопки для планшетів */
-    /* .addButtonContainer {
+  /* Позиціонування кнопки для планшетів */
+  /* .addButtonContainer {
         width: 56px;
         height: 56px;
         bottom: 40px;
@@ -200,63 +206,61 @@
 
 /* Стилі для десктопів (1280px і більше) */
 @media screen and (min-width: 1280px) {
-    .dashboardPage {
-        width: 1280px;
-    }
+  .dashboardPage {
+    width: 1280px;
+  }
 
-    .header {
-        width: 1280px;
-        height: 80px;
-    }
+  .header {
+    width: 1280px;
+    height: 80px;
+  }
 
-    .contentWrapper {
-        flex-direction: row;
-        max-width: 1280px;
-        height: 721px;
-        gap: 0;
-    }
+  .contentWrapper {
+    flex-direction: row;
+    max-width: 1280px;
+    height: 721px;
+    gap: 0;
+  }
 
-    .dashboardData {
-        display: flex;
-        flex-direction: column;
-    }
+  .dashboardData {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .navigation {
-        width: 480px;
-    }
+  .navigation {
+    width: 480px;
+  }
 
-    .balance {
-        width: 480px;
-        height: 80px;
-        margin-bottom: 32px;
-    }
+  .balance {
+    width: 480px;
+    height: 80px;
+    margin-bottom: 32px;
+  }
 
-    .currency {
-        display: block;
-        width: 480px;
-        height: 380px;
-        padding: 20px;
-    }
+  .currency {
+    display: block;
+    width: 480px;
+    height: 380px;
+  }
 
-    .sidebar {
-        width: 480px;
-    }
+  .sidebar {
+    width: 480px;
+  }
 
-    .divider {
-        display: block;
-        width: 1px;
-        height: 641px;
-        background-color: var(--color-white-600);
-        box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
-    }
+  .divider {
+    display: block;
+    width: 1px;
+    height: 641px;
+    background-color: var(--color-white-600);
+    box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
+  }
 
-    .mainContent {
-        width: 715px;
-        height: 308px;
-        flex-grow: 1;
-        padding-left: 69px;
-        padding-right: 16px;
-        padding-top: 46px;
-    }
-
+  .mainContent {
+    width: 715px;
+    height: 308px;
+    flex-grow: 1;
+    padding-left: 69px;
+    padding-right: 16px;
+    padding-top: 46px;
+  }
 }
