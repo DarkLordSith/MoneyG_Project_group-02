@@ -1,19 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { setIsLoading } from "../global/slice";
+import { setAuthToken, getAuthToken } from "../../utils/authToken";
 
 axios.defaults.baseURL = "https://money-guard-backend-lnfk.onrender.com";
 axios.defaults.withCredentials = true;
-
-const setAuthToken = (token) => {
-  if (token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    localStorage.setItem("token", token);
-  } else {
-    delete axios.defaults.headers.common.Authorization;
-    localStorage.removeItem("token");
-  }
-};
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -86,8 +77,8 @@ export const refreshUser = createAsyncThunk(
 export const getCurrentUser = createAsyncThunk(
   "/auth/current",
   async (_, thunkAPI) => {
-    setIsLoading(true);
-    const token = localStorage.getItem("token");
+    thunkAPI.dispatch(setIsLoading(true));
+    const token = getAuthToken();
     if (!token) {
       return thunkAPI.rejectWithValue("No token found");
     }
@@ -98,7 +89,7 @@ export const getCurrentUser = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     } finally {
-      setIsLoading(false);
+      thunkAPI.dispatch(setIsLoading(false));
     }
   }
 );

@@ -1,0 +1,68 @@
+.statisticsTab {
+  background: linear-gradient(180deg, #2d1461 0%, #3b1d75 50%, #4C3E9D 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+
+
+.headerStat {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+
+.chartSection {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+
+@media (min-width: 768px) {
+  .chartSection {
+    grid-template-columns: 1fr 1fr;
+    max-width: 768px;
+  }
+
+  .statisticsTab {
+    padding: 40px;
+    align-items: stretch;
+  }
+}
+
+
+@media (min-width: 1280px) {
+  .statisticsTab {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 64px 80px;
+  }
+
+  .chartSection {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 60%;
+  }
+
+  .tableSection {
+    width: 40%;
+  }
+
+  .headerStat {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+}

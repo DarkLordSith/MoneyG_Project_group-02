@@ -1,0 +1,116 @@
+.tableStat {
+    font-family: var(--font-family);
+}
+
+.notesStat {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+
+} 
+
+.tableHeader {
+    border-radius: 8px;
+    width: 280px;
+    height: 56px;
+    backdrop-filter: blur(100px);
+    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+    background: rgba(82, 59, 126, 0.6);
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+}
+
+.notesStat td {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--white);
+    vertical-align: middle;
+    text-align: left;
+    border-bottom: none;
+    background-image: none;
+}
+
+.notesStat td:last-child {
+    text-align: right;
+    padding-right: 16px;
+}
+
+.notesStat tr {
+    position: relative;
+}
+
+.notesStat tr::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.054), rgba(255, 255, 255, 0.289));
+    opacity: 0.5;
+}
+
+.restangle {
+    width: 56px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+.colorRes {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+}
+
+
+.expenses {
+    margin-top: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--dashboard-text);
+    display: flex;
+    justify-content: space-between;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+.income {
+    margin-top: 16px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--yellow);
+    display: flex;
+    justify-content: space-between;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+
+.title {
+    color: var(--white);
+}
+ 
+@media (min-width: 768px) {
+    .tableHeader {
+        width: 336px;
+    }
+
+    .reseme{
+     width: 336px;
+
+} 
+}
+
+@media (min-width: 1280px) {
+    .tableHeader {
+        width: 395px;
+    }
+
+    .reseme{
+    width: 395px;}
+}

@@ -3,6 +3,8 @@ import { Suspense, useEffect, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn, selectIsRefreshing } from "./redux/auth/selectors";
 import { getCurrentUser, refreshUser } from "./redux/auth/operations";
+import { setAuthToken, getAuthToken } from "./utils/authToken";
+
 import Layout from "./components/Layout/Layout";
 import Loader from "./components/Loader/Loader";
 import RestrictedRoute from "./routes/RestrictedRoute";
@@ -20,6 +22,9 @@ const App = () => {
 
   useEffect(() => {
     const verifyAuth = async () => {
+      const token = getAuthToken();
+      if (token) setAuthToken(token);
+
       try {
         await dispatch(refreshUser()).unwrap();
         await dispatch(getCurrentUser()).unwrap();

@@ -9,6 +9,7 @@ import transactionsReducer from "./transactions/slice";
 import { globalReducer } from "./global/slice";
 // import { financeReducer } from "./finance/slice"; // НОВИЙ ІМПОРТ - редюсер для фінансових даних
 
+
 const persistConfig = {
   key: "root",
   storage,
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   transactions: transactionsReducer,
   global: globalReducer,
   // finance: financeReducer,
+
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
