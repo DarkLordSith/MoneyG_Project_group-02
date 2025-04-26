@@ -1,324 +1,296 @@
-/* Стиль для ячейки с доходом - желтый цвет */
-td.profitAmount {
+/* Стилізація позитивних значень */
+td.incomeValue {
     color: var(--color-accent);
     font-weight: 600;
-    text-align: right;
-    padding-right: 16px;
+    text-align: end;
+    padding-inline-end: 16px;
 }
 
-/* Увеличиваем специфичность для переопределения других стилей */
-table tr td.profitAmount,
-tbody tr td.profitAmount {
+/* Підсилення пріоритету для позитивних транзакцій */
+table tbody td.incomeValue,
+tbody>tr>td.incomeValue {
     font-weight: 600;
 }
 
-/* Стиль для ячейки с расходом - красный цвет */
-td.lossAmount {
-    color: #f87171;
+/* Негативні значення */
+td.outflowValue {
+    color: hsl(0, 89%, 72%);
     font-weight: 600;
-    text-align: right;
-    padding-right: 16px;
+    text-align: end;
+    padding-inline-end: 16px;
 }
 
-/* Увеличиваем специфичность для переопределения других стилей */
-table tr td.lossAmount,
-tbody tr td.lossAmount {
+/* Форсований пріоритет для негативних транзакцій */
+table tbody td.outflowValue,
+tbody>tr>td.outflowValue {
     font-weight: 600;
 }
 
-/* Основной контейнер строки транзакции */
-.transactionRow {
-    margin: 0 auto;
+/* Базовий рядок операції */
+.recordLine {
+    margin-block: 0;
+    margin-inline: auto;
 }
 
-/* Контейнер строки для расходной транзакции */
-.transactionRowExpense {
-    margin: 0 auto;
+/* Рядок витрат */
+.recordLineNegative {
+    margin-block: 0;
+    margin-inline: auto;
 }
 
-/* Общие стили для базовых колонок */
-.columnDate,
-.columnType,
-.columnCategory,
-.columnDescription {
+/* Універсальні стилі для комірок */
+.timeCell,
+.kindCell,
+.groupCell,
+.remarkCell {
     font-weight: 400;
-    padding: 16px 0;
-    word-wrap: break-word;
+    padding-block: 16px;
+    overflow-wrap: break-word;
 }
 
-/* Стили для колонки даты с левым выравниванием */
-.columnDate {
-    text-align: left;
-    padding-left: 20px;
+/* Час з вирівнюванням */
+.timeCell {
+    text-align: start;
+    padding-inline-start: 20px;
 }
 
-/* Стили для колонки типа транзакции */
-.columnType {
+/* Типізація операції */
+.kindCell {
     width: auto;
-    text-align: left;
-    padding-left: 20px;
+    text-align: start;
+    padding-inline-start: 20px;
 }
 
-/* Стили для колонок категории и описания */
-.columnCategory,
-.columnDescription {
-    text-align: left;
+/* Контент-колонки */
+.groupCell,
+.remarkCell {
+    text-align: start;
 }
 
-/* Контейнер для кнопок действий */
-.buttonsWrapper {
+/* Флекс-контейнер для дій */
+.actionSet {
     display: flex;
 }
 
-/* Контейнер для кнопок редактирования и удаления */
-.controlsCell {
+/* Управляючі елементи */
+.manageCell {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    place-content: center;
+    place-items: center;
     gap: 8px;
-    padding: 24px;
+    padding: 1.5rem;
 }
 
-/* Капитализация первой буквы комментария */
-.columnDescription:first-letter {
-    text-transform: capitalize;
+/* Перша велика літера для приміток */
+.remarkCell::first-letter {
+    text-transform: uppercase;
 }
 
-/* Скрытый текст редактирования для мобильной версии */
-.editLabel {
+/* Текст мобільної кнопки по дефолту схований */
+.mobileEditText {
     display: none;
 }
 
-/* Стили для кнопки редактирования */
-.modifyButton {
-    color: #9ca3af;
-    background: none;
+/* Кнопка змін */
+.modifyBtn {
+    color: hsl(220, 9%, 64%);
+    background: transparent;
     border: none;
     cursor: pointer;
     transition: var(--transition);
 }
 
-/* Эффект наведения на иконку редактирования */
-.editIcon:hover,
-.editIcon:focus {
-    scale: 1.5;
+/* Збільшення іконки при фокусі */
+.modifyBtn svg:hover,
+.modifyBtn svg:focus {
+    transform: scale(1.5);
     stroke: var(--color-white);
 }
 
-/* Стили для кнопки удаления с градиентом */
-.removeButton {
+/* Градієнтна кнопка видалення */
+.eraseBtn {
     width: 69px;
     height: 29px;
-    border-radius: 20px;
-    background-position: left center;
+    border-radius: 9999px;
+    background-position: 0% 50%;
     color: var(--color-white);
-    padding: 4px 12px;
+    padding: 0.25rem 0.75rem;
     border: none;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 0.875rem;
     box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
-    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
+    background-image: linear-gradient(to right, var(--color-accent), #9e40ba 61.46%, #7000ff);
     transition: var(--transition);
-    background-size: 200%;
+    background-size: 200% 100%;
 }
 
-/* Эффект наведения на кнопку удаления */
-.removeButton:hover,
-.removeButton:focus {
-    background-position: right center;
+/* Анімація градієнта при наведенні */
+.eraseBtn:hover,
+.eraseBtn:focus {
+    background-position: 100% 50%;
     transform: var(--scale);
 }
 
+/* МОБІЛЬНІ СТИЛІ */
 @media screen and (max-width: 767px) {
 
-    /* Отображение текста редактирования в мобильной версии */
-    .editLabel {
-        display: contents;
-        font-size: 16px;
+    /* Показуємо текст для мобільних */
+    .mobileEditText {
+        display: inline-block;
+        font-size: 1rem;
     }
 
-    /* Эффект наведения на текст редактирования */
-    .editLabel:hover {
+    /* Ховер-ефект для тексту */
+    .mobileEditText:hover {
         transform: var(--scale);
         color: var(--color-white);
     }
 
-    /* Сброс эффекта масштабирования иконки в мобильной версии */
-    .editIcon:hover,
-    .editIcon:focus {
-        scale: 1;
+    /* Скидання масштабування для мобільних */
+    .modifyBtn svg:hover,
+    .modifyBtn svg:focus {
+        transform: none;
         stroke: var(--color-white-600);
     }
 
-    /* Эффект наведения на кнопку редактирования */
-    .modifyButton:hover,
-    .modifyButton:focus {
+    /* Ховер для всієї кнопки на мобільних */
+    .modifyBtn:hover,
+    .modifyBtn:focus {
         transform: var(--scale);
         color: var(--color-white);
     }
 
-    /* Эффект наведения на кнопку удаления */
-    .removeButton:hover {
-        background-position: right center;
+    /* Зберігаємо анімацію для видалення */
+    .eraseBtn:hover {
+        background-position: 100% 50%;
         transform: var(--scale);
     }
 
-    /* Желтый индикатор для строки дохода */
-    .transactionRow::before {
+    /* Бокова індикація для доходів */
+    .recordLine::after {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
+        inset-block: 0;
+        inset-inline-start: 0;
         width: 5px;
-        height: 100%;
         background-color: var(--color-accent);
-        border-radius: 10px 0 0 10px;
+        border-start-start-radius: 10px;
+        border-end-start-radius: 10px;
     }
 
-    /* Оранжевый индикатор для строки расхода */
-    .transactionRowExpense::before {
+    /* Індикатор для витрат */
+    .recordLineNegative::after {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
+        inset-block: 0;
+        inset-inline-start: 0;
         width: 5px;
-        height: 100%;
-        background-color: #ff6a3d;
-        border-radius: 10px 0 0 10px;
+        background-color: hsl(18, 100%, 62%);
+        border-start-start-radius: 10px;
+        border-end-start-radius: 10px;
     }
 
-    /* Добавляем position: relative к строкам, чтобы псевдоэлементы позиционировались правильно */
-    .transactionRow,
-    .transactionRowExpense {
+    /* Позиціонування для псевдоелементів */
+    .recordLine,
+    .recordLineNegative {
         position: relative;
     }
 
-    /* Отступы для ячеек строки дохода */
-    .transactionRow td {
-        padding: 12px 20px 12px 25px;
+    /* Флекс-лейаут для мобільних */
+    .recordLine td,
+    .recordLineNegative td {
+        padding: 0.75rem 1.25rem 0.75rem 1.5625rem;
         display: flex;
     }
 
-    /* Отступы для ячеек строки расхода */
-    .transactionRowExpense td {
-        padding: 12px 20px 12px 25px;
-        display: flex;
-    }
-
-    /* Расположение контента в колонке даты */
-    .columnDate {
+    /* Розміщення контенту в комірках */
+    .timeCell,
+    .kindCell,
+    .groupCell,
+    .remarkCell,
+    td.incomeValue,
+    td.outflowValue,
+    .manageCell {
         justify-content: space-between;
     }
 
-    /* Расположение контента в колонке типа */
-    .columnType {
-        justify-content: space-between;
-        text-align: left;
-        padding-left: 32px;
+    /* Додаткові стилі для колонок */
+    .kindCell {
+        padding-inline-start: 2rem;
     }
 
-    /* Расположение контента в колонке категории */
-    .columnCategory {
-        justify-content: space-between;
-        text-align: left;
-        padding-left: 16px;
+    .groupCell,
+    .remarkCell {
+        padding-inline-start: 1rem;
     }
 
-    /* Расположение контента в колонке комментария */
-    .columnDescription {
-        justify-content: space-between;
+    .remarkCell {
         gap: 5px;
-        text-align: left;
-        padding-left: 16px;
     }
 
-    /* Обрезка длинного текста комментария */
-    .columnDescription p {
-        overflow: hidden;
+    /* Обмеження довжини коментаря */
+    .remarkCell p {
         text-overflow: ellipsis;
+        overflow: hidden;
     }
 
-    /* Расположение контента в колонках сумм */
-    td.profitAmount,
-    td.lossAmount {
-        justify-content: space-between;
-    }
-
-    /* Сохраняем цвета для сумм в мобильной версии */
-    .transactionRow td.profitAmount,
-    table .transactionRow td.profitAmount {
+    /* Збереження кольорів для мобільної версії */
+    .recordLine td.incomeValue,
+    table .recordLine td.incomeValue {
         color: var(--color-accent);
     }
 
-    .transactionRowExpense td.lossAmount,
-    table .transactionRowExpense td.lossAmount {
-        color: #f87171;
+    .recordLineNegative td.outflowValue,
+    table .recordLineNegative td.outflowValue {
+        color: hsl(0, 89%, 72%);
     }
 
-    /* Расположение кнопок управления */
-    .controlsCell {
-        justify-content: space-between;
+    /* Флекс для кнопки редагування */
+    .modifyBtn {
         display: flex;
-    }
-
-    /* Центрирование кнопки редактирования */
-    .modifyButton {
         align-items: center;
-        display: flex;
         gap: 5px;
     }
 
-    /* Стили для меток полей в мобильной версии */
-    .labelDate,
-    .labelType,
-    .labelCategory,
-    .labelDescription {
+    /* Підписи для мобільних */
+    .timeLabel,
+    .kindLabel,
+    .groupLabel,
+    .remarkLabel {
         font-weight: 600;
     }
 
-    /* Белый цвет для метки суммы */
-    .labelAmount {
+    /* Колір для суми на мобільних */
+    .sumLabel {
         color: var(--color-white);
     }
 }
 
-/* Альтернативные подходы для повышения специфичности без !important */
+/* АЛЬТЕРНАТИВНІ МЕТОДИ ПІДВИЩЕННЯ СПЕЦИФІЧНОСТІ */
 
-/* 1. Используем более специфичные селекторы */
-.transactions-table tbody tr td.profitAmount {
+/* Метод 1: Каскадне підсилення */
+.ledger-view tbody td.incomeValue,
+.ledger-view tbody td.outflowValue {
+    font-weight: 600 !important;
+}
+
+/* Метод 2: Комбінація селекторів */
+.ledger-view table tr:not(.disabled) td[class*="Value"] {
     font-weight: 600;
 }
 
-.transactions-table tbody tr td.lossAmount {
+/* Метод 3: Через атрибути data */
+td[data-value-type="income"],
+td[data-value-type="expense"] {
     font-weight: 600;
 }
 
-/* 2. Если нужно переопределить inline-стили, используем CSS переменные в HTML */
-/* 
-Пример в HTML:
-<td style="--font-weight: 600; font-weight: var(--font-weight, normal);" class="profitAmount">
-*/
-
-/* 3. Используем атрибуты для повышения специфичности */
-td[class="profitAmount"] {
+/* Метод 4: Використання :where() для групування */
+:where(td.incomeValue, td.outflowValue) {
     font-weight: 600;
 }
 
-td[class="lossAmount"] {
-    font-weight: 600;
-}
-
-/* 4. Комбинируем селекторы для увеличения специфичности */
-tbody tr:not([data-disabled]) td.profitAmount,
-tbody tr:not([data-disabled]) td.lossAmount {
-    font-weight: 600;
-}
-
-/* 5. Используем селектор :not() для исключений */
-td.profitAmount:not(.lightweight) {
-    font-weight: 600;
-}
-
-td.lossAmount:not(.lightweight) {
+/* Метод 5: Логічні комбінації */
+td:is(.incomeValue, .outflowValue):not([data-thin]) {
     font-weight: 600;
 }

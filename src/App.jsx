@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, useEffect, lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectIsLoggedIn, selectIsRefreshing } from "./redux/auth/selectors";
@@ -39,6 +39,14 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route
             index
+            element={
+              <PrivateRoute>
+                <Navigate to="/dashboard" replace />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard/*"
             element={
               <PrivateRoute>
                 <DashboardPage />
