@@ -1,0 +1,142 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  gap: 16px;
+  z-index: 10;
+}
+
+.selectWrapper {
+  width: 100%;
+  position: relative;
+}
+
+.select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 280px;
+  height: 50px;
+  border-width: 1px;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  background: #4A56E21A;
+  border: 1px solid #fbfbfb;
+  cursor: pointer;
+  position: relative;
+}
+
+
+.dropdown {
+  position: absolute;
+  margin-top: 4px;
+  width: 280px;
+  max-height: 157px;
+  border-radius: 8px;
+  overflow: auto;
+  background: linear-gradient(
+    0deg,
+    rgba(83, 61, 186, 0.7) 0%,
+    rgba(80, 48, 154, 0.7) 43.14%,
+    rgba(106, 70, 165, 0.525) 73.27%,
+    rgba(133, 93, 175, 0.133) 120.03%
+  );
+  backdrop-filter: blur(100px);
+  box-shadow: 0px 4px 60px 0px #00000040;
+  max-height: 157px;
+  overflow-y: auto;
+  z-index: 30;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  list-style: none;
+
+  scrollbar-width: none;
+}
+
+.option {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: white;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.option:hover {
+  background: #FFFFFF1A;
+  color: #FF868D;
+}
+
+.option:active {
+  color: #FF868D;
+}
+.optionSelected {
+  color: #FF868D;
+}
+.optionActive {
+  background: #FFFFFF1A;
+}
+
+.selected {
+  color: #FF868D;
+}
+/* Стрелка */
+.select::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 20px;
+  height: 11px;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='11' viewBox='0 0 20 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M19 10L10 1L1 10' stroke='%23FBFBFB'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.selectWrapper:focus-within .select::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Адаптив */
+@media (min-width: 768px) {
+  .wrapper {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .select {
+    width: 160px;
+  }
+
+  .dropdown {
+    width: 159px;
+  }
+
+}
+
+@media (min-width: 1280px) {
+  .wrapper {
+    gap: 32px;
+  }
+
+   .select {
+    width: 181px;
+  }
+
+  .dropdown {
+    width: 182px;
+  }
+}

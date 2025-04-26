@@ -44,16 +44,16 @@ const Chart = ({ summary, categories, balance }) => {
   };
 
     return (
-        <div className={css.chartWrapper}>
+        <div className={css.chartContainer}>
             <Doughnut data={data} options={options} />
             <div className={css.chartCenter}> 
-                expenses ? (
+                {expenses ? (
                         <>
                             <span>₴ {balance ? balance.toFixed(2) : '0.00'}</span>
                         </>
                     ) :  (
                     <p className={css.emptyText}>No expenses</p>
-                )
+                )}
             </div>
             
         </div>

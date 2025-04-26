@@ -1,50 +1,45 @@
-// src/pages/DashboardPage/DashboardPage.jsx
+// DashboardPage.jsx;
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Toaster, toast } from "react-hot-toast";
 import { useMediaQuery } from "react-responsive";
 
-// Існуючі компоненти
+// Компоненти
 import Loader from "../../components/Loader/Loader";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
-import Balance from "../../components/Balance/Balance"; // Компонент для відображення балансу
+import Balance from "../../components/Balance/Balance";
 import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
-import TransactionList from "../../components/TransactionList/TransactionList";
+import Currency from "../../components/Currency/Currency";
+import HomeTab from "../../components/HomeTab/HomeTab";
+import StatisticsTab from "../StatisticsTab/StatisticsTab";
+// import CurrencyTab from "../../components/CurrencyTab/CurrencyTab";
+// import TransactionList from "../../components/TransactionList/TransactionList";
 
-// Існуючі операції
+// Операції
 import { logout } from "../../redux/auth/operations";
-// НОВИЙ ІМПОРТ - операція для отримання балансу
-// import { fetchBalance } from "../../redux/finance/operations";
 
 import styles from "./DashboardPage.module.css";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  // НОВЕ - отримуємо дані про авторизацію для перевірки перед запитом балансу
   const { token, isLoggedIn } = useSelector((state) => state.auth);
 
-  // Існуючі стани
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Існуючі медіа-запити для адаптивного дизайну
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 1280 });
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
 
-  // НОВИЙ USEEFFECT - автоматично отримуємо баланс при завантаженні сторінки
   useEffect(() => {
-    // Перевіряємо чи користувач авторизований перед запитом
     if (isLoggedIn && token) {
-      // dispatch(fetchBalance()); // Відправляємо запит на отримання балансу
+      // dispatch(fetchBalance());
     }
-  }, [dispatch, isLoggedIn, token]); // Залежності: виконується при зміні цих значень
+  }, [dispatch, isLoggedIn, token]);
 
-  // Існуючі обробники подій
   const handleOpenLogoutModal = () => {
     setIsLogoutModalOpen(true);
   };
@@ -58,9 +53,9 @@ const DashboardPage = () => {
       setIsLoading(true);
       await dispatch(logout()).unwrap();
       handleCloseLogoutModal();
-      navigate("/login");
     } catch (error) {
       console.error("Помилка при виході з системи:", error);
+      toast.error("Помилка при виході з системи. Спробуйте ще раз.");
     } finally {
       setIsLoading(false);
     }
@@ -83,7 +78,6 @@ const DashboardPage = () => {
         </div>
 
         <div className={styles.contentWrapper}>
-          {/* Існуючий рендеринг для різних розмірів екрану */}
           {/* Мобільна версія */}
           {isMobile && (
             <div className={styles.sidebar}>
@@ -91,7 +85,6 @@ const DashboardPage = () => {
                 <Navigation />
               </div>
               <div className={styles.balance}>
-                {/* КОМПОНЕНТ BALANCE - тепер отримує дані з Redux store */}
                 <Balance />
               </div>
             </div>
@@ -106,16 +99,16 @@ const DashboardPage = () => {
                     <Navigation />
                   </div>
                   <div className={styles.balance}>
-                    {/* КОМПОНЕНТ BALANCE - тепер отримує дані з Redux store */}
                     <Balance />
                   </div>
                 </div>
                 <div className={styles.currency}>
-                  <p>Currency</p>
+                  <Currency />
                 </div>
               </div>
             </div>
           )}
+
           {/* Десктопна версія */}
           {isDesktop && (
             <>
@@ -125,11 +118,10 @@ const DashboardPage = () => {
                     <Navigation />
                   </div>
                   <div className={styles.balance}>
-                    {/* КОМПОНЕНТ BALANCE - тепер отримує дані з Redux store */}
                     <Balance />
                   </div>
                   <div className={styles.currency}>
-                    <p>Currency</p>
+                    <Currency />
                   </div>
                 </div>
               </div>
@@ -138,8 +130,26 @@ const DashboardPage = () => {
           )}
 
           <div className={styles.mainContent}>
-            <TransactionList />
-            <Outlet />
+            <Routes>
+              <Route index element={<Navigate to="home" />} />
+              {/* <Route path="home" element={<TransactionList />} />{" "} */}
+              {/* Замість <div>Home Tab (в разработке)</div> */}
+              <Route path="home" element={<HomeTab />} />
+              <Route path="statistics" element={<StatisticsTab />} />
+              {/* {isMobile && <Route path="currency" element={<CurrencyTab />} />} */}
+              {/* Временные заглушки */}
+              <Route path="home" element={<div>Home Tab (в разработке)</div>} />
+              {/* <Route
+                path="statistics"
+                element={<div>Statistics Tab (в разработке)</div>}
+              /> */}
+              {isMobile && (
+                <Route
+                  path="currency"
+                  element={<div>Currency Tab (в разработке)</div>}
+                />
+              )}
+            </Routes>
           </div>
         </div>
       </div>

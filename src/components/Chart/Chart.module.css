@@ -1,8 +1,11 @@
-.chartWrapper {
+.chartContainer {
     position: relative;
     width: 280px;
     height: 280px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .chartCenter {
@@ -10,18 +13,23 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    max-width: 140px;
+    word-break: break-word;
+    line-height: 1.2;
+    padding: 0 4px;
     font-weight: 600;
     font-size: 18px;
     text-align: center;
     color:  #ffffff;
-    opacity: 1;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease;
     animation: fadeInCenter 0.4s ease-in-out;
+
 }
 
 .chartCenter span {
     display: block;
     animation: fadeIn 0.4s ease;
+    
 }
 
 .emptyText {
@@ -35,14 +43,14 @@
 
 
 @media (min-width: 768px) {
-    .chartWrapper {
+    .chartContainer {
         width: 336px;
         height: 336px;
     }
 }
 
 @media (min-width: 1280px) {
-    .chartWrapper {
+    .chartContainer {
         width: 288px;
         height: 288px;
     }
