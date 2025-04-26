@@ -1,25 +1,23 @@
-// src/redux/store.js
-import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import { combineReducers } from "redux";
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from 'redux';
 
-import { authReducer } from "./auth/slice";
-import transactionsReducer from "./transactions/slice";
-import { globalReducer } from "./global/slice";
-// import { financeReducer } from "./finance/slice"; // НОВИЙ ІМПОРТ - редюсер для фінансових даних
+import { authReducer } from './auth/slice';
+import transactionsReducer from './transactions/slice';
+import { globalReducer } from './global/slice';
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  whitelist: ["auth"],
+  whitelist: ['auth'],
 };
 
 const rootReducer = combineReducers({
   auth: authReducer,
   transactions: transactionsReducer,
   global: globalReducer,
-  // finance: financeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
