@@ -13,7 +13,7 @@ import Balance from "../../components/Balance/Balance";
 import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
 import Currency from "../../components/Currency/Currency";
 // import HomeTab from "../../components/HomeTab/HomeTab";
-// import StatisticsTab from "../../components/StatisticsTab/StatisticsTab";
+import StatisticsTab from "../StatisticsTab/StatisticsTab";
 // import CurrencyTab from "../../components/CurrencyTab/CurrencyTab";
 import TransactionList from "../../components/TransactionList/TransactionList";
 
@@ -135,14 +135,14 @@ const DashboardPage = () => {
               <Route path="home" element={<TransactionList />} />{" "}
               {/* Замість <div>Home Tab (в разработке)</div> */}
               {/* <Route path="home" element={<HomeTab />} /> */}
-              {/* <Route path="statistics" element={<StatisticsTab />} /> */}
+              <Route path="statistics" element={<StatisticsTab />} />
               {/* {isMobile && <Route path="currency" element={<CurrencyTab />} />} */}
               {/* Временные заглушки */}
               <Route path="home" element={<div>Home Tab (в разработке)</div>} />
-              <Route
+              {/* <Route
                 path="statistics"
                 element={<div>Statistics Tab (в разработке)</div>}
-              />
+              /> */}
               {isMobile && (
                 <Route
                   path="currency"
