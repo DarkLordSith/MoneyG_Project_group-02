@@ -119,3 +119,17 @@ const TransactionList = () => {
 };
 
 export default TransactionList;
+
+// import TransactionsItem from "../TransactionsItem/TransactionsItem";
+
+// const TransactionsList = ({ transactions }) => {
+//   return (
+//     <ul>
+//       {transactions.map((tx) => (
+//         <TransactionsItem key={tx.id} transaction={tx} />
+//       ))}
+//     </ul>
+//   );
+// };
+
+// export default TransactionsList;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import EditTransactionForm from "../EditTransactionForm/EditTransactionForm";
-import styles from "./ModalEditTransaction.module.css"; 
+import styles from "./ModalEditTransaction.module.css";
 
 const ModalEditTransaction = ({ onClose }) => {
   useEffect(() => {
@@ -38,8 +38,22 @@ const ModalEditTransaction = ({ onClose }) => {
         <EditTransactionForm onClose={onClose} />
       </div>
     </div>,
-    document.getElementById("modal-root") 
+    document.getElementById("modal-root")
   );
 };
 
 export default ModalEditTransaction;
+
+// import EditTransactionForm from "../EditTransactionForm/EditTransactionForm";
+
+// const ModalEditTransaction = ({ transaction, onClose }) => {
+//   return (
+//     <div onClick={onClose}>
+//       <div onClick={(e) => e.stopPropagation()}>
+//         <EditTransactionForm transaction={transaction} onClose={onClose} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ModalEditTransaction;

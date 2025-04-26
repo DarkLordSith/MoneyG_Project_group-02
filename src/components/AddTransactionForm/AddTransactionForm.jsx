@@ -52,7 +52,9 @@ const AddTransactionForm = ({ onClose }) => {
       toast.success("Транзакція додана успішно!");
       onClose();
     } catch (error) {
-      toast.error(`Помилка при додаванні: ${error.message || "Спробуйте ще раз."}`);
+      toast.error(
+        `Помилка при додаванні: ${error.message || "Спробуйте ще раз."}`
+      );
     }
   };
 
@@ -60,7 +62,13 @@ const AddTransactionForm = ({ onClose }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label>
-          <input type="radio" value="expense" {...register("type")} defaultChecked /> Витрата
+          <input
+            type="radio"
+            value="expense"
+            {...register("type")}
+            defaultChecked
+          />{" "}
+          Витрата
         </label>
         <label>
           <input type="radio" value="income" {...register("type")} /> Дохід
@@ -101,3 +109,38 @@ const AddTransactionForm = ({ onClose }) => {
 };
 
 export default AddTransactionForm;
+
+// import { useForm } from "react-hook-form";
+// import { yupResolver } from "@hookform/resolvers/yup";
+// import * as yup from "yup";
+
+// const schema = yup.object().shape({
+//   sum: yup.number().required(),
+//   date: yup.date().required(),
+//   category: yup.string().required(),
+//   comment: yup.string().required(),
+// });
+
+// const AddTransactionForm = ({ onClose }) => {
+//   const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) });
+
+//   const onSubmit = (data) => {
+//     // dispatch addTransaction
+//     onClose();
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       <input {...register("sum")} placeholder="Amount" />
+//       <input {...register("date")} type="date" />
+//       <select {...register("category")}>
+//         {/* options */}
+//       </select>
+//       <input {...register("comment")} placeholder="Comment" />
+//       <button type="submit">Add</button>
+//       <button type="button" onClick={onClose}>Cancel</button>
+//     </form>
+//   );
+// };
+
+// export default AddTransactionForm;

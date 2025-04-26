@@ -60,3 +60,17 @@ const ButtonAddTransactions = () => {
 };
 
 export default ButtonAddTransactions;
+
+// const ButtonAddTransaction = () => {
+//   const openModal = () => {
+//     console.log("Open ModalAddTransaction");
+//   };
+
+//   return (
+//     <button onClick={openModal} aria-label="Add transaction">
+//       +
+//     </button>
+//   );
+// };
+
+// export default ButtonAddTransaction;

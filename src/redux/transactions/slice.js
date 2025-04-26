@@ -49,6 +49,13 @@ const transactionsSlice = createSlice({
 
       .addCase(addTransaction.fulfilled, (state, action) => {
         state.items.push(action.payload);
+        if (action.payload.type === "income") {
+          state.totalIncome += action.payload.amount;
+          state.balance += action.payload.amount;
+        } else {
+          state.totalExpenses += action.payload.amount;
+          state.balance -= action.payload.amount;
+        }
       })
 
       .addCase(deleteTransaction.fulfilled, (state, action) => {
@@ -67,7 +74,7 @@ const transactionsSlice = createSlice({
         state.totalExpenses = action.payload.totalExpenses;
         state.balance = action.payload.balance;
       })
-      
+
       .addCase(fetchSummary.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
@@ -85,7 +92,6 @@ const transactionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-
   },
 });
 export const { setSelectedMonth, setSelectedYear } = transactionsSlice.actions;

@@ -5,7 +5,8 @@ import { setAuthToken } from "../../utils/authToken";
 
 const prepareAuthHeader = (thunkAPI) => {
   const token = thunkAPI.getState().auth.token;
-  if (token) {
+  const currentHeader = axios.defaults.headers.common.Authorization;
+  if (token && (!currentHeader || currentHeader !== `Bearer ${token}`)) {
     setAuthToken(token);
   }
 };
@@ -67,6 +68,22 @@ export const fetchSummary = createAsyncThunk(
       const response = await axios.get("/transactions/summary", {
         params: { month, year },
       });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
+    }
+  }
+);
+
+export const fetchAllCategories = createAsyncThunk(
+  "categories/fetchAll",
+  async (_, thunkAPI) => {
+    prepareAuthHeader(thunkAPI);
+    try {
+      thunkAPI.dispatch(setIsLoading(true));
+      const response = await axios.get("/transactions/categories");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
