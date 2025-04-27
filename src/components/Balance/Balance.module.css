@@ -46,6 +46,10 @@
     .balanceWrapper {
         width: 280px;
     }
+
+    .balanceContainer {
+        margin: 0px;
+    }
 }
 
 /* Адаптивні стилі для планшетів */
