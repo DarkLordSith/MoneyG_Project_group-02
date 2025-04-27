@@ -76,20 +76,57 @@ export const fetchSummary = createAsyncThunk(
   }
 );
 
-export const fetchCategories = createAsyncThunk(
-  "transactions/fetchCategories",
-  async ({ month, year }, thunkAPI) => {
-    prepareAuthHeader(thunkAPI);
-    try {
-      thunkAPI.dispatch(setIsLoading(true));
-      const response = await axios.get("/transactions/categories", {
-        params: { month, year },
-      });
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    } finally {
-      thunkAPI.dispatch(setIsLoading(false));
-    }
-  }
-);
+//export const fetchCategories = createAsyncThunk(
+//  "transactions/fetchCategories",
+//  async ({ month, year }, thunkAPI) => {
+//    prepareAuthHeader(thunkAPI);
+//    try {
+//      thunkAPI.dispatch(setIsLoading(true));
+//      const response = await axios.get("/transactions/summary", {
+//        params: { month, year },
+ //     });
+//      return response.data;
+//    } catch (error) {
+//      return thunkAPI.rejectWithValue(error.message);
+//    } finally {
+//      thunkAPI.dispatch(setIsLoading(false));
+//    }
+//  }
+//);
+
+//export const fetchCategories = createAsyncThunk(
+//  "transactions/fetchCategories",
+//  async ({ month, year }, thunkAPI) => {
+//    prepareAuthHeader(thunkAPI);
+//    try {
+//      thunkAPI.dispatch(setIsLoading(true));
+//      const response = await axios.get("/transactions/summary", {
+//        params: { month, year },
+//      });
+//
+//      const { income, expenses } = response.data;
+//
+//      const incomeCategories = income?.categories || [];
+//      const expenseCategories = expenses?.categories || [];
+//
+//      const allCategories = [...incomeCategories, ...expenseCategories];
+//
+//      // Витягуємо імена категорій
+//      const categoryNames = allCategories.map((cat) => ({
+//        id: cat.id || cat._id || cat.name, // запасний варіант для id
+//        name: cat.name,
+//      }));
+//
+//      const uniqueCategories = [
+//        ...new Map(categoryNames.map((item) => [item.name, item])).values(),
+//      ];
+//
+//      return uniqueCategories;
+//
+//    } catch (error) {
+//      return thunkAPI.rejectWithValue(error.message);
+//    } finally {
+//      thunkAPI.dispatch(setIsLoading(false));
+//    }
+//  }
+//);

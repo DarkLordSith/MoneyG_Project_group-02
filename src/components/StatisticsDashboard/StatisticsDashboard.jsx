@@ -9,6 +9,9 @@ import {
   selectSelectedMonth,
   selectSelectedYear,
 } from "../../redux/transactions/selectors";
+import { useEffect } from "react"; // <-- импорт
+
+import { fetchSummary } from "../../redux/transactions/operations";
 
 import css from './StatisticsDashboard.module.css';
 
@@ -28,6 +31,12 @@ const StatisticsDashboard = () => {
   const handleYearChange = (year) => {
     dispatch(setSelectedYear(year));
   };
+
+  useEffect(() => {
+    if (selectedYear !== null) {
+      dispatch(fetchSummary({ month: selectedMonth, year: selectedYear }));
+    }
+  }, [dispatch, selectedMonth, selectedYear]); // следим за изменениями месяца и года
 
   return (
     <div className={css.wrapper}>

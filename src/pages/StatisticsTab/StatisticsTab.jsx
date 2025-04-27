@@ -5,11 +5,11 @@ import StatisticsDashboard from "../../components/StatisticsDashboard/Statistics
 import StatisticsTable from "../../components/StatisticsTable/StatisticsTable";
 import {
   fetchSummary,
-  fetchCategories,
+//  fetchCategories,
 } from "../../redux/transactions/operations";
 import {
   selectSummary,
-  selectCategories,
+//  selectCategories,
   selectTotalIncome,
   selectTotalExpenses,
   selectBalance,
@@ -26,13 +26,13 @@ const StatisticsTab = () => {
   const dispatch = useDispatch();
 
   const summary = useSelector(selectSummary);
-  const categories = useSelector(selectCategories);
+//  const categories = useSelector(selectCategories);
   const income = useSelector(selectTotalIncome);
   const expenses = useSelector(selectTotalExpenses);
   const balance = useSelector(selectBalance);
-  const month = useSelector(selectSelectedMonth);
-  const year = useSelector(selectSelectedYear);
-  const loading = useSelector(selectIsLoading); 
+  const month = useSelector(selectSelectedMonth) ?? new Date().getMonth() + 1;
+  const year = useSelector(selectSelectedYear) ?? new Date().getFullYear();
+  const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
 
@@ -41,7 +41,7 @@ const StatisticsTab = () => {
    useEffect(() => {
     if (month !== null && year !== null) {
       dispatch(fetchSummary({ month, year }));
-      dispatch(fetchCategories({ month, year }));
+   //   dispatch(fetchCategories({ month, year }));  после проверки убрать
     }
   }, [dispatch, month, year]);
 
@@ -59,14 +59,14 @@ const StatisticsTab = () => {
         <div className={css.statisticsTab}>
            <div className={css.chartSection}>
              <h2 className={css.headerStat}>Statistics</h2>
-             <Chart summary={summary} categories={categories} balance={balance} />
+             <Chart summary={summary} balance={balance} />
              <StatisticsDashboard />
        </div>
 
   <div className={css.tableSection}>
     <StatisticsTable
       summary={summary}
-      categories={categories}
+    //  categories={categories}
       income={income}
       expenses={expenses}
     />
@@ -78,4 +78,58 @@ const StatisticsTab = () => {
 
 
 };
+  //ПОТОМ УБРАТЬ
+//const StatisticsTab = () => {
+//  const dispatch = useDispatch();
+
+//  const summary = useSelector(selectSummary);
+ // const categories = useSelector(selectCategories);
+ // const income = useSelector(selectTotalIncome);
+//  const expenses = useSelector(selectTotalExpenses);
+//  const balance = useSelector(selectBalance);
+//  const month = useSelector(selectSelectedMonth);
+//  const year = useSelector(selectSelectedYear);
+ // const loading = useSelector(selectIsLoading);
+//  const error = useSelector(selectError);
+
+//  useEffect(() => {
+ //   if (month !== null && year !== null) {
+//      dispatch(fetchSummary({ month, year }));
+//      dispatch(fetchCategories({ month, year }));
+ //   }
+//  }, [dispatch, month, year]);
+
+//  if (loading) {
+//    return <div>Loading...</div>;
+ // }
+
+ // if (error) {
+ //   return <div>Error: {error.message || "Unknown error occurred"}</div>;
+ // }
+
+//  if (!summary || !categories) {
+ //   return <div>No data available</div>;
+//  }
+
+//  return (
+//    <div className={css.statisticsTab}>
+//      <div className={css.chartSection}>
+ //       <h2 className={css.headerStat}>Statistics</h2>
+//        <Chart summary={summary} categories={categories} balance={balance} />
+//        <StatisticsDashboard income={income} expenses={expenses} balance={balance} />
+//      </div>
+//
+//      <div className={css.tableSection}>
+//        <StatisticsTable
+//          summary={summary}
+//          categories={categories}
+//          income={income}
+//          expenses={expenses}
+//        />
+//      </div>
+//    </div>
+//  );
+//};
+
+
 export default StatisticsTab;

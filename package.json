@@ -23,7 +23,7 @@
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
-    "framer-motion": "^12.7.4",
+    "framer-motion": "^12.9.2",
     "modern-normalize": "^3.0.1",
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
