@@ -1,0 +1,176 @@
+/* src/components/ModalLogOut/ModalLogOut.module.css */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoutModalContainer {
+    position: relative;
+    width: 533px;
+    height: 447px;
+    backdrop-filter: blur(100px);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    background: var(--color-form-bg);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px;
+    z-index: 21;
+    /* Добавляем фоновое изображение для десктопа и планшета */
+    background-image: url('/src/assets/dashboard_images/modallogtab.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.logoutLogoContainer {
+    display: flex;
+    width: 182px;
+    height: 75px;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 52px;
+}
+
+.logoutLogoIcon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 10px;
+}
+
+.logoutLogoText {
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--color-white);
+}
+
+.logoutConfirmMessage {
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: 18px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 52px;
+}
+
+.logoutButtonContainer {
+    display: flex;
+    width: 300px;
+    height: 50px;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.logoutButton {
+    max-width: 300px;
+    min-height: 50px;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
+    color: white;
+    font-size: 16px;
+    font-family: var(--font-main);
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.cancelLogoutButton {
+    max-width: 300px;
+    min-height: 50px;
+    border: none;
+    border-radius: 20px;
+    background-color: white;
+    color: #e04b9a;
+    font-size: 16px;
+    font-family: var(--font-main);
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cancelLogoutButton:hover {
+    transform: translateY(-2px);
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(7px);
+    background: rgba(34, 13, 91, 0.23);
+    z-index: 20;
+}
+
+/* Адаптивные стили */
+@media screen and (max-width: 767px) {
+    .logoutModalContainer {
+        padding: 24px;
+        width: 320px;
+        height: 691px;
+        backdrop-filter: blur(100px);
+        box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+        background: var(--color-form-bg);
+        /* Меняем фоновое изображение для мобильной версии */
+        background-image: url('/src/assets/dashboard_images/modallogmob.webp');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .logoutLogoContainer {
+        display: none;
+    }
+
+    .logoutLogoIcon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .logoutLogoText {
+        font-size: 20px;
+    }
+
+    .logoutConfirmMessage {
+        width: 214px;
+        height: 54px;
+        font-size: 18px;
+        margin-top: 239px;
+    }
+
+    .logoutButton,
+    .cancelLogoutButton {
+        border-radius: 20px;
+        width: 280px;
+        height: 50px;
+    }
+
+    .logoutButtonContainer {
+        display: flex;
+        width: 280px;
+        height: 50px;
+        flex-direction: column;
+        gap: 20px;
+    }
+}

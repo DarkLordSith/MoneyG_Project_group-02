@@ -1,6 +1,7 @@
 a {
   text-decoration: none;
 }
+
 .backdrop {
   position: fixed;
   top: 0px;
@@ -52,6 +53,7 @@ a {
     background-image: url("./images/bg-login-tab@1x.webp");
   }
 }
+
 @media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
   .backdrop {
     background-size: cover, 50%, 30%;
@@ -69,6 +71,7 @@ a {
     background-image: url("./images/bg-login-desk@1x.webp");
   }
 }
+
 @media only screen and (min-width: 1440px) and (min-resolution: 192dpi) {
   .backdrop {
     background-image: url("./images/bg-login-desk@2x.webp");
@@ -100,6 +103,7 @@ a {
       url("./images/login-modal-circle-desk@1x.webp");
   }
 }
+
 @media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
   .modal {
     background-image:
@@ -147,6 +151,7 @@ a {
 .input:focus {
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
+
 @media only screen and (min-width: 768px) {
   .input {
     width: 409px;
@@ -215,6 +220,7 @@ a {
   font-size: 19px;
   color: rgba(251, 251, 251, 1);
   margin: 0;
+
   img {
     width: 26px;
     height: 26px;
@@ -229,6 +235,7 @@ a {
 @media only screen and (min-width: 768px) {
   .logo {
     font-size: 26px;
+
     img {
       width: 36px;
       height: 36px;

@@ -1,6 +1,30 @@
 :root {
-  --color-primary: #4caf50;
+  /* Colors */
+  --color-accent: #ffb627;
+  --color-primary: #734aef;
+  --color-white: #fbfbfb;
+  --color-white-400: rgba(255, 255, 255, 0.4);
+  --color-white-600: rgba(255, 255, 255, 0.6);
+  --color-text: #212121;
   --color-error: #e53935;
+  --color-success: #4caf50;
+  --color-bg: #fafafa;
+  --color-form-bg: rgba(255, 255, 255, 0.1);
+  /* Transaction Card Colors */
+  --color-transaction-bg: #4a338e;
+  --color-transaction-border: #5dd5d5;
+  --color-transaction-sum: #ff868d;
+  --color-transaction-delete: #ff868d;
+
+  /* Fonts */
   --font-main: "Poppins", sans-serif;
-  --bg-main: #fafafa;
+  --font-secondary: "Circe", sans-serif;
+
+  /* Shadow */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
 }

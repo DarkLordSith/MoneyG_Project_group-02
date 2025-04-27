@@ -1,27 +1,21 @@
+// src/redux/auth/operations.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-axios.defaults.baseURL = "https://connections-api.goit.global";
-
-const setAuthToken = (token) => {
-  if (token) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-    localStorage.setItem("token", token);
-  } else {
-    delete axios.defaults.headers.common.Authorization;
-    localStorage.removeItem("token");
-  }
-};
+import axiosInstance from "../../utils/axiosInstance";
+import { persistor } from "../store";
+import { setIsLoading } from "../global/slice";
+import { setAuthToken } from "../../utils/authToken";
 
 export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await axios.post("/users/signup", credentials);
-      setAuthToken(data.token);
-      return data;
+      thunkAPI.dispatch(setIsLoading(true));
+      const { data } = await axiosInstance.post("/auth/register", credentials);
+      return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
     }
   }
 );
@@ -30,39 +24,58 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const { data } = await axios.post("/users/login", credentials);
-      setAuthToken(data.token);
-      return data;
+      thunkAPI.dispatch(setIsLoading(true));
+      const { data } = await axiosInstance.post("/auth/login", credentials);
+      const token = data.data.accessToken;
+      setAuthToken(token);
+      return { accessToken: token };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
     }
   }
 );
 
 export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await axios.post("/users/logout");
-    setAuthToken(null);
+    thunkAPI.dispatch(setIsLoading(true));
+    await axiosInstance.post("/auth/logout");
+    await persistor.purge();
     return;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.response?.data || error.message);
+  } finally {
+    thunkAPI.dispatch(setIsLoading(false));
   }
 });
 
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    let token = state.auth.token || localStorage.getItem("token");
-
-    if (!token) return thunkAPI.rejectWithValue("No token found");
-
     try {
-      setAuthToken(token);
-      const { data } = await axios.get("/users/current");
-      return data;
+      thunkAPI.dispatch(setIsLoading(true));
+      const { data } = await axiosInstance.post("/auth/refresh");
+      return data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
+    }
+  }
+);
+
+export const getCurrentUser = createAsyncThunk(
+  "auth/current",
+  async (_, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(setIsLoading(true));
+      const { data } = await axiosInstance.get("/auth/current");
+      return data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
     }
   }
 );

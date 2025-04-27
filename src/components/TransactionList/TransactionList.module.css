@@ -1,0 +1,303 @@
+/* Контейнер обгортка для журналу записів */
+.operationsPanel {
+    display: flex;
+    width: 715px;
+    max-height: calc(100dvh - 110px);
+    border-radius: var(--radius-sm);
+    padding: 10px;
+}
+
+/* Текст для системних повідомлень */
+.notificationBlock {
+    text-align: center;
+    margin-block: 24px;
+    margin-inline: auto;
+}
+
+/* Стилі для області прокрутки даних */
+.dataGrid tbody {
+    display: block;
+    inline-size: 100%;
+    max-block-size: calc(100dvh - 170px);
+    overflow-y: auto;
+}
+
+/* Вирівнювання шапки та рядків даних */
+.dataGrid thead,
+.dataGrid tbody tr {
+    display: table;
+    inline-size: 100%;
+    table-layout: fixed;
+}
+
+/* Закруглення кутів для шапки */
+.dataGrid thead {
+    border-radius: var(--radius-sm);
+}
+
+/* Зображення для порожнього стану */
+.blankStateImage {
+    inline-size: 100%;
+    block-size: auto;
+    display: flex;
+}
+
+/* Центрування графіки порожнього стану */
+.emptyScreenArt {
+    display: flex;
+    margin-inline: auto;
+    padding: 0;
+}
+
+/* Базові стилі для таблиці даних */
+.dataGrid {
+    color: var(--color-white);
+    font-weight: 600;
+    font-family: var(--font-main);
+    inline-size: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius-sm);
+}
+
+/* Стилі комірок з нижньою лінією */
+.dataGrid td {
+    border-block-end: 1px solid var(--color-white-400);
+    font-size: 0.875rem;
+}
+
+/* Фіксована шапка з фіолетовим градієнтом */
+.gridHeader {
+    position: sticky;
+    inset-block-start: 0;
+    background: color-mix(in srgb, #523b7e 60%, transparent);
+    box-shadow: 0px 4px 60px 0px rgb(0 0 0 / 0.25);
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+/* Підсвічування рядка на ховері */
+tbody tr:hover {
+    background-color: var(--color-table-hover);
+}
+
+/* Колонка для дат */
+.dateSection {
+    text-align: start;
+    padding-block: 16px;
+    padding-inline-start: 20px;
+}
+
+/* Колонка типу операції */
+.typeSection {
+    text-align: start;
+    inline-size: auto;
+}
+
+/* Секції категорії та коментаря */
+.categorySection,
+.noteSection {
+    text-align: start;
+}
+
+/* Колонка суми з правим вирівнюванням */
+.valueSection {
+    text-align: end;
+    padding-inline-end: 22px;
+}
+
+/* Приховані елементи керування */
+.hiddenControls {
+    display: none;
+}
+
+/* Кастомізація скролбара */
+.dataGrid tbody::-webkit-scrollbar {
+    inline-size: 10px;
+}
+
+.dataGrid tbody::-webkit-scrollbar-thumb {
+    background-color: var(--color-scrollbar-thumb);
+    border-radius: 4px;
+}
+
+.dataGrid tbody::-webkit-scrollbar-track {
+    background-color: var(--color-scrollbar-track);
+}
+
+/* Firefox скролбар */
+.dataGrid tbody {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+}
+
+/* Стилі картки запису */
+.recordCard {
+    background: var(--color-transaction-bg);
+    border: 2px solid var(--color-transaction-border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    color: var(--color-white);
+    font-family: var(--font-main);
+}
+
+.itemRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 12px;
+    border-block-end: 1px solid var(--color-white-400);
+}
+
+.itemRow:last-child {
+    border-block-end: none;
+}
+
+.fieldLabel {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--color-white);
+}
+
+.fieldValue {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--color-white);
+}
+
+.highlightAmount {
+    color: var(--color-transaction-sum);
+    font-weight: 600;
+}
+
+.removeAction {
+    background: var(--color-transaction-delete);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-btn);
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-main);
+}
+
+.removeAction:hover {
+    opacity: 0.9;
+}
+
+.editAction {
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-block-start: 20px;
+}
+
+/* Медіа запити */
+@media only screen and (max-width: 767px) {
+
+    /* Мобільний контейнер */
+    .operationsPanel {
+        margin-inline: auto;
+        inline-size: 280px;
+        padding: 0;
+        max-block-size: 60vh;
+        overflow-y: scroll;
+        scrollbar-width: none;
+    }
+
+    /* Блочне відображення */
+    .dataGrid,
+    .dataGrid tbody,
+    .dataGrid tr,
+    .dataGrid td {
+        display: block;
+    }
+
+    /* Скидання обмежень висоти */
+    .dataGrid tbody {
+        max-block-size: none;
+    }
+
+    /* Центрування заголовка */
+    .dataGrid thead {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+    }
+
+    /* Картки для мобільних */
+    .dataGrid tbody tr {
+        background: color-mix(in srgb, #523b7e 60%, transparent);
+        margin-block-end: 8px;
+        border-radius: var(--radius-sm);
+        position: relative;
+    }
+
+    /* Стилі комірок */
+    .dataGrid td {
+        font-size: 1rem;
+        font-weight: 400;
+        text-align: end;
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Видалення лінії у останньої комірки */
+    .dataGrid td:last-child {
+        border-block-end: none;
+    }
+
+    /* Кнопки дій */
+    .dataGrid .actionButtons {
+        border-block-end: none;
+    }
+
+    /* Додавання міток */
+    .dataGrid td::before {
+        content: attr(data-label);
+        position: absolute;
+        inset-inline-start: 6px;
+        inline-size: 45%;
+        text-align: start;
+        font-weight: bold;
+    }
+
+    /* Позиціонування кнопок */
+    .dataGrid .controlGroup {
+        position: absolute;
+        inset-block-end: 0.5rem;
+        inset-inline-end: 0.5rem;
+    }
+}
+
+/* Планшети (768px - 1279px) */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+    .operationsPanel {
+        border-radius: var(--radius-sm);
+        inline-size: 704px;
+        block-size: 56px;
+    }
+}
+
+/* Десктопи (1280px і більше) */
+@media screen and (min-width: 1280px) {
+    .operationsPanel {
+        padding: 0px;
+    }
+}

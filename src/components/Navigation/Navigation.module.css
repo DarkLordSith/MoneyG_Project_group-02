@@ -1,0 +1,112 @@
+/* Основной контейнер для навигационных элементов */
+.navList {
+    display: flex;
+    justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    gap: 32px;
+}
+
+/* Базовый стиль для контейнера иконок */
+.navIconWrapper {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+
+
+}
+
+/* Базовый стиль для иконок (мобильная версия) */
+.navIcon {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    color: rgba(255, 255, 255, 0.4);
+    transition: color 0.3s ease;
+}
+
+/* Эффект при наведении на элемент меню */
+.navItem:hover .navIconWrapper {
+    background-color: #ffffff;
+
+
+}
+
+.navItem:hover .navIcon {
+    color: #734aef;
+    /* box-shadow: 0 3px 10px 0 rgba(74, 86, 226, 0.5); */
+}
+
+/* Стили для активного элемента */
+.activeLink .navIconWrapper {
+    background-color: #ffffff;
+}
+
+.activeLink .navIcon {
+    color: #734aef;
+}
+
+.navItem:hover .navIconWrapper {
+    background-color: #ffffff;
+    box-shadow: 0 3px 10px 0 rgba(115, 74, 239, 0.3);
+}
+
+/* Стили для планшетов */
+@media screen and (min-width: 768px) {
+
+    /* Вертикальное расположение меню для планшетов */
+    .navList {
+        flex-direction: column;
+        padding-top: 40px;
+        padding-bottom: 28px;
+        gap: 12px;
+        margin-left: 16px;
+    }
+
+    /* Горизонтальное расположение иконки и текста на планшетах */
+    .navItem {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    /* Уменьшенный размер контейнера иконок на планшетах */
+    .navIconWrapper {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Уменьшенный размер иконок на планшетах */
+    .navIcon {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Стили для текста навигации */
+    .navItemText {
+        font-size: 18px;
+        padding: 0 20px;
+        font-weight: 400;
+        color: #fbfbfb;
+    }
+
+    /* Стили для активного пункта меню */
+    .activeLink .navItemText {
+        color: #fbfbfb;
+        font-weight: bold;
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Эффект при наведении на текст элемента */
+    .navItem:hover .navItemText {
+        font-weight: 700;
+        font-size: 18px;
+        color: #fbfbfb;
+    }
+}

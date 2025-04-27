@@ -6,14 +6,14 @@ import {
   MdVisibilityOff,
 } from "react-icons/md";
 import { motion } from "framer-motion";
-import { toast, Toaster } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "./images/logo.svg";
 import s from "./LoginForm.module.css";
-import { login } from "../../redux/auth/operations";
+import { login, getCurrentUser } from "../../redux/auth/operations";
 import FormButton from "../common/FormButton/FormButton";
 import clsx from "clsx";
 import * as Yup from "yup";
@@ -21,7 +21,6 @@ import * as Yup from "yup";
 const LoginForm = () => {
   const dispatch = useDispatch();
 
-  // Стейт для видимости пароля
   const [showPassword, setShowPassword] = useState(false);
   const initialValues = {
     email: "",
@@ -30,10 +29,11 @@ const LoginForm = () => {
 
   const handleSubmit = async (values, actions) => {
     try {
-      await dispatch(login(values)).unwrap(); // works with createAsyncThunk
+      await dispatch(login(values)).unwrap();
+      await dispatch(getCurrentUser()).unwrap();
       actions.resetForm();
     } catch (error) {
-      toast.error("User not found or wrong input details.");
+      toast.error(error?.message || "User not found or wrong input details.");
     }
   };
 
@@ -46,7 +46,6 @@ const LoginForm = () => {
 
   return (
     <div className={s.backdrop}>
-      <Toaster position="top-right" reverseOrder={false} />
       <motion.div
         className={s.sectionLogin}
         initial={{ opacity: 0 }}
@@ -95,7 +94,7 @@ const LoginForm = () => {
                     name="password"
                     placeholder="Password"
                     className={s.input}
-                    required
+                    // required
                   />
                   <span
                     onClick={() => setShowPassword(!showPassword)}
