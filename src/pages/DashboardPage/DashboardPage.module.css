@@ -239,6 +239,12 @@
     margin-bottom: 32px;
   }
 
+  @media (max-height: 720px) {
+    .balance {
+      margin-bottom: 0;
+    }
+  }
+
   .currency {
     display: block;
     width: 480px;
