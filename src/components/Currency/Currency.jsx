@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ClipLoader } from "react-spinners";
+import { TbFaceIdError } from "react-icons/tb";
 import css from "./Currency.module.css";
 import currencyGraph from "./images/currency-graph.svg";
 
@@ -11,10 +12,10 @@ function Currency() {
   const [currencyRates, setCurrencyRates] = useState({ usd: null, eur: null });
 
   const fetchCurrencyRates = async () => {
-    try {
-      setError(false);
-      setLoading(true);
+    setLoading(true);
+    setError(false);
 
+    try {
       const response = await axios.get(
         "https://api.monobank.ua/bank/currency",
         {
@@ -88,7 +89,7 @@ function Currency() {
           <ClipLoader
             color="#e15b64"
             loading={true}
-            size={80}
+            size="50px"
             aria-label="Loading Spinner"
             speedMultiplier={0.8}
             cssOverride={{
@@ -99,11 +100,16 @@ function Currency() {
       </div>
     );
   };
+
   return (
     <div className={css.container}>
-      {loading && <div>{loader}</div>}
-      {error && <p>{error}</p>}
-
+      {loading && loader()}
+      {!loading && error && (
+        <div className={css.errorWrap}>
+          <TbFaceIdError size="50px" />
+          <span className={css.errorMsg}>{error}</span>
+        </div>
+      )}
       {!loading && !error && isCurrencyLoaded && (
         <div className={css.componentWrapper}>
           <table className={css.table}>

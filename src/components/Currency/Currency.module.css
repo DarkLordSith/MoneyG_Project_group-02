@@ -1,23 +1,30 @@
+@import "../../styles/variables.css";
 /* General styles */
 .container {
   background-color: rgba(74, 86, 226, 0.1);
   backdrop-filter: blur(100px);
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
 .loaderBackdrop {
-  width: 480px;
-  height: 395px;
-  background: linear-gradient(220deg, #6d54eb 28.31%, #652392 66.76%);
+  background: linear-gradient(
+    220deg,
+    rgba(109, 84, 235, 0.3) 28.31%,
+    rgba(101, 35, 146, 0.3) 66.76%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 
-.spinnerWrapper {
-  width: 80px;
-  height: 80px;
+.errorWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
 }
 
 .table {
@@ -55,6 +62,28 @@
   .container {
     height: 395px;
   }
+
+  .loaderBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 480px;
+    height: 395px;
+    background: linear-gradient(
+      220deg,
+      rgba(109, 84, 235, 0.3) 28.31%,
+      rgba(101, 35, 146, 0.3) 66.76%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .errorWrap {
+    padding-top: 100px;
+  }
+
   .th {
     padding: 16px 0 16px;
     font-family: var(--second-family);
@@ -107,6 +136,16 @@
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .container {
     height: 214px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .loaderBackdrop {
+    width: 336;
+    height: 214px;
+  }
+
+  .spinnerWrapper {
+    size: 50px;
   }
 
   .th {
@@ -115,7 +154,8 @@
   }
 
   .td {
-    padding: 8px 20px 4px;
+    padding: 8px 20px 0;
+    font-family: var(--font-secondary);
   }
 
   .th:first-child,
@@ -128,17 +168,19 @@
     padding-right: 20px;
     text-align: right;
   }
-
-  .image {
-    margin-top: 4px;
-  }
 }
 
 @media screen and (max-width: 767px) {
   .container {
     width: 320px;
     height: 214px;
-    margin-top: 24px;
+    border-radius: 0 0 8px 8px;
+    /* background: rgba(255, 255, 255, 0.2); */
+  }
+
+  .loaderBackdrop {
+    width: 320;
+    height: 214px;
   }
 
   .th {
@@ -148,7 +190,7 @@
   }
 
   .td {
-    padding: 8px 20px 4px;
+    padding: 8px 20px 0px;
   }
 
   .th:first-child,
