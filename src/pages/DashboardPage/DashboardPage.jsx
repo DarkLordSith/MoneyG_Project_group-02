@@ -141,7 +141,23 @@ const DashboardPage = () => {
               <Route path="home" element={<TransactionList />} />{" "}
               {/* TransactionList Замість <div>Home Tab (он в разработке)</div> */}
               <Route path="statistics" element={<StatisticsTab />} />
-              {isMobile && <Route path="currency" element={<CurrencyTab />} />}
+<<<<<<< HEAD
+              {/* {isMobile && <Route path="currency" element={<CurrencyTab />} />} */}
+              {/* Временные заглушки */}
+              <Route path="home" element={<div>Home Tab (в разработке)</div>} />
+              {/* <Route
+                path="statistics"
+                element={<div>Statistics Tab (в разработке)</div>}
+              /> */}
+              {isMobile && <Route path="currency" element={<Currency />} />}
+=======
+              {isMobile && (
+                <Route
+                  path="currency"
+                  element={<div>Currency Tab (в разработке)</div>}
+                />
+              )}
+>>>>>>> 3bbc3be22b747e563738b2076f8f165e4cf897fa
             </Routes>
           </div>
         </div>

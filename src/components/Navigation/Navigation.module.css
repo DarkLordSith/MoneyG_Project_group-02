@@ -1,17 +1,32 @@
 .navList {
+<<<<<<< HEAD
   display: flex;
   justify-content: center;
   gap: 32px;
+=======
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+>>>>>>> 3bbc3be22b747e563738b2076f8f165e4cf897fa
 }
 
 .navIconWrapper {
+<<<<<<< HEAD
   width: 38px;
   height: 38px;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  transition: all 0.3s ease;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+=======
+    width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: all 0.3s ease;
 }
 
 .navIconWrapper::before {
@@ -25,25 +40,48 @@
 }
 
 .navIconWrapper::after {
-  content: "";
-  position: absolute;
-  width: 44px;
-  height: 44px;
-  border-radius: 6px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  box-shadow: 0 3px 10px 0 rgba(74, 86, 226, 0.5);
-  pointer-events: none;
+    content: '';
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    box-shadow: 0 3px 10px 0 rgba(74, 86, 226, 0.5);
+    pointer-events: none;
+>>>>>>> 3bbc3be22b747e563738b2076f8f165e4cf897fa
 }
 
 .navIcon {
+<<<<<<< HEAD
   width: 38px;
   height: 38px;
   object-fit: contain;
   color: rgba(255, 255, 255, 0.4);
-  transition: color 0.15s ease;
-  position: relative;
-  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+/* Эффект при наведении на элемент меню */
+.navItem:hover .navIconWrapper {
+  background-color: #ffffff;
+}
+
+.navItem:hover .navIcon {
+  color: #734aef;
+  /* box-shadow: 0 3px 10px 0 rgba(74, 86, 226, 0.5); */
+}
+
+/* Стили для активного элемента */
+.activeLink .navIconWrapper {
+  background-color: #ffffff;
+=======
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    color: rgba(255, 255, 255, 0.4);
+    transition: color 0.15s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .navItem:hover .navIconWrapper::before {
@@ -69,28 +107,89 @@
 }
 
 .activeLink .navIconWrapper::before {
-  background-color: #ffffff;
+    background-color: #ffffff;
+>>>>>>> 3bbc3be22b747e563738b2076f8f165e4cf897fa
 }
 
 .activeLink .navIcon {
   color: #734aef;
 }
 
+<<<<<<< HEAD
+.navItem:hover .navIconWrapper {
+  background-color: #ffffff;
+  box-shadow: 0 3px 10px 0 rgba(115, 74, 239, 0.3);
+=======
 @media screen and (max-width: 767px) {
-  .navList {
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
+    .navList {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+>>>>>>> 3bbc3be22b747e563738b2076f8f165e4cf897fa
 }
 
 @media screen and (min-width: 768px) {
+<<<<<<< HEAD
+  /* Вертикальное расположение меню для планшетов */
   .navList {
     flex-direction: column;
     padding-top: 40px;
     padding-bottom: 28px;
     gap: 12px;
-    margin-left: 16px;
+    /* margin-left: 16px; */
   }
+
+  /* Горизонтальное расположение иконки и текста на планшетах */
+  .navItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* Уменьшенный размер контейнера иконок на планшетах */
+  .navIconWrapper {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Уменьшенный размер иконок на планшетах */
+  .navIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Стили для текста навигации */
+  .navItemText {
+    font-size: 18px;
+    padding: 0 20px;
+    font-weight: 400;
+    color: #fbfbfb;
+  }
+
+  /* Стили для активного пункта меню */
+  .activeLink .navItemText {
+    color: #fbfbfb;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Эффект при наведении на текст элемента */
+  .navItem:hover .navItemText {
+    font-weight: 700;
+    font-size: 18px;
+    color: #fbfbfb;
+  }
+}
+=======
+    .navList {
+        flex-direction: column;
+        padding-top: 40px;
+        padding-bottom: 28px;
+        gap: 12px;
+        margin-left: 16px;
+    }
 
   .navItem {
     display: flex;
@@ -191,3 +290,4 @@
     opacity: 0.9;
   }
 }
+>>>>>>> 3bbc3be22b747e563738b2076f8f165e4cf897fa
