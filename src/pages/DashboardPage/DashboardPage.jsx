@@ -21,6 +21,7 @@ import TransactionList from "../../components/TransactionList/TransactionList";
 import { logout } from "../../redux/auth/operations";
 
 import styles from "./DashboardPage.module.css";
+import CurrencyTab from "../CurrencyTab/CurrencyTab";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -138,17 +139,9 @@ const DashboardPage = () => {
             <Routes>
               <Route index element={<Navigate to="home" />} />
               <Route path="home" element={<TransactionList />} />{" "}
-              {/* Замість <div>Home Tab (в разработке)</div> */}
-              {/* <Route path="home" element={<HomeTab />} /> */}
+              {/* TransactionList Замість <div>Home Tab (он в разработке)</div> */}
               <Route path="statistics" element={<StatisticsTab />} />
-              {/* {isMobile && <Route path="currency" element={<CurrencyTab />} />} */}
-              {/* Временные заглушки */}
-              <Route path="home" element={<div>Home Tab (в разработке)</div>} />
-              {/* <Route
-                path="statistics"
-                element={<div>Statistics Tab (в разработке)</div>}
-              /> */}
-              {isMobile && <Route path="currency" element={<Currency />} />}
+              {isMobile && <Route path="currency" element={<CurrencyTab />} />}
             </Routes>
           </div>
         </div>

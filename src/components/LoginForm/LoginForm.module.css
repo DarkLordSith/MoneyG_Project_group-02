@@ -10,7 +10,7 @@ a {
   background-image:
     url("./images/login-modal-mob@1x.webp"),
     url("./images/login-modal-circle-mob@1x.webp");
-  background-size: 50%, 30%;
+  background-size: 100%;
   background-position:
     right bottom,
     left top;
@@ -38,6 +38,7 @@ a {
 
 @media only screen and (min-resolution: 192dpi) {
   .backdrop {
+    background-size: 100% 100%;
     background-image:
       url("./images/login-modal-mob@2x.webp"),
       url("./images/login-modal-circle-mob@2x.webp");
@@ -46,7 +47,8 @@ a {
 
 @media only screen and (min-width: 768px) {
   .backdrop {
-    background-size: 100% 100%;
+    background-size: cover, 50%, 30%;
+    background-position: left bottom;
     background-color: #101010;
     background-image: url("./images/bg-login-tab@1x.webp");
   }
@@ -54,12 +56,18 @@ a {
 
 @media only screen and (min-width: 768px) and (min-resolution: 192dpi) {
   .backdrop {
+    background-size: cover, 50%, 30%;
+    background-position: left bottom;
     background-image: url("./images/bg-login-tab@2x.webp");
   }
 }
 
 @media only screen and (min-width: 1440px) {
   .backdrop {
+    background-size: cover;
+    background-position:
+      right bottom,
+      left top;
     background-image: url("./images/bg-login-desk@1x.webp");
   }
 }
@@ -163,7 +171,7 @@ a {
 
 .eyeIcon {
   position: absolute;
-  top: 50%;
+  top: 70%;
   right: 10px;
   transform: translateY(-50%);
   cursor: pointer;

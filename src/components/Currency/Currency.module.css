@@ -27,29 +27,9 @@
   padding-top: 50px;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
 .componentWrapper {
   height: 100%;
   overflow: hidden;
-}
-
-.mainRow {
-  text-align: left;
-}
-
-.th {
-  font-weight: 600;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.td {
-  text-align: center;
-  font-weight: 400;
 }
 
 .image {
@@ -60,7 +40,7 @@
 /* Desktop styles */
 @media screen and (min-width: 1280px) {
   .container {
-    height: 395px;
+    height: 380px;
   }
 
   .loaderBackdrop {
@@ -82,25 +62,6 @@
 
   .errorWrap {
     padding-top: 100px;
-  }
-
-  .th {
-    padding: 16px 0 16px;
-    font-family: var(--second-family);
-  }
-
-  .td {
-    padding-top: 24px;
-  }
-
-  .th:first-child,
-  .td:first-child {
-    padding-left: 62px;
-  }
-  .th:last-child,
-  .td:last-child {
-    text-align: right;
-    padding-right: 130px;
   }
 
   .graphicHolder {
@@ -147,27 +108,6 @@
   .spinnerWrapper {
     size: 50px;
   }
-
-  .th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-
-  .td {
-    padding: 8px 20px 0;
-    font-family: var(--font-secondary);
-  }
-
-  .th:first-child,
-  .td:first-child {
-    padding-left: 20px;
-    text-align: left;
-  }
-  .th:last-child,
-  .td:last-child {
-    padding-right: 20px;
-    text-align: right;
-  }
 }
 
 @media screen and (max-width: 767px) {
@@ -181,26 +121,5 @@
   .loaderBackdrop {
     width: 320;
     height: 214px;
-  }
-
-  .th {
-    padding-top: 13px;
-    padding-bottom: 13px;
-    font-family: var(--font-family);
-  }
-
-  .td {
-    padding: 8px 20px 0px;
-  }
-
-  .th:first-child,
-  .td:first-child {
-    padding-left: 20px;
-    text-align: left;
-  }
-  .th:last-child,
-  .td:last-child {
-    padding-right: 20px;
-    text-align: right;
   }
 }
