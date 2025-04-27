@@ -6,7 +6,7 @@ import {
   MdVisibilityOff,
 } from "react-icons/md";
 import { motion } from "framer-motion";
-import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast"; // Toaster не импортируем!
 
 import { useDispatch } from "react-redux";
 import { useState } from "react";
@@ -33,7 +33,8 @@ const LoginForm = () => {
       await dispatch(getCurrentUser()).unwrap();
       actions.resetForm();
     } catch (error) {
-      toast.error(error?.message || "User not found or wrong input details.");
+      console.error(error);
+      toast.error("User not found or input data incorrect. Please try again!");
     }
   };
 
@@ -55,12 +56,14 @@ const LoginForm = () => {
         <div className={s.modal}>
           <div className={clsx(s.logo)}>
             <img
-              // style={{ width, height, fontSize }}
               src={logo}
               alt="Money Guard Logo"
             />
             <h2 className={s.textLogo}>Money Guard</h2>
           </div>
+
+          {/* УБИРАЕМ тут <Toaster /> */}
+
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -94,7 +97,6 @@ const LoginForm = () => {
                     name="password"
                     placeholder="Password"
                     className={s.input}
-                    // required
                   />
                   <span
                     onClick={() => setShowPassword(!showPassword)}
