@@ -1,8 +1,6 @@
 .navList {
     display: flex;
     justify-content: center;
-    padding-top: 12px;
-    padding-bottom: 12px;
     gap: 32px;
 }
 
@@ -78,7 +76,13 @@
     color: #734aef;
 }
 
-/* Стили для планшетов */
+@media screen and (max-width: 767px) {
+    .navList {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+}
+
 @media screen and (min-width: 768px) {
     .navList {
         flex-direction: column;
@@ -186,4 +190,6 @@
     .navItemText {
         opacity: 0.9;
     }
+
+
 }
