@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { selectToken, selectIsRefreshing } from "./redux/auth/selectors";
 import { refreshUser, getCurrentUser } from "./redux/auth/operations";
-import { getAuthToken } from "./utils/authToken";
+import { getAuthToken, setAuthToken } from "./utils/authToken";
 
 import Layout from "./components/Layout/Layout";
 import Loader from "./components/Loader/Loader";
@@ -22,13 +22,13 @@ const App = () => {
 
   useEffect(() => {
     const verifyAuth = async () => {
-      const token = getAuthToken();
+      const token = setAuthToken();
 
       if (!token) {
         console.log("Нет токена — не отправляем refresh и current");
         return;
       }
-
+      selectToken(token);
       try {
         await dispatch(refreshUser()).unwrap();
         await dispatch(getCurrentUser()).unwrap();

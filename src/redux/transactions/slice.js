@@ -9,11 +9,13 @@ import {
 
 const initialState = {
   items: [],
-  summary: [],
-//  categories: [],
-  totalIncome: 0,
-  totalExpenses: 0,
-  balance: 0,
+  summary: {
+    income: {}, 
+    expense: {}, 
+    totalIncome: 0,
+    totalExpense: 0,
+    balance: 0,
+  },
   isLoading: false,
   error: null,
   selectedMonth: null,
@@ -62,29 +64,20 @@ const transactionsSlice = createSlice({
 
       .addCase(fetchSummary.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.summary = action.payload.categories;
-        state.totalIncome = action.payload.totalIncome;
-        state.totalExpenses = action.payload.totalExpenses;
-        state.balance = action.payload.balance;
+        const { income, expense, totalIncome, totalExpense, balance } = action.payload;
+        state.summary = {
+          income: income || {},
+          expense: expense || {},
+          totalIncome,
+          totalExpense,
+          balance,
+        };
       })
       
       .addCase(fetchSummary.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-
-  //    .addCase(fetchCategories.pending, (state) => {
-  //      state.isLoading = true;
-  //      state.error = null;
-  //    })
-  //    .addCase(fetchCategories.fulfilled, (state, action) => {
-  //      state.isLoading = false;
-  //      state.categories = action.payload;
-  //    })
-  //    .addCase(fetchCategories.rejected, (state, action) => {
-  //      state.isLoading = false;
-  //      state.error = action.payload;
-  //    });
 
   },
 });

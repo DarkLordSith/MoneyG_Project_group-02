@@ -3,7 +3,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
 import { persistor } from "../store";
 import { setIsLoading } from "../global/slice";
-import { setAuthToken } from "../../utils/authToken";
+import { setAuthToken, saveAuthToken} from "../../utils/authToken";
+
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -27,6 +28,7 @@ export const login = createAsyncThunk(
       thunkAPI.dispatch(setIsLoading(true));
       const { data } = await axiosInstance.post("/auth/login", credentials);
       const token = data.data.accessToken;
+      saveAuthToken(token);
       setAuthToken(token);
       return { accessToken: token };
     } catch (error) {
