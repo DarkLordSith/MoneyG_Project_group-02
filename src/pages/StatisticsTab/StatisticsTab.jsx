@@ -27,6 +27,12 @@ const fakeData = {
       { name: 'Food', amount: 500 },
       { name: 'Transport', amount: 200 },
       { name: 'Entertainment', amount: 150 },
+      { name: 'Products', amount: 500 },
+      { name: 'Car', amount: 200 },
+      { name: 'Child care', amount: 150 },
+      { name: 'Food', amount: 500 },
+      { name: 'Transport', amount: 200 },
+      { name: 'Entertainment', amount: 150 },
     ],
   },
 };

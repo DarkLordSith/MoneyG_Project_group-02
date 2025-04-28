@@ -22,7 +22,7 @@ const shadowPlugin = {
 };
 
 const Chart = ({ summary, income, expenses }) => {
-  const [expensesCategories, setExpensesCategories] = useState([500, 200, 150]);
+  const [expensesCategories, setExpensesCategories] = useState([500, 200, 150, 200, 300, 100, 270, 320, 400]);
 
   useEffect(() => {
     if (summary?.expenses?.categories) {
