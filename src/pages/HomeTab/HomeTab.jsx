@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTransactions, fetchCategories } from "../../redux/transactions/operations";
+import {
+  fetchTransactions,
+  fetchCategories,
+} from "../../redux/transactions/operations";
 import { transactionsSelectors } from "../../redux/transactions/selectors";
-import { selectIsLoading } from "../../redux/global/selectors";
-import TransactionsList from "../../components/TransactionsList/TransactionsList";
+import { selectIsLoading } from "../../redux/global/slice";
+import TransactionsList from "../../components/TransactionList/TransactionList";
 import Loader from "../../components/Loader/Loader";
-import s from "./HomeTab.module.css";
+// import s from "./HomeTab.module.css";
 
 const HomeTab = () => {
   const dispatch = useDispatch();
@@ -46,7 +49,6 @@ export default HomeTab;
 - Якщо немає — показуємо заглушку
 - Важливо: верстку моб/планшет/десктоп налаштовуємо через CSS у HomeTab.module.css
 */
-
 
 // import { useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";

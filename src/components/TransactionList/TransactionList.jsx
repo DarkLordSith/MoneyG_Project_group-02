@@ -5,7 +5,7 @@ import TransactionItem from "../TransactionItem/TransactionItem";
 import useMedia from "../../hooks/useMedia";
 import s from "./TransactionList.module.css";
 import FormButton from "../common/FormButton/FormButton";
-import Loader from "../common/Loader/Loader";  // Підключення Loader для стану завантаження
+import Loader from "../Loader/Loader"; // Підключення Loader для стану завантаження
 
 const TransactionList = () => {
   const dispatch = useDispatch();
@@ -18,10 +18,15 @@ const TransactionList = () => {
   // Фільтрація за типом транзакцій
   const [filter, setFilter] = useState("ALL");
 
-  const filteredOperations = transactions.filter((operation) => {
-    if (filter === "ALL") return true;
-    return operation.type === filter;
-  }).sort((prev, next) => new Date(prev.transactionDate) - new Date(next.transactionDate));
+  const filteredOperations = transactions
+    .filter((operation) => {
+      if (filter === "ALL") return true;
+      return operation.type === filter;
+    })
+    .sort(
+      (prev, next) =>
+        new Date(prev.transactionDate) - new Date(next.transactionDate)
+    );
 
   // Адаптивний хук
   const { isMobile } = useMedia();

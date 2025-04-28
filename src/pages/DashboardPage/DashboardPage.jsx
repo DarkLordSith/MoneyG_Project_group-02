@@ -12,7 +12,7 @@ import Navigation from "../../components/Navigation/Navigation";
 import Balance from "../../components/Balance/Balance";
 import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
 import Currency from "../../components/Currency/Currency";
-import HomeTab from "../../components/HomeTab/HomeTab";
+import HomeTab from "../HomeTab/HomeTab";
 import StatisticsTab from "../StatisticsTab/StatisticsTab";
 // import CurrencyTab from "../../components/CurrencyTab/CurrencyTab";
 // import TransactionList from "../../components/TransactionList/TransactionList";
