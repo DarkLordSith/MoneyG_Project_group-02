@@ -1,5 +1,11 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { TbFaceIdError } from "react-icons/tb";
+import { ClipLoader } from "react-spinners";
+import axios from "axios";
+import CurrencyChart from "../CurrencyChart/CurrencyChart";
+import currencyGraph from "./images/currency-graph.svg";
+import css from "./Currency.module.css";
 
 function Currency() {
   const [loading, setLoading] = useState(false);
@@ -7,11 +13,16 @@ function Currency() {
   const [currencyRates, setCurrencyRates] = useState({ usd: null, eur: null });
 
   const fetchCurrencyRates = async () => {
-    try {
-      setError(false);
-      setLoading(true);
+    setLoading(true);
+    setError(null);
 
-      const response = await axios.get("https://api.monobank.ua/bank/currency");
+    try {
+      const response = await axios.get(
+        "https://api.monobank.ua/bank/currency",
+        {
+          withCredentials: false,
+        }
+      );
       const usdCurrency = response.data.find(
         (item) => item.currencyCodeA === 840 && item.currencyCodeB === 980
       );
@@ -33,21 +44,21 @@ function Currency() {
         JSON.stringify({
           usd: usdCurrency,
           eur: eurCurrency,
-          date: Math.min(usdCurrency.date, eurCurrency.date),
+          fetchTime: Date.now(),
         })
       );
     } catch {
-      setError("Failed to load currency rates");
+      setError("Too many requests, please try again later.");
     } finally {
       setLoading(false);
     }
   };
 
   const isCurrencyFresh = (savedData) => {
-    const oneHour = 60 * 60;
-    const currentTime = Date.now() / 1000;
+    const oneHour = 60 * 60 * 1000;
+    const currentTime = Date.now();
     const parsedData = JSON.parse(savedData);
-    return currentTime - parsedData.date < oneHour;
+    return currentTime - parsedData.fetchTime < oneHour;
   };
 
   useEffect(() => {
@@ -60,42 +71,68 @@ function Currency() {
         usd: parsedCurrencyRates.usd,
         eur: parsedCurrencyRates.eur,
       });
-      setError(false);
-      return;
+      setError(null);
+    } else {
+      fetchCurrencyRates();
     }
-
-    fetchCurrencyRates();
   }, []);
 
   const isCurrencyLoaded = currencyRates?.usd && currencyRates?.eur;
 
-  return (
-    <div>
-      {loading && <p>Loading currency rates...</p>}
-      {error && <p>{error}</p>}
+  const isDesktop = useMediaQuery({ minWidth: 1280 });
 
+  // Loader for currency
+  const loader = () => {
+    return (
+      <div className={css.loaderBackdrop}>
+        <div className={css.spinnerWrapper}>
+          <ClipLoader
+            color="#e15b64"
+            loading={true}
+            size="50px"
+            aria-label="Loading Spinner"
+            speedMultiplier={0.8}
+            cssOverride={{
+              borderWidth: "10px",
+            }}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className={css.container}>
+      {loading && loader()}
+      {!loading && error && (
+        <div className={css.errorWrap}>
+          <TbFaceIdError size="50px" />
+          <span className={css.errorMsg}>{error}</span>
+        </div>
+      )}
       {!loading && !error && isCurrencyLoaded && (
-        <table>
-          <thead>
-            <tr>
-              <th>Currency</th>
-              <th>Purchase</th>
-              <th>Sale</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>USD</td>
-              <td>{currencyRates.usd?.rateBuy || "-"}</td>
-              <td>{currencyRates.usd?.rateSell || "-"}</td>
-            </tr>
-            <tr>
-              <td>EUR</td>
-              <td>{currencyRates.eur?.rateBuy || "-"}</td>
-              <td>{currencyRates.eur?.rateSell || "-"}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className={css.componentWrapper}>
+          <CurrencyChart currencyRates={currencyRates} />
+          <div className={css.graphicHolder}>
+            <div className={css.graphic}>
+              {isDesktop && (
+                <>
+                  <p className={`${css.rate} ${css.usdRate}`}>
+                    {currencyRates.usd?.rateBuy.toFixed(2) || "-"}
+                  </p>
+                  <p className={`${css.rate} ${css.eurRate}`}>
+                    {currencyRates.eur?.rateBuy.toFixed(2) || "-"}
+                  </p>
+                </>
+              )}
+              <img
+                className={css.image}
+                src={currencyGraph}
+                alt="Currency graphic"
+              />
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

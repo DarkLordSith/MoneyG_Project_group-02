@@ -1,0 +1,125 @@
+@import "../../styles/variables.css";
+/* General styles */
+.container {
+  background-color: rgba(74, 86, 226, 0.1);
+  backdrop-filter: blur(100px);
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.loaderBackdrop {
+  background: linear-gradient(
+    220deg,
+    rgba(109, 84, 235, 0.3) 28.31%,
+    rgba(101, 35, 146, 0.3) 66.76%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.errorWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.componentWrapper {
+  height: 100%;
+  overflow: hidden;
+}
+
+.image {
+  display: block;
+  width: 100%;
+}
+
+/* Desktop styles */
+@media screen and (min-width: 1280px) {
+  .container {
+    height: 380px;
+  }
+
+  .loaderBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 480px;
+    height: 395px;
+    background: linear-gradient(
+      220deg,
+      rgba(109, 84, 235, 0.3) 28.31%,
+      rgba(101, 35, 146, 0.3) 66.76%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .errorWrap {
+    padding-top: 100px;
+  }
+
+  .graphicHolder {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .graphic {
+    position: relative;
+  }
+
+  .rate {
+    position: absolute;
+    font-weight: 400;
+    font-size: 12px;
+    color: #ff868d;
+  }
+
+  .usdRate {
+    top: 5px;
+    left: 47px;
+  }
+  .eurRate {
+    top: -30px;
+    right: 96px;
+  }
+}
+
+/* Tablet styles */
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .container {
+    height: 214px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .loaderBackdrop {
+    width: 336;
+    height: 214px;
+  }
+
+  .spinnerWrapper {
+    size: 50px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .container {
+    width: 320px;
+    height: 214px;
+    border-radius: 0 0 8px 8px;
+    /* background: rgba(255, 255, 255, 0.2); */
+  }
+
+  .loaderBackdrop {
+    width: 320;
+    height: 214px;
+  }
+}

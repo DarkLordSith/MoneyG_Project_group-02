@@ -2,238 +2,238 @@
 
 /* Основной контейнер */
 .operationsPanel {
-    width: 100%;
-    max-width: 715px;
-    max-height: calc(100dvh - 110px);
-    margin: 0 auto;
+  width: 100%;
+  max-width: 715px;
+  max-height: calc(100dvh - 110px);
+  margin: 0 auto;
 }
 
 /* Стили таблицы */
 .dataGrid {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    color: var(--color-white);
-    font-family: var(--font-main);
-    border-radius: 8px;
-    overflow: hidden;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: var(--color-white);
+  font-family: var(--font-main);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 /* Заголовок таблицы */
 .gridHeader {
-    border-radius: 8px;
-    width: 704px;
-    height: 56px;
-    -webkit-backdrop-filter: blur(100px);
-    backdrop-filter: blur(100px);
-    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
-    background: rgba(82, 59, 126, 0.6);
+  border-radius: 8px;
+  width: 704px;
+  height: 56px;
+  -webkit-backdrop-filter: blur(100px);
+  backdrop-filter: blur(100px);
+  box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+  background: rgba(82, 59, 126, 0.6);
 }
 
 .headRow {
-    width: 100%;
+  width: 100%;
 }
 
 .gridHeader th {
-    padding: 16px;
-    text-align: left;
-    font-weight: 600;
-    font-size: 16px;
-    color: #fbfbfb;
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fbfbfb;
 }
 
 /* Скругление углов заголовка */
 .gridHeader th:first-child {
-    border-top-left-radius: 8px;
+  border-top-left-radius: 8px;
 }
 
 .gridHeader th:last-child {
-    border-top-right-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 /* Додати нижні заокруглення, якщо треба */
 .gridHeader tr:last-child th:first-child {
-    border-bottom-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
 .gridHeader tr:last-child th:last-child {
-    border-bottom-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 /* Стили колонок */
 .dateSection {
-    width: 15%;
-    min-width: 80px;
+  width: 15%;
+  min-width: 80px;
 }
 
 .typeSection {
-    width: 8%;
-    min-width: 50px;
-    text-align: center;
+  width: 8%;
+  min-width: 50px;
+  text-align: center;
 }
 
 .categorySection {
-    width: 20%;
-    min-width: 100px;
+  width: 20%;
+  min-width: 100px;
 }
 
 .noteSection {
-    width: 35%;
-    min-width: 150px;
+  width: 35%;
+  min-width: 150px;
 }
 
 .valueSection {
-    width: 12%;
-    min-width: 80px;
-    text-align: right;
+  width: 12%;
+  min-width: 80px;
+  text-align: right;
 }
 
 .controlsSection {
-    width: 10%;
-    min-width: 120px;
-    text-align: center;
+  width: 10%;
+  min-width: 120px;
+  text-align: center;
 }
 
 .hiddenControls {
-    display: none;
+  display: none;
 }
 
 /* Тело таблицы */
 .gridBody {
-    width: 100%;
+  width: 100%;
 }
 
 .gridBody tr {
-    position: relative;
+  position: relative;
 }
 
 /* Добавляем линии только для десктопа и планшета */
 @media screen and (min-width: 768px) {
-    .gridHeader th:first-child {
-        border-top-left-radius: 8px;
-    }
+  .gridHeader th:first-child {
+    border-top-left-radius: 8px;
+  }
 
-    .gridHeader th:last-child {
-        border-top-right-radius: 8px;
-    }
+  .gridHeader th:last-child {
+    border-top-right-radius: 8px;
+  }
 
-    .gridHeader tr:last-child th:first-child {
-        border-bottom-left-radius: 8px;
-    }
+  .gridHeader tr:last-child th:first-child {
+    border-bottom-left-radius: 8px;
+  }
 
-    .gridHeader tr:last-child th:last-child {
-        border-bottom-right-radius: 8px;
-    }
+  .gridHeader tr:last-child th:last-child {
+    border-bottom-right-radius: 8px;
+  }
 
-    .operationsPanel {
-        width: 100%;
-        max-width: 715px;
-        max-height: calc(100dvh - 110px);
-        margin: 0 auto;
-    }
+  .operationsPanel {
+    width: 100%;
+    max-width: 715px;
+    max-height: calc(100dvh - 110px);
+    margin: 0 auto;
+  }
 
-    .gridBody tr:after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 10px;
-        right: 10px;
-        height: 1px;
-        background-color: rgba(255, 255, 255, 0.41);
-    }
+  .gridBody tr:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.41);
+  }
 
-    /* Убираем нижнюю линию у последнего элемента */
-    .gridBody tr:last-child:after {
-        display: none;
-    }
+  /* Убираем нижнюю линию у последнего элемента */
+  .gridBody tr:last-child:after {
+    display: none;
+  }
 }
 
 .gridBody tr:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .gridBody td {
-    padding: 12px 16px;
-    font-size: 0.875rem;
-    vertical-align: middle;
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  vertical-align: middle;
 }
 
 /* Контейнер для пустого состояния */
 .emptyContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding: 2rem;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
 }
 
 /* Мобильные стили */
 @media screen and (max-width: 767px) {
-    .operationsPanel {
-        width: 280px;
-        padding: 0;
-        max-height: 60vh;
-        overflow-y: scroll;
-        scrollbar-width: none;
-    }
+  .operationsPanel {
+    width: 280px;
+    padding: 0;
+    max-height: 60vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
 
-    .operationsPanel::-webkit-scrollbar {
-        display: none;
-    }
+  .operationsPanel::-webkit-scrollbar {
+    display: none;
+  }
 
-    .dataGrid {
-        border-radius: 0;
-        background: transparent;
-    }
+  .dataGrid {
+    border-radius: 0;
+    background: transparent;
+  }
 
-    .gridHeader {
-        display: none;
-    }
+  .gridHeader {
+    display: none;
+  }
 
-    .gridBody {
-        display: block;
-        max-height: none;
-        overflow: visible;
-    }
+  .gridBody {
+    display: block;
+    max-height: none;
+    overflow: visible;
+  }
 
-    .gridBody tr {
-        display: block;
-        margin-bottom: 8px;
-        border-radius: 10px;
-    }
+  .gridBody tr {
+    display: block;
+    margin-bottom: 8px;
+    border-radius: 10px;
+  }
 
-    .gridBody tr:after {
-        display: none;
-    }
+  .gridBody tr:after {
+    display: none;
+  }
 
-    .gridBody td {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.41);
-    }
+  .gridBody td {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.41);
+  }
 
-    .gridBody td:last-child {
-        border-bottom: none;
-    }
+  .gridBody td:last-child {
+    border-bottom: none;
+  }
 }
 
 /* Кастомизация скроллбара */
 .gridBody::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 .gridBody::-webkit-scrollbar-thumb {
-    background-color: var(--color-scrollbar-thumb);
-    border-radius: 4px;
+  background-color: var(--color-scrollbar-thumb);
+  border-radius: 4px;
 }
 
 .gridBody::-webkit-scrollbar-track {
-    background-color: var(--color-scrollbar-track);
+  background-color: var(--color-scrollbar-track);
 }
 
 /* Firefox скроллбар */
 .gridBody {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-track);
 }

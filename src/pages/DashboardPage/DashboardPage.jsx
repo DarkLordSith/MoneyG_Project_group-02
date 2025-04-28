@@ -1,7 +1,7 @@
 // DashboardPage.jsx;
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { useMediaQuery } from "react-responsive";
 
@@ -21,6 +21,7 @@ import StatisticsTab from "../StatisticsTab/StatisticsTab";
 import { logout } from "../../redux/auth/operations";
 
 import styles from "./DashboardPage.module.css";
+import CurrencyTab from "../CurrencyTab/CurrencyTab";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,9 @@ const DashboardPage = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 1280 });
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
+
+  // Зчитуємо шлях для рендерингу компоненту Balance в моб версії
+  const location = useLocation();
 
   useEffect(() => {
     if (isLoggedIn && token) {
@@ -84,9 +88,11 @@ const DashboardPage = () => {
               <div className={styles.navigation}>
                 <Navigation />
               </div>
-              <div className={styles.balance}>
-                <Balance />
-              </div>
+              {location.pathname === "/dashboard/home" && (
+                <div className={styles.balance}>
+                  <Balance />
+                </div>
+              )}
             </div>
           )}
 
@@ -136,19 +142,7 @@ const DashboardPage = () => {
               {/* Замість <div>Home Tab (в разработке)</div> */}
               <Route path="home" element={<HomeTab />} />
               <Route path="statistics" element={<StatisticsTab />} />
-              {/* {isMobile && <Route path="currency" element={<CurrencyTab />} />} */}
-              {/* Временные заглушки */}
-              <Route path="home" element={<div>Home Tab (в разработке)</div>} />
-              {/* <Route
-                path="statistics"
-                element={<div>Statistics Tab (в разработке)</div>}
-              /> */}
-              {isMobile && (
-                <Route
-                  path="currency"
-                  element={<div>Currency Tab (в разработке)</div>}
-                />
-              )}
+              {isMobile && <Route path="currency" element={<CurrencyTab />} />}
             </Routes>
           </div>
         </div>

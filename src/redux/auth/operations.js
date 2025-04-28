@@ -1,18 +1,16 @@
+// src/redux/auth/operations.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
+import { persistor } from "../store";
 import { setIsLoading } from "../global/slice";
-import { setAuthToken, getAuthToken } from "../../utils/authToken";
-
-axios.defaults.baseURL = "https://money-guard-backend-lnfk.onrender.com";
-axios.defaults.withCredentials = true;
+import { setAuthToken } from "../../utils/authToken";
 
 export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      const { data } = await axios.post("/auth/register", credentials);
-      setAuthToken(data.data.accessToken);
+      const { data } = await axiosInstance.post("/auth/register", credentials);
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
@@ -27,9 +25,10 @@ export const login = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      const { data } = await axios.post("/auth/login", credentials);
-      setAuthToken(data.data.accessToken);
-      return data;
+      const { data } = await axiosInstance.post("/auth/login", credentials);
+      const token = data.data.accessToken;
+      setAuthToken(token);
+      return { accessToken: token };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     } finally {
@@ -38,36 +37,28 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk("/auth/logout", async (_, thunkAPI) => {
+export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     thunkAPI.dispatch(setIsLoading(true));
-    await axios.post("/auth/logout");
-    setAuthToken(null);
+    await axiosInstance.post("/auth/logout");
+    await persistor.purge();
     return;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error.response?.data || error.message);
   } finally {
     thunkAPI.dispatch(setIsLoading(false));
   }
 });
 
 export const refreshUser = createAsyncThunk(
-  "/auth/refresh",
+  "auth/refresh",
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    let token = state.auth.token;
-    if (!token) return thunkAPI.rejectWithValue("No token found");
-
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      const { data } = await axios.post("/auth/refresh", null, {
-        withCredentials: true,
-      });
-
-      setAuthToken(data.data.accessToken);
+      const { data } = await axiosInstance.post("/auth/refresh");
       return data.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
     } finally {
       thunkAPI.dispatch(setIsLoading(false));
     }
@@ -75,16 +66,11 @@ export const refreshUser = createAsyncThunk(
 );
 
 export const getCurrentUser = createAsyncThunk(
-  "/auth/current",
+  "auth/current",
   async (_, thunkAPI) => {
-    thunkAPI.dispatch(setIsLoading(true));
-    const token = getAuthToken();
-    if (!token) {
-      return thunkAPI.rejectWithValue("No token found");
-    }
     try {
-      setAuthToken(token);
-      const { data } = await axios.get("/auth/current");
+      thunkAPI.dispatch(setIsLoading(true));
+      const { data } = await axiosInstance.get("/auth/current");
       return data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || error.message);

@@ -1,23 +1,15 @@
+// src/redux/transactions/operations.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance"; // подключаем правильный axiosInstance
 import { setIsLoading } from "../global/slice";
-import { setAuthToken } from "../../utils/authToken";
 
-const prepareAuthHeader = (thunkAPI) => {
-  const token = thunkAPI.getState().auth.token;
-  const currentHeader = axios.defaults.headers.common.Authorization;
-  if (token && (!currentHeader || currentHeader !== `Bearer ${token}`)) {
-    setAuthToken(token);
-  }
-};
-
+// fetchTransactions
 export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
   async (_, thunkAPI) => {
-    prepareAuthHeader(thunkAPI);
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      const response = await axios.get("/transactions/");
+      const response = await axiosInstance.get("/transactions/");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -27,13 +19,16 @@ export const fetchTransactions = createAsyncThunk(
   }
 );
 
+// addTransaction
 export const addTransaction = createAsyncThunk(
   "transactions/add",
   async (transactionData, thunkAPI) => {
-    prepareAuthHeader(thunkAPI);
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      const response = await axios.post("/transactions/", transactionData);
+      const response = await axiosInstance.post(
+        "/transactions/",
+        transactionData
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -43,13 +38,13 @@ export const addTransaction = createAsyncThunk(
   }
 );
 
+// deleteTransaction
 export const deleteTransaction = createAsyncThunk(
   "transactions/delete",
   async (id, thunkAPI) => {
-    prepareAuthHeader(thunkAPI);
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      await axios.delete(`/transactions/${id}`);
+      await axiosInstance.delete(`/transactions/${id}`);
       return id;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -59,13 +54,13 @@ export const deleteTransaction = createAsyncThunk(
   }
 );
 
+// fetchSummary
 export const fetchSummary = createAsyncThunk(
   "transactions/fetchSummary",
   async ({ month, year }, thunkAPI) => {
-    prepareAuthHeader(thunkAPI);
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      const response = await axios.get("/transactions/summary", {
+      const response = await axiosInstance.get("/transactions/summary", {
         params: { month, year },
       });
       return response.data;
@@ -77,29 +72,13 @@ export const fetchSummary = createAsyncThunk(
   }
 );
 
-export const fetchAllCategories = createAsyncThunk(
-  "categories/fetchAll",
-  async (_, thunkAPI) => {
-    prepareAuthHeader(thunkAPI);
-    try {
-      thunkAPI.dispatch(setIsLoading(true));
-      const response = await axios.get("/transactions/categories");
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    } finally {
-      thunkAPI.dispatch(setIsLoading(false));
-    }
-  }
-);
-
+// fetchCategories
 export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
   async ({ month, year }, thunkAPI) => {
-    prepareAuthHeader(thunkAPI);
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      const response = await axios.get("/transactions/categories", {
+      const response = await axiosInstance.get("/transactions/categories", {
         params: { month, year },
       });
       return response.data;
