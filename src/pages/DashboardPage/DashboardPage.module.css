@@ -9,7 +9,6 @@
   color: var(--color-white);
   position: relative;
   width: 100%;
-  /* Видаляємо margin-left: calc(-50vw + 50%); - це спричиняє проблеми */
   overflow-x: hidden;
   font-family: "Poppins-Regular", Helvetica, sans-serif;
 }
@@ -38,23 +37,23 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #101010;
+
 }
 
 /* Версії фону для різних пристроїв */
 .mobileBg {
   background-image: url("/src/assets/dashboard_images/gradient_mobile.webp");
-  background-color: #101010;
+
 }
 
 .tabletBg {
   background-image: url("/src/assets/dashboard_images/gradient_tablet.webp");
-  background-color: #101010;
+
 }
 
 .desktopBg {
   background-image: url("/src/assets/dashboard_images/gradient_desktop.webp");
-  background-color: #101010;
+
 }
 
 /* Контейнер для вмісту (все крім Header) */
