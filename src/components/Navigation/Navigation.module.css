@@ -1,195 +1,193 @@
 .navList {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
 }
 
 .navIconWrapper {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    transition: all 0.3s ease;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
 .navIconWrapper::before {
-    content: '';
-    position: absolute;
-    width: 32px;
-    height: 32px;
-    background-color: transparent;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
 }
 
 .navIconWrapper::after {
-    content: '';
+  content: "";
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 3px 10px 0 rgba(74, 86, 226, 0.5);
+  pointer-events: none;
+}
+
+.navIcon {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.15s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.navItem:hover .navIconWrapper::before {
+  background-color: #ffffff;
+  transition-delay: 0.05s;
+}
+
+.navItem:hover .navIconWrapper::after {
+  opacity: 1;
+}
+
+.navItem:hover .navIcon {
+  color: #734aef;
+  transition-delay: 0s;
+}
+
+.navItem:not(:hover) .navIconWrapper::before {
+  transition-delay: 0s;
+}
+
+.navItem:not(:hover) .navIcon {
+  transition-delay: 0.2s;
+}
+
+.activeLink .navIconWrapper::before {
+  background-color: #ffffff;
+}
+
+.activeLink .navIcon {
+  color: #734aef;
+}
+
+@media screen and (max-width: 767px) {
+  .navList {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .navList {
+    flex-direction: column;
+    padding-top: 40px;
+    padding-bottom: 28px;
+    gap: 12px;
+    margin-left: 16px;
+  }
+
+  .navItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 120px;
+    height: 27px;
+    text-decoration: none;
+  }
+
+  .navIconWrapper {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navIconWrapper::before {
+    content: "";
     position: absolute;
-    width: 44px;
-    height: 44px;
-    border-radius: 6px;
+    width: 14px;
+    height: 14px;
+    background-color: transparent;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+  }
+
+  .navIconWrapper::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
     opacity: 0;
     transition: opacity 0.2s ease;
     box-shadow: 0 3px 10px 0 rgba(74, 86, 226, 0.5);
     pointer-events: none;
-}
+  }
 
-.navIcon {
-    width: 38px;
-    height: 38px;
-    object-fit: contain;
-    color: rgba(255, 255, 255, 0.4);
-    transition: color 0.15s ease;
+  .navIcon {
+    width: 18px;
+    height: 18px;
     position: relative;
     z-index: 1;
-}
+  }
 
-.navItem:hover .navIconWrapper::before {
+  .navItem:hover .navIconWrapper::before {
     background-color: #ffffff;
     transition-delay: 0.05s;
-}
+  }
 
-.navItem:hover .navIconWrapper::after {
-    opacity: 1;
-}
-
-.navItem:hover .navIcon {
+  .navItem:hover .navIcon {
     color: #734aef;
     transition-delay: 0s;
-}
+  }
 
-.navItem:not(:hover) .navIconWrapper::before {
+  .navItem:not(:hover) .navIconWrapper::before {
     transition-delay: 0s;
-}
+  }
 
-.navItem:not(:hover) .navIcon {
+  .navItem:not(:hover) .navIcon {
     transition-delay: 0.2s;
-}
+  }
 
-.activeLink .navIconWrapper::before {
+  .navItem:hover .navIconWrapper::after {
+    opacity: 1;
+  }
+
+  .activeLink .navIconWrapper::before {
     background-color: #ffffff;
-}
+  }
 
-.activeLink .navIcon {
-    color: #734aef;
-}
+  .navItemText {
+    font-size: 18px;
+    padding: 0 0 0 20px;
+    font-weight: 400;
+    color: #fbfbfb;
+    transition: font-weight 0.3s ease;
+    width: 100px;
+    white-space: nowrap;
+  }
 
-@media screen and (max-width: 767px) {
-    .navList {
-        padding-top: 12px;
-        padding-bottom: 12px;
-    }
-}
+  .activeLink .navItemText {
+    font-weight: 700;
+    color: #fbfbfb;
+  }
 
-@media screen and (min-width: 768px) {
-    .navList {
-        flex-direction: column;
-        padding-top: 40px;
-        padding-bottom: 28px;
-        gap: 12px;
-        margin-left: 16px;
-    }
+  .navItem:hover .navItemText {
+    opacity: 1;
+    text-shadow: 0 0 0.5px currentColor;
+  }
 
-    .navItem {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        width: 120px;
-        height: 27px;
-        text-decoration: none;
-    }
-
-    .navIconWrapper {
-        width: 18px;
-        height: 18px;
-        flex-shrink: 0;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .navIconWrapper::before {
-        content: '';
-        position: absolute;
-        width: 14px;
-        height: 14px;
-        background-color: transparent;
-        border-radius: 3px;
-        transition: background-color 0.2s ease;
-    }
-
-    .navIconWrapper::after {
-        content: '';
-        position: absolute;
-        width: 24px;
-        height: 24px;
-        border-radius: 3px;
-        opacity: 0;
-        transition: opacity 0.2s ease;
-        box-shadow: 0 3px 10px 0 rgba(74, 86, 226, 0.5);
-        pointer-events: none;
-    }
-
-    .navIcon {
-        width: 18px;
-        height: 18px;
-        position: relative;
-        z-index: 1;
-    }
-
-    .navItem:hover .navIconWrapper::before {
-        background-color: #ffffff;
-        transition-delay: 0.05s;
-    }
-
-    .navItem:hover .navIcon {
-        color: #734aef;
-        transition-delay: 0s;
-    }
-
-    .navItem:not(:hover) .navIconWrapper::before {
-        transition-delay: 0s;
-    }
-
-    .navItem:not(:hover) .navIcon {
-        transition-delay: 0.2s;
-    }
-
-    .navItem:hover .navIconWrapper::after {
-        opacity: 1;
-    }
-
-    .activeLink .navIconWrapper::before {
-        background-color: #ffffff;
-    }
-
-    .navItemText {
-        font-size: 18px;
-        padding: 0 0 0 20px;
-        font-weight: 400;
-        color: #fbfbfb;
-        transition: font-weight 0.3s ease;
-        width: 100px;
-        white-space: nowrap;
-    }
-
-    .activeLink .navItemText {
-        font-weight: 700;
-        color: #fbfbfb;
-    }
-
-    .navItem:hover .navItemText {
-        opacity: 1;
-        text-shadow: 0 0 0.5px currentColor;
-    }
-
-    .navItemText {
-        opacity: 0.9;
-    }
-
-
+  .navItemText {
+    opacity: 0.9;
+  }
 }
