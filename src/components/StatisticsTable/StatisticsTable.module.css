@@ -57,6 +57,7 @@
   width: 56px;
   padding-left: 16px;
   padding-right: 0;
+  
 }
 
 .colorRes {
@@ -64,6 +65,7 @@
   width: 24px;
   height: 24px;
   border-radius: 2px;
+  box-shadow: inset 0px 0px 15px rgba(0, 0, 0, 0.4);
 }
 
 .categoryName {

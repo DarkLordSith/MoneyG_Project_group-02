@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import css from './StatisticsTable.module.css';
 
 const fakeData = [
@@ -13,13 +13,21 @@ const fakeData = [
   { name: 'Other expenses', amount: 400 },
 ];
 
-const StatisticsTable = ({ summary, income, expenses }) => {
+const StatisticsTable = ({ summary, income, expenses, onCategoriesChange }) => {
   const expensesCategories = summary?.expenses?.categories || fakeData;   //[];
 
+  useEffect(() => {
+    onCategoriesChange(expensesCategories);
+  }, [summary, onCategoriesChange]);
+
+
   const categoryColor = index => {
-    const colors = ['#FED057', '#FFD8D0', '#FD9498', '#C5BAFF', '#6E78E8', '#4A56E2', '#81E1FF', '#24CCA7', '#00AD84', '#D35400'];
+    const colors = ['#FED057', '#FFD8D0', '#FD9498', '#C5BAFF', '#6E78E8',
+                    '#4A56E2', '#81E1FF', '#24CCA7', '#00AD84', '#D35400'];
     return colors[index % colors.length];
   };
+
+
 
   return (
     <div className={css.tableStat}>

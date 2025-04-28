@@ -4,14 +4,14 @@ import Chart from "../../components/Chart/Chart";
 import StatisticsDashboard from "../../components/StatisticsDashboard/StatisticsDashboard";
 import StatisticsTable from "../../components/StatisticsTable/StatisticsTable";
 import {
-  fetchSummary,
+//  fetchSummary,
 //  fetchCategories,
 } from "../../redux/transactions/operations";
 import {
-  selectSummary,
-  selectTotalIncome,
-  selectTotalExpenses,
-  selectBalance,
+ // selectSummary,
+ // selectTotalIncome,
+ // selectTotalExpenses,
+ // selectBalance,
  // selectSelectedMonth,
  // selectSelectedYear,
   selectIsLoading,
@@ -21,25 +21,39 @@ import {
 
 import css from './StatisticsTab.module.css'
 
-const StatisticsTab = () => {
-   const dispatch = useDispatch();
+const fakeData = {
+  expenses: {
+    categories: [
+      { name: 'Food', amount: 500 },
+      { name: 'Transport', amount: 200 },
+      { name: 'Entertainment', amount: 150 },
+    ],
+  },
+};
 
-  const summary = useSelector(selectSummary);
-  const income = useSelector(selectTotalIncome);
-  const expenses = useSelector(selectTotalExpenses);
-  const balance = useSelector(selectBalance);
+const StatisticsTab = ({ summary, income, expenses }) => {
+ //  const dispatch = useDispatch();
+
+  //const summary = useSelector(selectSummary);
+  //const income = useSelector(selectTotalIncome);
+  //const expenses = useSelector(selectTotalExpenses);
+  //const balance = useSelector(selectBalance);
   // const month = useSelector(selectSelectedMonth) ?? new Date().getMonth() + 1;
   // const year = useSelector(selectSelectedYear) ?? new Date().getFullYear();
   const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-   const now = new Date();
+  const now = new Date();
   const currentMonthIndex = now.getMonth(); // Индекс текущего месяца (0-11)
   const currentYear = now.getFullYear(); 
 
-    const [selectedMonth, setSelectedMonth] = useState(currentMonthIndex);
-    const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState(currentMonthIndex);
+  const [selectedYear, setSelectedYear] = useState(currentYear);
+  const [categoriesData, setCategoriesData] = useState([]); // для Chart
+  const [balance, setBalance] = useState(income - expenses);
+  
+
 
     useEffect(() => {
         fetchData(selectedMonth, selectedYear);
@@ -47,8 +61,9 @@ const StatisticsTab = () => {
 
     const fetchData = (monthIndex, year) => {
       if (monthIndex == null || !year) return;
-
-      //const period = { month: monthIndex + 1, year: Number(year) }; 
+       // ЗДЕСЬ ЗАПРОС НА СЕРВЕР ДЛЯ ПОЛУЧЕНИЯ ДАННЫХ ПО СТАТИСТИКЕ
+      
+       //const period = { month: monthIndex + 1, year: Number(year) };
       // dispatch(fetchSummary(period));
 
        // const yearNumber = Number(year);
@@ -65,7 +80,11 @@ const StatisticsTab = () => {
 
     const handleYearChange = year => {
         setSelectedYear(Number(year));
-    };
+  };
+  
+  const updateCategories = (categories) => {
+    setCategoriesData(categories);
+  };  
 
     if (loading) {
         return <Loader />;
@@ -87,19 +106,24 @@ const StatisticsTab = () => {
       <div>
         <h2 className={css.headerStat}>Statistics</h2>
         <div className={css.chartSection}>
-          <Chart summary={summary} balance={balance} />
+          <Chart summary={summary} income={income} expenses={expenses} />
         </div>
       </div>
 
       <div className={css.tableSection}>
          <div className={css.statisticsDashboard}>   
-            <StatisticsDashboard selectedMonth={selectedMonth} selectedYear={selectedYear} onMonthChange={handleMonthChange} onYearChange={handleYearChange}/>
+          <StatisticsDashboard
+            selectedMonth={selectedMonth}
+            selectedYear={selectedYear}
+            onMonthChange={handleMonthChange}
+            onYearChange={handleYearChange} />
         </div>
        
         <StatisticsTable
           summary={summary}
           income={income}
           expenses={expenses}
+          onCategoriesChange={updateCategories}
         />
       </div>
     </div>
@@ -110,7 +134,7 @@ const StatisticsTab = () => {
 export default StatisticsTab;   
 
 
-  //ПОТОМ УБРАТЬ
+  //ПОТОМ УБРАТЬ (оставила для себя, с чего все начиналось, с категориями)
 //const StatisticsTab = () => {
 //  const dispatch = useDispatch();
 

@@ -1,53 +1,81 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { motion } from "framer-motion";
 import { Chart as ChartJS, ArcElement } from 'chart.js';
-
-
 import css from './Chart.module.css';
 
 ChartJS.register(ArcElement);
 
-const Chart = ({ summary, balance }) => {
-  const expensesCategories = summary?.expenses?.categories || [];
+const shadowPlugin = {
+  id: 'shadowPlugin',
+  beforeDraw: (chart) => {
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.4)'; 
+    ctx.shadowBlur = 40;                      
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+  },
+  afterDraw: (chart) => {
+    chart.ctx.restore();
+  }
+};
+
+const Chart = ({ summary, income, expenses }) => {
+  const [expensesCategories, setExpensesCategories] = useState([500, 200, 150]);
+
+  useEffect(() => {
+    if (summary?.expenses?.categories) {
+      setExpensesCategories(summary.expenses.categories.map(item => item.amount));
+    }
+  }, [summary]);
 
   const hasExpenses = expensesCategories.length > 0;
-
   const labels = hasExpenses
-    ? expensesCategories.map(item => item.name)
+    ? summary?.expenses?.categories?.map(item => item.name)  
     : ['No Data'];
 
   const data = {
-    labels,
+    labels: labels,
     datasets: [
       {
         label: 'Expenses ₴',
-        data: hasExpenses ? expensesCategories.map(item => item.amount) : [1],
+        data: expensesCategories,
         backgroundColor: [
-          '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-          '#9966FF', '#FF9F40', '#8D6EFF', '#69F0AE',
+          '#FED057', '#FFD8D0', '#FD9498', '#C5BAFF', '#6E78E8',
+          '#4A56E2', '#81E1FF', '#24CCA7', '#00AD84', '#D35400'
         ],
-        borderWidth: 1,
+        borderWidth: 0,
       },
     ],
   };
 
   const options = {
-    cutout: '70%',
-    plugins: {
-      legend: {
-        position: 'right',
-      },
+  cutout: '70%', 
+  plugins: {
+    legend: {
+      position: 'right',
     },
-  };
+    tooltip: {
+      enabled: true,
+    },
+  },
+  maintainAspectRatio: false,
+};
+
+
+  
+  const safeIncome = isNaN(income) ? 0 : Number(income);
+  const safeExpenses = isNaN(expenses) ? 0 : Number(expenses);
+  const balance = safeIncome - safeExpenses;
 
   return (
-    <div className={css.chartContainer}>
+    <div className={`${css.chartContainer}`}>
       {hasExpenses ? (
         <>
-          <Doughnut data={data} options={options} />
+          <Doughnut data={data} options={options} plugins={[shadowPlugin]} />
           <div className={css.chartCenter}>
-            <span>₴ {balance ? balance.toFixed(2) : '0.00'}</span>
+            <span>{balance !== 0 ? `₴ ${balance.toFixed(2)}` : '₴ 0.00'}</span>
           </div>
         </>
       ) : (
@@ -65,4 +93,5 @@ const Chart = ({ summary, balance }) => {
 };
 
 export default Chart;
+
 
