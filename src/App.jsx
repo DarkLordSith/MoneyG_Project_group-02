@@ -36,10 +36,10 @@ const App = () => {
     verifyAuth();
   }, [dispatch, isLoggedIn]);
 
-  if (isRefreshing) return null;
+  if (isRefreshing) return <Loader />; // Покажемо лоадер під час перевірки
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader />}> {/* Фолбек лоадера при завантаженні лейзі компонентів */}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route

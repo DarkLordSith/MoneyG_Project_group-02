@@ -1,76 +1,46 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTransactions } from "../../redux/transactions/operations";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import useMedia from "../../hooks/useMedia";
 import s from "./TransactionList.module.css";
 import FormButton from "../common/FormButton/FormButton";
-
-// Тестовий набір операцій
-const sampleOperations = [
-  {
-    id: "1",
-    transactionDate: "2023-01-04",
-    amount: -300,
-    categoryId: "1",
-    type: "EXPENSE",
-    comment: "Gift for your wife",
-  },
-  {
-    id: "2",
-    transactionDate: "2023-01-05",
-    amount: 8000,
-    categoryId: "2",
-    type: "INCOME",
-    comment: "January bonus",
-  },
-  {
-    id: "3",
-    transactionDate: "2023-01-07",
-    amount: -1000,
-    categoryId: "3",
-    type: "EXPENSE",
-    comment: "Oil",
-  },
-  {
-    id: "4",
-    transactionDate: "2023-01-07",
-    amount: -280,
-    categoryId: "4",
-    type: "EXPENSE",
-    comment: "Vegetables for the week",
-  },
-  {
-    id: "5",
-    transactionDate: "2023-01-07",
-    amount: 1000,
-    categoryId: "2",
-    type: "INCOME",
-    comment: "Gift",
-  },
-];
+import Loader from "../common/Loader/Loader";  // Підключення Loader для стану завантаження
 
 const TransactionList = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // Використання тестових даних
-  const operationsData = sampleOperations;
-  // const loadingState = useSelector(selectTransactionsLoading);
-  // const errorState = useSelector(selectTransactionsError);
-  const loadingState = false;
-  // const errorState = false;
+  // Дані з Redux
+  const transactions = useSelector((state) => state.transactions.items);
+  const loadingState = useSelector((state) => state.transactions.isLoading);
+  const errorState = useSelector((state) => state.transactions.error);
 
-  // Сортування за датою
-  const sortedOperations = [...operationsData].sort(
-    (prev, next) =>
-      new Date(prev.transactionDate) - new Date(next.transactionDate)
-  );
+  // Фільтрація за типом транзакцій
+  const [filter, setFilter] = useState("ALL");
+
+  const filteredOperations = transactions.filter((operation) => {
+    if (filter === "ALL") return true;
+    return operation.type === filter;
+  }).sort((prev, next) => new Date(prev.transactionDate) - new Date(next.transactionDate));
 
   // Адаптивний хук
   const { isMobile } = useMedia();
 
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
+
+  useEffect(() => {
+    dispatch(fetchTransactions());
+  }, [dispatch]);
+
   return (
     <>
-      {/* {loadingState && <Loader />} */}
-      {/* {errorState && <p className={s.notificationBlock}>Щось пішло не так...</p>} */}
-      {!loadingState && operationsData.length === 0 ? (
+      {loadingState && <Loader />}
+      {errorState && (
+        <p className={s.notificationBlock}>Щось пішло не так...</p>
+      )}
+      {!loadingState && transactions.length === 0 ? (
         <div className={s.emptyContainer}>
           <p>Немає доступних записів.</p>
           <p>Додайте операцію</p>
@@ -83,35 +53,62 @@ const TransactionList = () => {
         </div>
       ) : (
         <div className={s.operationsPanel}>
+          {/* Фільтрація */}
+          <div className={s.filters}>
+            <FormButton
+              type="button"
+              text={"Всі"}
+              variant={"filterButton"}
+              handlerFunction={() => handleFilterChange("ALL")}
+            />
+            <FormButton
+              type="button"
+              text={"Прибуток"}
+              variant={"filterButton"}
+              handlerFunction={() => handleFilterChange("INCOME")}
+            />
+            <FormButton
+              type="button"
+              text={"Витрати"}
+              variant={"filterButton"}
+              handlerFunction={() => handleFilterChange("EXPENSE")}
+            />
+          </div>
+
+          {/* Відображення транзакцій */}
           <table className={s.dataGrid}>
             {!isMobile && (
               <thead className={s.gridHeader}>
                 <tr className={s.headRow}>
-                  <th className={s.dateSection}>Date</th>
-                  <th className={s.typeSection}>Type</th>
-                  <th className={s.categorySection}>Category</th>
-                  <th className={s.noteSection}>Comment</th>
-                  <th
-                    className={
-                      operationsData.length === 0
-                        ? s.hiddenControls
-                        : s.valueSection
-                    }
-                  >
-                    Sum
-                  </th>
-                  {operationsData.length !== 0 && (
-                    <th className={s.controlsSection}></th>
-                  )}
+                  <th className={s.dateSection}>Дата</th>
+                  <th className={s.typeSection}>Тип</th>
+                  <th className={s.categorySection}>Категорія</th>
+                  <th className={s.noteSection}>Коментар</th>
+                  <th className={s.valueSection}>Сума</th>
+                  <th className={s.controlsSection}></th>
                 </tr>
               </thead>
             )}
             <tbody className={s.gridBody}>
-              {sortedOperations.map((operation) => (
+              {filteredOperations.map((operation) => (
                 <TransactionItem key={operation.id} transaction={operation} />
               ))}
             </tbody>
           </table>
+
+          {/* Мобільний вигляд */}
+          {isMobile && (
+            <div className={s.mobileView}>
+              {filteredOperations.map((operation) => (
+                <div key={operation.id} className={s.transactionItem}>
+                  <div>{operation.transactionDate}</div>
+                  <div>{operation.type}</div>
+                  <div>{operation.comment}</div>
+                  <div>{operation.amount}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </>
@@ -119,17 +116,3 @@ const TransactionList = () => {
 };
 
 export default TransactionList;
-
-// import TransactionsItem from "../TransactionsItem/TransactionsItem";
-
-// const TransactionsList = ({ transactions }) => {
-//   return (
-//     <ul>
-//       {transactions.map((tx) => (
-//         <TransactionsItem key={tx.id} transaction={tx} />
-//       ))}
-//     </ul>
-//   );
-// };
-
-// export default TransactionsList;

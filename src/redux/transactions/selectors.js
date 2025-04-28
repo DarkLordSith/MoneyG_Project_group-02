@@ -1,3 +1,5 @@
+// src/redux/transactions/selectors.js
+
 const selectTransactions = (state) => state.transactions.items;
 const selectIsLoading = (state) => state.transactions.isLoading;
 const selectError = (state) => state.transactions.error;

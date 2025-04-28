@@ -5,6 +5,7 @@ import {
   deleteTransaction,
   fetchSummary,
   fetchCategories,
+  fetchAllCategories,
 } from "./operations";
 
 const initialState = {
@@ -31,7 +32,6 @@ const transactionsSlice = createSlice({
       state.selectedYear = action.payload;
     },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchTransactions.pending, (state) => {
@@ -59,14 +59,13 @@ const transactionsSlice = createSlice({
       })
 
       .addCase(deleteTransaction.fulfilled, (state, action) => {
-        state.items = state.items.filter((item) => item.id !== action.payload);
+        state.items = state.items.filter((item) => item._id !== action.payload);
       })
 
       .addCase(fetchSummary.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-
       .addCase(fetchSummary.fulfilled, (state, action) => {
         state.isLoading = false;
         state.summary = action.payload.categories;
@@ -74,7 +73,6 @@ const transactionsSlice = createSlice({
         state.totalExpenses = action.payload.totalExpenses;
         state.balance = action.payload.balance;
       })
-
       .addCase(fetchSummary.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
@@ -91,9 +89,24 @@ const transactionsSlice = createSlice({
       .addCase(fetchCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+
+      // ➡️ fetchAllCategories для HomeTab
+      .addCase(fetchAllCategories.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllCategories.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.categories = action.payload;
+      })
+      .addCase(fetchAllCategories.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });
+
 export const { setSelectedMonth, setSelectedYear } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
