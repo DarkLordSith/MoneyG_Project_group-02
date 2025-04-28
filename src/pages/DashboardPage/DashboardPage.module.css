@@ -216,6 +216,12 @@
 
   }
 
+  @media (max-height: 720px) {
+    .balance {
+      margin-bottom: 0;
+    }
+  }
+
   .currency {
     display: block;
     width: 480px;
@@ -229,7 +235,7 @@
   .divider {
     display: block;
     width: 1px;
-    height: auto;
+    height: 100vh;
     background-color: var(--color-white-600);
     box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
   }
