@@ -1,9 +1,11 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { TbFaceIdError } from "react-icons/tb";
 import { ClipLoader } from "react-spinners";
-import css from "./Currency.module.css";
+import axios from "axios";
+import CurrencyChart from "../CurrencyChart/CurrencyChart";
 import currencyGraph from "./images/currency-graph.svg";
+import css from "./Currency.module.css";
 
 function Currency() {
   const [loading, setLoading] = useState(false);
@@ -11,10 +13,10 @@ function Currency() {
   const [currencyRates, setCurrencyRates] = useState({ usd: null, eur: null });
 
   const fetchCurrencyRates = async () => {
-    try {
-      setError(false);
-      setLoading(true);
+    setLoading(true);
+    setError(null);
 
+    try {
       const response = await axios.get(
         "https://api.monobank.ua/bank/currency",
         {
@@ -46,7 +48,7 @@ function Currency() {
         })
       );
     } catch {
-      setError("Failed to load currency rates");
+      setError("Too many requests, please try again later.");
     } finally {
       setLoading(false);
     }
@@ -69,11 +71,10 @@ function Currency() {
         usd: parsedCurrencyRates.usd,
         eur: parsedCurrencyRates.eur,
       });
-      setError(false);
-      return;
+      setError(null);
+    } else {
+      fetchCurrencyRates();
     }
-
-    fetchCurrencyRates();
   }, []);
 
   const isCurrencyLoaded = currencyRates?.usd && currencyRates?.eur;
@@ -88,7 +89,7 @@ function Currency() {
           <ClipLoader
             color="#e15b64"
             loading={true}
-            size={80}
+            size="50px"
             aria-label="Loading Spinner"
             speedMultiplier={0.8}
             cssOverride={{
@@ -99,42 +100,19 @@ function Currency() {
       </div>
     );
   };
+
   return (
     <div className={css.container}>
-      {loading && <div>{loader}</div>}
-      {error && <p>{error}</p>}
-
+      {loading && loader()}
+      {!loading && error && (
+        <div className={css.errorWrap}>
+          <TbFaceIdError size="50px" />
+          <span className={css.errorMsg}>{error}</span>
+        </div>
+      )}
       {!loading && !error && isCurrencyLoaded && (
         <div className={css.componentWrapper}>
-          <table className={css.table}>
-            <thead className={css.thead}>
-              <tr className={css.mainRow}>
-                <th className={css.th}>Currency</th>
-                <th className={css.th}>Purchase</th>
-                <th className={css.th}>Sale</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className={css.td}>USD</td>
-                <td className={css.td}>
-                  {currencyRates.usd?.rateBuy.toFixed(2) || "-"}
-                </td>
-                <td className={css.td}>
-                  {currencyRates.usd?.rateSell.toFixed(2) || "-"}
-                </td>
-              </tr>
-              <tr>
-                <td className={css.td}>EUR</td>
-                <td className={css.td}>
-                  {currencyRates.eur?.rateBuy.toFixed(2) || "-"}
-                </td>
-                <td className={css.td}>
-                  {currencyRates.eur?.rateSell.toFixed(2) || "-"}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <CurrencyChart currencyRates={currencyRates} />
           <div className={css.graphicHolder}>
             <div className={css.graphic}>
               {isDesktop && (

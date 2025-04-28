@@ -1,48 +1,35 @@
+@import "../../styles/variables.css";
 /* General styles */
 .container {
   background-color: rgba(74, 86, 226, 0.1);
   backdrop-filter: blur(100px);
   box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
 .loaderBackdrop {
-  width: 480px;
-  height: 395px;
-  background: linear-gradient(220deg, #6d54eb 28.31%, #652392 66.76%);
+  background: linear-gradient(
+    220deg,
+    rgba(109, 84, 235, 0.3) 28.31%,
+    rgba(101, 35, 146, 0.3) 66.76%
+  );
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
 
-.spinnerWrapper {
-  width: 80px;
-  height: 80px;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
+.errorWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
 }
 
 .componentWrapper {
   height: 100%;
   overflow: hidden;
-}
-
-.mainRow {
-  text-align: left;
-}
-
-.th {
-  font-weight: 600;
-  background-color: rgba(255, 255, 255, 0.2);
-  text-align: center;
-}
-
-.td {
-  text-align: center;
-  font-weight: 400;
 }
 
 .image {
@@ -53,25 +40,28 @@
 /* Desktop styles */
 @media screen and (min-width: 1280px) {
   .container {
+    height: 380px;
+  }
+
+  .loaderBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 480px;
     height: 395px;
-  }
-  .th {
-    padding: 16px 0 16px;
-    font-family: var(--second-family);
+    background: linear-gradient(
+      220deg,
+      rgba(109, 84, 235, 0.3) 28.31%,
+      rgba(101, 35, 146, 0.3) 66.76%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
   }
 
-  .td {
-    padding-top: 24px;
-  }
-
-  .th:first-child,
-  .td:first-child {
-    padding-left: 62px;
-  }
-  .th:last-child,
-  .td:last-child {
-    text-align: right;
-    padding-right: 130px;
+  .errorWrap {
+    padding-top: 100px;
   }
 
   .graphicHolder {
@@ -107,30 +97,16 @@
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .container {
     height: 214px;
+    border-radius: 0 0 8px 8px;
   }
 
-  .th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+  .loaderBackdrop {
+    width: 336;
+    height: 214px;
   }
 
-  .td {
-    padding: 8px 20px 4px;
-  }
-
-  .th:first-child,
-  .td:first-child {
-    padding-left: 20px;
-    text-align: left;
-  }
-  .th:last-child,
-  .td:last-child {
-    padding-right: 20px;
-    text-align: right;
-  }
-
-  .image {
-    margin-top: 4px;
+  .spinnerWrapper {
+    size: 50px;
   }
 }
 
@@ -138,27 +114,12 @@
   .container {
     width: 320px;
     height: 214px;
-    margin-top: 24px;
+    border-radius: 0 0 8px 8px;
+    /* background: rgba(255, 255, 255, 0.2); */
   }
 
-  .th {
-    padding-top: 13px;
-    padding-bottom: 13px;
-    font-family: var(--font-family);
-  }
-
-  .td {
-    padding: 8px 20px 4px;
-  }
-
-  .th:first-child,
-  .td:first-child {
-    padding-left: 20px;
-    text-align: left;
-  }
-  .th:last-child,
-  .td:last-child {
-    padding-right: 20px;
-    text-align: right;
+  .loaderBackdrop {
+    width: 320;
+    height: 214px;
   }
 }
