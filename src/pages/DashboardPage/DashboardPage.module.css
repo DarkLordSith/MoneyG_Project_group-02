@@ -150,8 +150,7 @@
 
   .navigation {
     width: 336px;
-    height: 66px;
-    margin-bottom: 28px;
+    /* height: 66px; */
   }
 
   .balance {
@@ -235,7 +234,7 @@
   .divider {
     display: block;
     width: 1px;
-    height: 100vh;
+    height: 641px;
     background-color: var(--color-white-600);
     box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
   }
