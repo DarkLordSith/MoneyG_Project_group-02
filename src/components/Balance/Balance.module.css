@@ -47,9 +47,13 @@
 
 /* Адаптивні стилі для мобільних */
 @media screen and (max-width: 767px) {
-  .balanceWrapper {
-    width: 280px;
-  }
+    .balanceWrapper {
+        width: 280px;
+    }
+
+    .balanceContainer {
+        margin: 0px;
+    }
 }
 
 /* Адаптивні стилі для планшетів */

@@ -1,40 +1,35 @@
 /* src/pages/DashboardPage/DashboardPage.module.css */
 
-/* Основной контейнер для Dashboard */
+/* Основний контейнер для Dashboard */
 .dashboardContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  /* Для відображення на всю сторінку */
   background-color: #101010;
-  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
   color: var(--color-white);
   position: relative;
-  width: 100vw;
-  /* Для відображення на всю сторінку */
-  /* Исправляем горизонтальное центрирование */
-  margin-left: calc(-50vw + 50%);
-  /* Этот трюк помогает правильно центрировать на всю ширину экрана */
+  width: 100%;
+  /* Видаляємо margin-left: calc(-50vw + 50%); - це спричиняє проблеми */
   overflow-x: hidden;
   font-family: "Poppins-Regular", Helvetica, sans-serif;
-  /* Можно заменить на var(--font-main) */
 }
 
-/* Главный контейнер дэшборда с адаптивными стилями */
+/* Головний контейнер дешборду з адаптивними стилями */
 .dashboardPage {
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
 }
 
-/* Стили для хедера */
+/* Стилі для хедера */
 .header {
-  width: 320px;
+  width: 100%;
   height: 60px;
 }
 
-/* Фонові елементи - используем изображения */
+/* Фонові елементи */
 .backgroundElements {
   position: absolute;
   inset: 0;
@@ -44,26 +39,22 @@
   background-position: center;
   background-repeat: no-repeat;
   background-color: #101010;
-  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
-/* Версии фона для разных устройств */
+/* Версії фону для різних пристроїв */
 .mobileBg {
   background-image: url("/src/assets/dashboard_images/gradient_mobile.webp");
   background-color: #101010;
-  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 .tabletBg {
   background-image: url("/src/assets/dashboard_images/gradient_tablet.webp");
   background-color: #101010;
-  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 .desktopBg {
   background-image: url("/src/assets/dashboard_images/gradient_desktop.webp");
   background-color: #101010;
-  /* Здесь возможно понадобится добавить переменную --color-black: #101010 */
 }
 
 /* Контейнер для вмісту (все крім Header) */
@@ -76,18 +67,9 @@
   position: relative;
   z-index: 1;
   flex-direction: column;
-  display: flex;
-  flex: 1;
-  width: 100%;
-  max-width: 320px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-  flex-direction: column;
 }
 
 /* Базові стилі для всіх версій */
-
 .balance .currency {
   border-radius: var(--radius-sm);
 }
@@ -107,7 +89,6 @@
 
 .mainContent {
   width: 100%;
-
   border-radius: var(--radius-sm);
 }
 
@@ -117,38 +98,33 @@
 
 /* Стилі для мобільної версії (за замовчуванням) */
 .navigation {
-  width: 320px;
-  /* height: 96px; */
+  width: 100%;
 }
 
 .balance {
-  width: 280px;
+  width: 100%;
+  max-width: 280px;
   height: 80px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .currency {
   display: none;
 }
 
-/* Стилі для кнопки додавання транзакцій */
-/* .addButtonContainer {
-    position: fixed;
-    width: 50px;
-    height: 50px;
-    bottom: 20px;
-    right: 20px;
-    z-index: 100;
-} */
-
 /* Стилі для планшетів (768px - 1279px) */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .dashboardPage {
-    width: 768px;
-    height: 1024px;
+    width: 100%;
+    max-width: 768px;
+    min-height: 100vh;
   }
 
   .header {
-    width: 768px;
+    width: 100%;
     height: 80px;
   }
 
@@ -181,6 +157,9 @@
   .balance {
     width: 336px;
     height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .currency {
@@ -190,37 +169,31 @@
   }
 
   .mainContent {
-    display: flex;
-    justify-content: center;
-    /* width: 704px;
-    height: 312px; */
-    /* padding: 20px; */
+    width: 100%;
+    height: auto;
+    min-height: 312px;
+    padding: 20px;
   }
-
-  /* Позиціонування кнопки для планшетів */
-  /* .addButtonContainer {
-        width: 56px;
-        height: 56px;
-        bottom: 40px;
-        right: 40px;
-    } */
 }
 
 /* Стилі для десктопів (1280px і більше) */
 @media screen and (min-width: 1280px) {
   .dashboardPage {
-    width: 1280px;
+    width: 100%;
+    max-width: 1280px;
+    min-height: 100vh;
   }
 
   .header {
-    width: 1280px;
+    width: 100%;
     height: 80px;
   }
 
   .contentWrapper {
     flex-direction: row;
     max-width: 1280px;
-    height: 721px;
+    min-height: calc(100vh - 80px);
+    /* Висота екрану мінус висота хедера */
     gap: 0;
   }
 
@@ -237,6 +210,10 @@
     width: 480px;
     height: 80px;
     margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
   }
 
   @media (max-height: 720px) {
@@ -265,10 +242,21 @@
 
   .mainContent {
     width: 715px;
-    height: 308px;
+    height: auto;
+    min-height: 308px;
     flex-grow: 1;
     padding-left: 69px;
     padding-right: 16px;
     padding-top: 46px;
   }
+}
+
+/* Додаткові стилі для повного екрану */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
