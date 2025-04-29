@@ -85,29 +85,25 @@ const transactionsSlice = createSlice({
       .addCase(fetchSummary.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      });
       })
+      .addCase(fetchCategories.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.isLoading = false;
 
-      
-     .addCase(fetchCategories.pending, (state) => {
-       state.isLoading = true;
-       state.error = null;
-     })
-     .addCase(fetchCategories.fulfilled, (state, action) => {
-       state.isLoading = false;
-
-       const { type } = action.meta.arg; 
-       if (type === "INCOME") {
-         state.incomeCategories = action.payload;
-       } else if (type === "EXPENSE") {
-         state.expenseCategories = action.payload;
-       }
-     })
-     .addCase(fetchCategories.rejected, (state, action) => {
-       state.isLoading = false;
-       state.error = action.payload;
-     })
-
+        const { type } = action.meta.arg;
+        if (type === "INCOME") {
+          state.incomeCategories = action.payload;
+        } else if (type === "EXPENSE") {
+          state.expenseCategories = action.payload;
+        }
+      })
+      .addCase(fetchCategories.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 
