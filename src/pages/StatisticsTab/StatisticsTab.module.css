@@ -1,68 +1,76 @@
 .statisticsTab {
-  background: linear-gradient(180deg, #2d1461 0%, #3b1d75 50%, #4C3E9D 100%);
-  min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  color: white;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  background-attachment: fixed;
-  background-size: cover;
+  padding-top: 0px;
+  padding-left: 20px;
+  padding-right: 40px;
+  padding-bottom: 20px;
 }
 
 
-
 .headerStat {
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 1rem;
-  text-align: center;
+ font-weight: 400;
+ font-size: 30px;
+ color: var(--white);
+ margin-bottom: 8px;
 }
 
 
 .chartSection {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  width: 280px;
+  height: 280px;
+  margin-bottom: 32px;
+}
+
+.statisticsDashboard {
+    height: 120px;
+    margin-bottom: 20px;
 }
 
 
 @media (min-width: 768px) {
-  .chartSection {
-    grid-template-columns: 1fr 1fr;
-    max-width: 768px;
-  }
-
   .statisticsTab {
-    padding: 40px;
-    align-items: stretch;
-  }
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
 }
 
 
+.headerStat {
+ margin-bottom: 20px;
+}
+
+
+.chartSection {
+  width: 336px;
+  height: 336px;
+  margin-bottom: 0;
+}
+
+.statisticsDashboard {
+    margin-top: 20px;
+    height: 50px;
+}
+}
+
 @media (min-width: 1280px) {
   .statisticsTab {
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 64px 80px;
-  }
-
-  .chartSection {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    width: 60%;
-  }
-
-  .tableSection {
-    width: 40%;
+    padding-top: 32px;
   }
 
   .headerStat {
-    text-align: left;
-    margin-bottom: 2rem;
+     margin-left: 15px;
   }
+
+  .chartSection {
+     width: 288px;
+     height: 288px;;
+  }
+
+  .tableSection {
+     width: 395px;
+  }
+  .statisticsDashboard {
+     margin-top: 65px;
+  }
+  
 }

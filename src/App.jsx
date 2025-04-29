@@ -44,9 +44,7 @@ const App = () => {
 
   return (
     <Suspense fallback={<Loader />}>
-      {" "}
-      {/* Фолбек лоадера при завантаженні лейзі компонентів */}
-      <Routes>
+      <Routes> 
         <Route
           path="/login"
           element={
