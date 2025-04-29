@@ -89,6 +89,23 @@ export const fetchSummary = createAsyncThunk(
   }
 );
 
+export const fetchCategories = createAsyncThunk(
+  "transactions/fetchCategories",
+  async ({ month, year }, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(setIsLoading(true));
+      const response = await axiosInstance.get("/transactions/categories", {
+        params: { month, year },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
+    }
+  }
+);
+
 // fetchSummary
 //export const fetchSummary = createAsyncThunk(
 //  "transactions/fetchSummary",
@@ -108,7 +125,7 @@ export const fetchSummary = createAsyncThunk(
 //);
 
 // fetchCategories
-//export const fetchCategories = createAsyncThunk(
+// export const fetchCategories = createAsyncThunk(
 //  "transactions/fetchCategories",
 //  async ({ month, year }, thunkAPI) => {
 //    try {
@@ -123,6 +140,6 @@ export const fetchSummary = createAsyncThunk(
 //      thunkAPI.dispatch(setIsLoading(false));
 //    }
 //  }
-//);
+// );
 
 // Закомментированное из ветки main, оставь это, если хочешь оставить старую версию для будущего использования:
