@@ -55,8 +55,6 @@ export const deleteTransaction = createAsyncThunk(
   }
 );
 
-
-
 export const fetchSummary = createAsyncThunk(
   "transactions/fetchSummary",
   async ({ month, year }, thunkAPI) => {
@@ -73,7 +71,6 @@ export const fetchSummary = createAsyncThunk(
     }
   }
 );
-
 
 // fetchSummary
 //export const fetchSummary = createAsyncThunk(
@@ -92,7 +89,6 @@ export const fetchSummary = createAsyncThunk(
 //    }
 //  }
 //);
-
 
 // fetchCategories
 //export const fetchCategories = createAsyncThunk(
