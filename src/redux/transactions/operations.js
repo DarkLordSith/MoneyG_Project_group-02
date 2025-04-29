@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance"; // подключаем правильный axiosInstance
 import { setIsLoading } from "../global/slice";
+//import { setAuthToken } from "../../utils/authToken";
 
 // fetchTransactions
 export const fetchTransactions = createAsyncThunk(
@@ -54,7 +55,8 @@ export const deleteTransaction = createAsyncThunk(
   }
 );
 
-// fetchSummary
+
+
 export const fetchSummary = createAsyncThunk(
   "transactions/fetchSummary",
   async ({ month, year }, thunkAPI) => {
@@ -63,7 +65,7 @@ export const fetchSummary = createAsyncThunk(
       const response = await axiosInstance.get("/transactions/summary", {
         params: { month, year },
       });
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
@@ -72,20 +74,42 @@ export const fetchSummary = createAsyncThunk(
   }
 );
 
+
+// fetchSummary
+//export const fetchSummary = createAsyncThunk(
+//  "transactions/fetchSummary",
+//  async ({ month, year }, thunkAPI) => {
+//    try {
+//      thunkAPI.dispatch(setIsLoading(true));
+//      const response = await axiosInstance.get("/transactions/summary", {
+//        params: { month, year },
+//      });
+//      return response.data;
+//    } catch (error) {
+//      return thunkAPI.rejectWithValue(error.message);
+//    } finally {
+//      thunkAPI.dispatch(setIsLoading(false));
+//    }
+//  }
+//);
+
+
 // fetchCategories
-export const fetchCategories = createAsyncThunk(
-  "transactions/fetchCategories",
-  async ({ month, year }, thunkAPI) => {
-    try {
-      thunkAPI.dispatch(setIsLoading(true));
-      const response = await axiosInstance.get("/transactions/categories", {
-        params: { month, year },
-      });
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    } finally {
-      thunkAPI.dispatch(setIsLoading(false));
-    }
-  }
-);
+//export const fetchCategories = createAsyncThunk(
+//  "transactions/fetchCategories",
+//  async ({ month, year }, thunkAPI) => {
+//    try {
+//      thunkAPI.dispatch(setIsLoading(true));
+//      const response = await axiosInstance.get("/transactions/categories", {
+//        params: { month, year },
+//      });
+//      return response.data;
+//    } catch (error) {
+//      return thunkAPI.rejectWithValue(error.message);
+//    } finally {
+//      thunkAPI.dispatch(setIsLoading(false));
+//    }
+//  }
+//);
+
+// Закомментированное из ветки main, оставь это, если хочешь оставить старую версию для будущего использования:

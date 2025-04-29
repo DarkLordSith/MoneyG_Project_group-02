@@ -6,8 +6,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
 
+}
+ 
 .chartCenter {
     position: absolute;
     top: 50%;
@@ -23,12 +24,14 @@
     color:  #ffffff;
     transition: opacity 0.3s ease-in-out, transform 0.3s ease;
     animation: fadeInCenter 0.4s ease-in-out;
+    
 
 }
 
 .chartCenter span {
     display: block;
     animation: fadeIn 0.4s ease;
+    
     
 }
 
@@ -38,8 +41,7 @@
     opacity: 0.8;
     transition: opacity 0.3s;
 }
-
-
+ 
 
 
 @media (min-width: 768px) {
@@ -53,5 +55,16 @@
     .chartContainer {
         width: 288px;
         height: 288px;
+    }
+}
+
+@keyframes fadeInCenter {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
     }
 }
