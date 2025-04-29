@@ -29,7 +29,7 @@ const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCateg
   ];
 
   const sortedCategories = allCategories
-    .filter(cat => cat.amount > 0) // ❗ Исключаем пустые (0) категории
+    .filter(cat => cat.amount > 0) //  Исключаем пустые (0) категории
     .sort((a, b) => b.amount - a.amount);
 
   const hasData = sortedCategories.length > 0 || (income > 0 || expenses > 0);
@@ -85,4 +85,3 @@ const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCateg
 };
 
 export default StatisticsTable;
-
