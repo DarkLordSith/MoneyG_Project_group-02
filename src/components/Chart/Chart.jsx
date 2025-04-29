@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { motion } from "framer-motion";
 import { Chart as ChartJS, ArcElement } from 'chart.js';
@@ -21,26 +21,27 @@ const shadowPlugin = {
   }
 };
 
-const Chart = ({ summary, income, expenses }) => {
-  const [expensesCategories, setExpensesCategories] = useState([500, 200, 150, 200, 300, 100, 270, 320, 400]);
+const Chart = ({
+  income = 0,
+  expenses = 0,
+  expenseCategories = [],
+}) => {
+  const hasExpenses = expenseCategories?.length > 0;
 
-  useEffect(() => {
-    if (summary?.expenses?.categories) {
-      setExpensesCategories(summary.expenses.categories.map(item => item.amount));
-    }
-  }, [summary]);
-
-  const hasExpenses = expensesCategories.length > 0;
   const labels = hasExpenses
-    ? summary?.expenses?.categories?.map(item => item.name)  
+    ? expenseCategories.map(item => item.name)
     : ['No Data'];
+
+  const amounts = hasExpenses
+    ? expenseCategories.map(item => item.amount)
+    : [1]; // иначе чарт не отрисуется
 
   const data = {
     labels: labels,
     datasets: [
       {
         label: 'Expenses ₴',
-        data: expensesCategories,
+        data: amounts,
         backgroundColor: [
           '#FED057', '#FFD8D0', '#FD9498', '#C5BAFF', '#6E78E8',
           '#4A56E2', '#81E1FF', '#24CCA7', '#00AD84', '#D35400'
@@ -51,31 +52,29 @@ const Chart = ({ summary, income, expenses }) => {
   };
 
   const options = {
-  cutout: '70%', 
-  plugins: {
-    legend: {
-      position: 'right',
+    cutout: '70%',
+    plugins: {
+      legend: {
+        position: 'right',
+      },
+      tooltip: {
+        enabled: true,
+      },
     },
-    tooltip: {
-      enabled: true,
-    },
-  },
-  maintainAspectRatio: false,
-};
+    maintainAspectRatio: false,
+  };
 
-
-  
   const safeIncome = isNaN(income) ? 0 : Number(income);
   const safeExpenses = isNaN(expenses) ? 0 : Number(expenses);
   const balance = safeIncome - safeExpenses;
 
   return (
-    <div className={`${css.chartContainer}`}>
+    <div className={css.chartContainer}>
       {hasExpenses ? (
         <>
           <Doughnut data={data} options={options} plugins={[shadowPlugin]} />
           <div className={css.chartCenter}>
-            <span>{balance !== 0 ? `₴ ${balance.toFixed(2)}` : '₴ 0.00'}</span>
+            <span>{`₴ ${balance.toFixed(2)}`}</span>
           </div>
         </>
       ) : (

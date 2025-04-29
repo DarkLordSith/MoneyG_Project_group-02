@@ -2,7 +2,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance"; // подключаем правильный axiosInstance
 import { setIsLoading } from "../global/slice";
-//import { setAuthToken } from "../../utils/authToken";
+//import { persistor } from "../store";
+import { setAuthToken } from "../../utils/authToken";
 
 // fetchTransactions
 export const fetchTransactions = createAsyncThunk(
@@ -10,6 +11,10 @@ export const fetchTransactions = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
+
+      const token = thunkAPI.getState().auth.token;
+      setAuthToken(token);
+
       const response = await axiosInstance.get("/transactions/");
       return response.data.data.data;
     } catch (error) {
@@ -26,6 +31,10 @@ export const addTransaction = createAsyncThunk(
   async (transactionData, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
+
+      const token = thunkAPI.getState().auth.token;
+      setAuthToken(token);
+
       const response = await axiosInstance.post(
         "/transactions/",
         transactionData
@@ -45,6 +54,10 @@ export const deleteTransaction = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
+
+      const token = thunkAPI.getState().auth.token;
+      setAuthToken(token);
+
       await axiosInstance.delete(`/transactions/${id}`);
       return id;
     } catch (error) {
@@ -60,10 +73,31 @@ export const fetchSummary = createAsyncThunk(
   async ({ month, year }, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
+
+      const token = thunkAPI.getState().auth.token;
+      setAuthToken(token);
+
       const response = await axiosInstance.get("/transactions/summary", {
         params: { month, year },
       });
       return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
+    }
+  }
+);
+
+export const fetchCategories = createAsyncThunk(
+  "transactions/fetchCategories",
+  async ({ month, year }, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(setIsLoading(true));
+      const response = await axiosInstance.get("/transactions/categories", {
+        params: { month, year },
+      });
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
@@ -91,7 +125,7 @@ export const fetchSummary = createAsyncThunk(
 //);
 
 // fetchCategories
-//export const fetchCategories = createAsyncThunk(
+// export const fetchCategories = createAsyncThunk(
 //  "transactions/fetchCategories",
 //  async ({ month, year }, thunkAPI) => {
 //    try {
@@ -106,6 +140,6 @@ export const fetchSummary = createAsyncThunk(
 //      thunkAPI.dispatch(setIsLoading(false));
 //    }
 //  }
-//);
+// );
 
 // Закомментированное из ветки main, оставь это, если хочешь оставить старую версию для будущего использования:

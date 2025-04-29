@@ -1,25 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import css from './StatisticsTable.module.css';
 
-const fakeData = [
-  { name: 'Main expenses', amount: 7600 },
-  { name: 'Products', amount: 6200 },
-  { name: 'Car', amount: 1600 },
-  { name: 'Self care', amount: 800 },
-  { name: 'Child care', amount: 2025 },
-  { name: 'Household products', amount: 300 },
-  { name: 'Education', amount: 4000 },
-  { name: 'Leisure', amount: 1200 },
-  { name: 'Other expenses', amount: 400 },
-];
-
-const StatisticsTable = ({ summary, income, expenses, onCategoriesChange }) => {
-  const expensesCategories = summary?.expenses?.categories || fakeData;   //[];
-
-  useEffect(() => {
-    onCategoriesChange(expensesCategories);
-  }, [summary, onCategoriesChange]);
-
+const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCategories = [] }) => {
+  const formatCurrency = (value) => {
+    if (isNaN(value)) return '₴ 0.00';
+    return `₴ ${Number(value).toFixed(2)}`;
+  };
 
   const categoryColor = index => {
     const colors = ['#FED057', '#FFD8D0', '#FD9498', '#C5BAFF', '#6E78E8',
@@ -27,7 +13,34 @@ const StatisticsTable = ({ summary, income, expenses, onCategoriesChange }) => {
     return colors[index % colors.length];
   };
 
+  const allCategories = [
+    ...expenseCategories.map((cat, index) => ({
+      ...cat,
+      type: 'expense',
+      id: `expense-${cat.name}-${index}`,
+      amount: parseFloat(cat.amount) || 0,
+    })),
+    ...incomeCategories.map((cat, index) => ({
+      ...cat,
+      type: 'income',
+      id: `income-${cat.name}-${index}`,
+      amount: parseFloat(cat.amount) || 0,
+    }))
+  ];
 
+  const sortedCategories = allCategories
+    .filter(cat => cat.amount > 0) //  Исключаем пустые (0) категории
+    .sort((a, b) => b.amount - a.amount);
+
+  const hasData = sortedCategories.length > 0 || (income > 0 || expenses > 0);
+
+  if (!hasData) {
+    return (
+      <div className={css.tableStat}>
+        <p className={css.noDataText}>No statistics available for the selected period.</p>
+      </div>
+    );
+  }
 
   return (
     <div className={css.tableStat}>
@@ -38,13 +51,16 @@ const StatisticsTable = ({ summary, income, expenses, onCategoriesChange }) => {
 
       <table className={css.notesStat}>
         <tbody>
-          {expensesCategories.map((item, index) => (
-            <tr key={item.name}>
+          {sortedCategories.map((item, index) => (
+            <tr key={item.id}>
               <td className={css.restangle}>
                 <span className={css.colorRes} style={{ backgroundColor: categoryColor(index) }} />
               </td>
               <td className={css.categoryName}>{item.name}</td>
-              <td className={css.amount}>{item.amount.toFixed(2)}</td>
+              <td className={css.amount}>
+                {item.type === 'expense' ? '- ' : '+ '}
+                {formatCurrency(item.amount)}
+              </td>                            
             </tr>
           ))}
         </tbody>
@@ -54,13 +70,13 @@ const StatisticsTable = ({ summary, income, expenses, onCategoriesChange }) => {
         <div className={css.row}>
           <span className={css.label}>Expenses:</span>
           <span className={css.expensesTotal}>
-            {(expenses ?? 26364.2).toFixed(2)}
+            {formatCurrency(expenses ?? 0)}
           </span>
         </div>
         <div className={css.row}>
           <span className={css.label}>Income:</span>
           <span className={css.incomeTotal}>
-            {(income ?? 27350).toFixed(2)}
+            {formatCurrency(income ?? 0)}
           </span>
         </div>
       </div>
