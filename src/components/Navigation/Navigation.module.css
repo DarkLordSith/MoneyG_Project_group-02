@@ -85,11 +85,12 @@
 
 @media screen and (min-width: 768px) {
   .navList {
+    /* margin-left: 16px; */
     flex-direction: column;
     padding-top: 40px;
     padding-bottom: 28px;
     gap: 12px;
-    margin-left: 16px;
+
   }
 
   .navItem {
@@ -189,5 +190,14 @@
 
   .navItemText {
     opacity: 0.9;
+  }
+
+
+  @media screen and (min-width: 1280px) {
+    .navList {
+      margin-left: 16px;
+      /* margin-bottom: 28px; */
+    }
+
   }
 }
