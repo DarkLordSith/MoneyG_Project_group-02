@@ -3,7 +3,6 @@ import css from './StatisticsTable.module.css';
 
 const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCategories = [] }) => {
   const formatCurrency = (value) => {
-    // Проверим на валидность значения
     if (isNaN(value)) return '₴ 0.00';
     return `₴ ${Number(value).toFixed(2)}`;
   };
@@ -14,24 +13,34 @@ const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCateg
     return colors[index % colors.length];
   };
 
-  // Объединяем расходы и доходы и сортируем по убыванию суммы
   const allCategories = [
     ...expenseCategories.map((cat, index) => ({
       ...cat,
       type: 'expense',
       id: `expense-${cat.name}-${index}`,
-      amount: parseFloat(cat.amount) || 0, // Преобразуем в число и игнорируем NaN
+      amount: parseFloat(cat.amount) || 0,
     })),
     ...incomeCategories.map((cat, index) => ({
       ...cat,
       type: 'income',
       id: `income-${cat.name}-${index}`,
-      amount: parseFloat(cat.amount) || 0, // Преобразуем в число и игнорируем NaN
+      amount: parseFloat(cat.amount) || 0,
     }))
   ];
 
-  // Сортировка по убыванию суммы
-  const sortedCategories = allCategories.sort((a, b) => b.amount - a.amount);
+  const sortedCategories = allCategories
+    .filter(cat => cat.amount > 0) // ❗ Исключаем пустые (0) категории
+    .sort((a, b) => b.amount - a.amount);
+
+  const hasData = sortedCategories.length > 0 || (income > 0 || expenses > 0);
+
+  if (!hasData) {
+    return (
+      <div className={css.tableStat}>
+        <p className={css.noDataText}>No statistics available for the selected period.</p>
+      </div>
+    );
+  }
 
   return (
     <div className={css.tableStat}>
