@@ -93,7 +93,7 @@ export const fetchSummary = createAsyncThunk(
 
 export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
-  async (type, thunkAPI) => {
+  async ({ type, month, year }, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
 
@@ -101,7 +101,7 @@ export const fetchCategories = createAsyncThunk(
       setAuthToken(token);
       
    //   const config = type ? { data: { type } } : {};
-      const response = await axiosInstance.get("/transactions/categories", type ? { type } : {});
+      const response = await axiosInstance.get("/transactions/categories", { params: { type, month, year }, });
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

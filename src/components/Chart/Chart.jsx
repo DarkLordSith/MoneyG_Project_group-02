@@ -26,7 +26,7 @@ const Chart = ({
   expenses = 0,
   expenseCategories = [],
 }) => {
-  const hasExpenses = expenseCategories.length > 0;
+  const hasExpenses = expenseCategories?.length > 0;
 
   const labels = hasExpenses
     ? expenseCategories.map(item => item.name)

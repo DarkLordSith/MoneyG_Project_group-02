@@ -1,27 +1,12 @@
 import React from 'react';
 import css from './StatisticsTable.module.css';
 
-//const fakeData = [
-//  { name: 'Main expenses', amount: 7600 },
-//  { name: 'Products', amount: 6200 },
-//  { name: 'Car', amount: 1600 },
-//  { name: 'Self care', amount: 800 },
-//  { name: 'Child care', amount: 2025 },
-//  { name: 'Household products', amount: 300 },
-//  { name: 'Education', amount: 4000 },
-//  { name: 'Leisure', amount: 1200 },
-//  { name: 'Other expenses', amount: 400 },
-//];
-
 const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCategories = [] }) => {
-  //const expensesCategories = summary?.expenses?.categories || fakeData;   //[];
-  //const expensesCategories = summary?.expense
-  //  ? Object.entries(summary.expense).map(([name, amount]) => ({ name, amount }))
-  //  : [];
-  //useEffect(() => {
- //   onCategoriesChange(expensesCategories);
-  // }, [summary, onCategoriesChange]);
-  const formatCurrency = (value) => `₴ ${Number(value).toFixed(2)}`;
+  const formatCurrency = (value) => {
+    // Проверим на валидность значения
+    if (isNaN(value)) return '₴ 0.00';
+    return `₴ ${Number(value).toFixed(2)}`;
+  };
 
   const categoryColor = index => {
     const colors = ['#FED057', '#FFD8D0', '#FD9498', '#C5BAFF', '#6E78E8',
@@ -29,7 +14,24 @@ const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCateg
     return colors[index % colors.length];
   };
 
+  // Объединяем расходы и доходы и сортируем по убыванию суммы
+  const allCategories = [
+    ...expenseCategories.map((cat, index) => ({
+      ...cat,
+      type: 'expense',
+      id: `expense-${cat.name}-${index}`,
+      amount: parseFloat(cat.amount) || 0, // Преобразуем в число и игнорируем NaN
+    })),
+    ...incomeCategories.map((cat, index) => ({
+      ...cat,
+      type: 'income',
+      id: `income-${cat.name}-${index}`,
+      amount: parseFloat(cat.amount) || 0, // Преобразуем в число и игнорируем NaN
+    }))
+  ];
 
+  // Сортировка по убыванию суммы
+  const sortedCategories = allCategories.sort((a, b) => b.amount - a.amount);
 
   return (
     <div className={css.tableStat}>
@@ -40,21 +42,18 @@ const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCateg
 
       <table className={css.notesStat}>
         <tbody>
-          {[...expenseCategories.map(cat => ({ ...cat, type: 'expense' })), 
-          ...incomeCategories.map(cat => ({ ...cat, type: 'income' }))]
-          .sort((a, b) => b.amount - a.amount) // по убыванию суммы
-          .map((item, index) => (
-            <tr key={`${item.type}-${item.name}`}>
+          {sortedCategories.map((item, index) => (
+            <tr key={item.id}>
               <td className={css.restangle}>
                 <span className={css.colorRes} style={{ backgroundColor: categoryColor(index) }} />
               </td>
               <td className={css.categoryName}>{item.name}</td>
-              <td className={css.amount}>- {item.type === 'expense' ? '- ' : '+ '} 
+              <td className={css.amount}>
+                {item.type === 'expense' ? '- ' : '+ '}
                 {formatCurrency(item.amount)}
               </td>                            
             </tr>
-          ))           //вот ЗДЕСЬ нужно уточнить у тимлида в случае +/- может нужно будет потм убрать
-          }
+          ))}
         </tbody>
       </table>
 

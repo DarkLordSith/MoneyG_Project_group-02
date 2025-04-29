@@ -80,8 +80,8 @@ const StatisticsTab = () => {
     const fetchData = async () => {
       const period = { month: selectedMonth + 1, year: selectedYear };
       dispatch(fetchSummary(period));
-      dispatch(fetchCategories("EXPENSE"));
-      dispatch(fetchCategories("INCOME"));
+      dispatch(fetchCategories({ type: "EXPENSE", ...period }));
+      dispatch(fetchCategories({ type: "INCOME", ...period }));
     };
     fetchData();
   }, [dispatch, selectedMonth, selectedYear]);
@@ -125,6 +125,24 @@ const StatisticsTab = () => {
         );
     }
   
+  // Преобразование категорий
+   const expenseCategoriesData = expenseCategories && Array.isArray(expenseCategories)
+    ? expenseCategories.map(([name, amount]) => ({
+        name,
+        amount,
+        type: 'expense',
+    }))
+    : [];
+
+  const incomeCategoriesData = incomeCategories && Array.isArray(incomeCategories)
+    ? incomeCategories.map(([name, amount]) => ({
+        name,
+        amount,
+        type: 'income',
+    }))
+    : [];
+
+
 
     
  
@@ -136,7 +154,7 @@ const StatisticsTab = () => {
           <Chart
             income={income}
             expenses={expenses}
-            expenseCategories={expenseCategories}
+            expenseCategories={expenseCategoriesData || []}
 
           />
         </div>
@@ -154,8 +172,8 @@ const StatisticsTab = () => {
         <StatisticsTable
           income={income}
           expenses={expenses}
-          expenseCategories={expenseCategories}
-          incomeCategories={incomeCategories}
+          expenseCategories={expenseCategoriesData}
+          incomeCategories={incomeCategoriesData}
         />
       </div>
     </div>

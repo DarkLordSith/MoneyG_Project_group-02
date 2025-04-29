@@ -84,6 +84,8 @@ const transactionsSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
+
+      
      .addCase(fetchCategories.pending, (state) => {
        state.isLoading = true;
        state.error = null;
@@ -91,7 +93,7 @@ const transactionsSlice = createSlice({
      .addCase(fetchCategories.fulfilled, (state, action) => {
        state.isLoading = false;
 
-       const type = action.meta.arg; 
+       const { type } = action.meta.arg; 
        if (type === "INCOME") {
          state.incomeCategories = action.payload;
        } else if (type === "EXPENSE") {
