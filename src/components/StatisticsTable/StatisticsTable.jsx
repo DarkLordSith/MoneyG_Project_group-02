@@ -13,15 +13,15 @@ import css from './StatisticsTable.module.css';
 //  { name: 'Other expenses', amount: 400 },
 //];
 
-const StatisticsTable = ({ summary, income, expenses }) => {
+const StatisticsTable = ({ income, expenses, expenseCategories = [], incomeCategories = [] }) => {
   //const expensesCategories = summary?.expenses?.categories || fakeData;   //[];
-  const expensesCategories = summary?.expense
-    ? Object.entries(summary.expense).map(([name, amount]) => ({ name, amount }))
-    : [];
+  //const expensesCategories = summary?.expense
+  //  ? Object.entries(summary.expense).map(([name, amount]) => ({ name, amount }))
+  //  : [];
   //useEffect(() => {
  //   onCategoriesChange(expensesCategories);
- // }, [summary, onCategoriesChange]);
-
+  // }, [summary, onCategoriesChange]);
+  const formatCurrency = (value) => `₴ ${Number(value).toFixed(2)}`;
 
   const categoryColor = index => {
     const colors = ['#FED057', '#FFD8D0', '#FD9498', '#C5BAFF', '#6E78E8',
@@ -40,15 +40,21 @@ const StatisticsTable = ({ summary, income, expenses }) => {
 
       <table className={css.notesStat}>
         <tbody>
-          {expensesCategories.map((item, index) => (
-            <tr key={item.name}>
+          {[...expenseCategories.map(cat => ({ ...cat, type: 'expense' })), 
+          ...incomeCategories.map(cat => ({ ...cat, type: 'income' }))]
+          .sort((a, b) => b.amount - a.amount) // по убыванию суммы
+          .map((item, index) => (
+            <tr key={`${item.type}-${item.name}`}>
               <td className={css.restangle}>
                 <span className={css.colorRes} style={{ backgroundColor: categoryColor(index) }} />
               </td>
               <td className={css.categoryName}>{item.name}</td>
-              <td className={css.amount}>{item.amount.toFixed(2)}</td>
+              <td className={css.amount}>- {item.type === 'expense' ? '- ' : '+ '} 
+                {formatCurrency(item.amount)}
+              </td>                            
             </tr>
-          ))}
+          ))           //вот ЗДЕСЬ нужно уточнить у тимлида в случае +/- может нужно будет потм убрать
+          }
         </tbody>
       </table>
 
@@ -56,13 +62,13 @@ const StatisticsTable = ({ summary, income, expenses }) => {
         <div className={css.row}>
           <span className={css.label}>Expenses:</span>
           <span className={css.expensesTotal}>
-            {(expenses ?? 0).toFixed(2)}
+            {formatCurrency(expenses ?? 0)}
           </span>
         </div>
         <div className={css.row}>
           <span className={css.label}>Income:</span>
           <span className={css.incomeTotal}>
-            {(income ?? 0).toFixed(2)}
+            {formatCurrency(income ?? 0)}
           </span>
         </div>
       </div>
@@ -71,3 +77,4 @@ const StatisticsTable = ({ summary, income, expenses }) => {
 };
 
 export default StatisticsTable;
+

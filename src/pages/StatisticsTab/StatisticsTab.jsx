@@ -10,10 +10,13 @@ import {
   fetchCategories,
 } from "../../redux/transactions/operations";
 import {
-  selectSummary,
+  //selectSummary,
   selectTotalIncome,
   selectTotalExpenses,
-  selectBalance,
+  //selectCategories,
+  selectExpenseCategories,
+  selectIncomeCategories,
+//  selectBalance,
  // selectSelectedMonth,
  // selectSelectedYear,
   selectIsLoading,
@@ -42,10 +45,15 @@ import css from './StatisticsTab.module.css'
 const StatisticsTab = () => {
    const dispatch = useDispatch();
 
-  const summary = useSelector(selectSummary);
+  //const summary = useSelector(selectSummary);
   const income = useSelector(selectTotalIncome);
   const expenses = useSelector(selectTotalExpenses);
-  const balance = useSelector(selectBalance);
+  //const categories = useSelector(selectCategories);
+  const expenseCategories = useSelector(selectExpenseCategories);
+  const incomeCategories = useSelector(selectIncomeCategories);
+
+
+  //const balance = useSelector(selectBalance);
   // const month = useSelector(selectSelectedMonth) ?? new Date().getMonth() + 1;
   // const year = useSelector(selectSelectedYear) ?? new Date().getFullYear();
  
@@ -70,6 +78,8 @@ const StatisticsTab = () => {
     const fetchData = async () => {
       const period = { month: selectedMonth + 1, year: selectedYear };
       dispatch(fetchSummary(period));
+      dispatch(fetchCategories("EXPENSE"));
+      dispatch(fetchCategories("INCOME"));
     };
     fetchData();
   }, [dispatch, selectedMonth, selectedYear]);
@@ -97,9 +107,9 @@ const StatisticsTab = () => {
         setSelectedYear(Number(year));
   };
   
-    const updateCategories = (categories) => {
-       setCategoriesData(categories);
-  };  
+  //  const updateCategories = (categories) => {
+  //     setCategoriesData(categories);
+  //};  
 
     if (loading) {
         return <Loader />;
@@ -121,7 +131,12 @@ const StatisticsTab = () => {
       <div>
         <h2 className={css.headerStat}>Statistics</h2>
         <div className={css.chartSection}>
-          <Chart summary={summary} income={income} expenses={expenses} />
+          <Chart
+            income={income}
+            expenses={expenses}
+            expenseCategories={expenseCategories}
+
+          />
         </div>
       </div>
 
@@ -135,10 +150,10 @@ const StatisticsTab = () => {
         </div>
        
         <StatisticsTable
-          summary={summary}
           income={income}
           expenses={expenses}
-          onCategoriesChange={updateCategories}
+          expenseCategories={expenseCategories}
+          incomeCategories={incomeCategories}
         />
       </div>
     </div>

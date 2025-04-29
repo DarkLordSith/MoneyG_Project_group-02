@@ -16,7 +16,8 @@ const initialState = {
     totalExpense: 0,
     balance: 0,
   },
-  categories: [],
+  incomeCategories: [],
+  expenseCategories: [],
   isLoading: false,
   error: null,
   selectedMonth: null,
@@ -89,7 +90,13 @@ const transactionsSlice = createSlice({
      })
      .addCase(fetchCategories.fulfilled, (state, action) => {
        state.isLoading = false;
-       state.categories = action.payload;
+
+       const type = action.meta.arg; 
+       if (type === "INCOME") {
+         state.incomeCategories = action.payload;
+       } else if (type === "EXPENSE") {
+         state.expenseCategories = action.payload;
+       }
      })
      .addCase(fetchCategories.rejected, (state, action) => {
        state.isLoading = false;
