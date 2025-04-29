@@ -33,7 +33,6 @@ const transactionsSlice = createSlice({
       state.selectedYear = action.payload;
     },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(fetchTransactions.pending, (state) => {
@@ -51,17 +50,23 @@ const transactionsSlice = createSlice({
 
       .addCase(addTransaction.fulfilled, (state, action) => {
         state.items.push(action.payload);
+        if (action.payload.type === "income") {
+          state.totalIncome += action.payload.amount;
+          state.balance += action.payload.amount;
+        } else {
+          state.totalExpenses += action.payload.amount;
+          state.balance -= action.payload.amount;
+        }
       })
 
       .addCase(deleteTransaction.fulfilled, (state, action) => {
-        state.items = state.items.filter((item) => item.id !== action.payload);
+        state.items = state.items.filter((item) => item._id !== action.payload);
       })
 
       .addCase(fetchSummary.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-
       .addCase(fetchSummary.fulfilled, (state, action) => {
         state.isLoading = false;
         const { income, expense, totalIncome, totalExpense, balance } = action.payload;
@@ -73,14 +78,13 @@ const transactionsSlice = createSlice({
           balance,
         };
       })
-      
       .addCase(fetchSummary.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
-
   },
 });
+
 export const { setSelectedMonth, setSelectedYear } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

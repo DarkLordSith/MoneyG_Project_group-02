@@ -1,0 +1,55 @@
+/* EditTransactionForm.module.css */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+textarea,
+button {
+    padding: 8px;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.error {
+    border: 1px solid red;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 12px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cancelButton,
+.saveButton {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.cancelButton {
+    background-color: #ccc;
+}
+
+.saveButton {
+    background-color: #4caf50;
+    color: white;
+}

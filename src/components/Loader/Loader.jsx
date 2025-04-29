@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import s from "./Loader.module.css";
 
 const Loader = () => {
-  // Отримуємо стан завантаження з Redux store (Підписуємось на global.isLoading)
+  // Отримуємо стан завантаження з Redux store (підписуємось на global.isLoading)
   const isLoading = useSelector((state) => state.global?.isLoading);
 
   // Якщо немає завантаження, не відображаємо лоадер

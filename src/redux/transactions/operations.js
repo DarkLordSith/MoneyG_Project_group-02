@@ -11,7 +11,7 @@ export const fetchTransactions = createAsyncThunk(
     try {
       thunkAPI.dispatch(setIsLoading(true));
       const response = await axiosInstance.get("/transactions/");
-      return response.data;
+      return response.data.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {

@@ -1,113 +1,98 @@
-/* Стилізація позитивних значень */
-td.incomeValue {
-    color: var(--color-accent);
-    font-weight: 600;
-    text-align: end;
-    padding-inline-end: 16px;
-}
+/* TransactionItem.module.css  */
 
-/* Підсилення пріоритету для позитивних транзакцій */
-table tbody td.incomeValue,
-tbody>tr>td.incomeValue {
-    font-weight: 600;
-}
-
-/* Негативні значення */
-td.outflowValue {
-    color: hsl(0, 89%, 72%);
-    font-weight: 600;
-    text-align: end;
-    padding-inline-end: 16px;
-}
-
-/* Форсований пріоритет для негативних транзакцій */
-table tbody td.outflowValue,
-tbody>tr>td.outflowValue {
-    font-weight: 600;
-}
-
-/* Базовий рядок операції */
+/* Базовые стили для строк */
 .recordLine {
-    margin-block: 0;
-    margin-inline: auto;
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
-/* Рядок витрат */
 .recordLineNegative {
-    margin-block: 0;
-    margin-inline: auto;
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
-/* Універсальні стилі для комірок */
+/* Стили для ячеек */
 .timeCell,
 .kindCell,
 .groupCell,
 .remarkCell {
     font-weight: 400;
-    padding-block: 16px;
-    overflow-wrap: break-word;
+    font-size: 14px;
+    line-height: 129%;
+    color: #fbfbfb;
 }
 
-/* Час з вирівнюванням */
 .timeCell {
-    text-align: start;
-    padding-inline-start: 20px;
+    text-align: left;
+    padding-left: 20px;
 }
 
-/* Типізація операції */
 .kindCell {
+    text-align: left;
     width: auto;
-    text-align: start;
-    padding-inline-start: 20px;
 }
 
-/* Контент-колонки */
 .groupCell,
 .remarkCell {
-    text-align: start;
+    text-align: left;
 }
 
-/* Флекс-контейнер для дій */
-.actionSet {
-    display: flex;
+/* Стили для значений */
+.incomeValue {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-align: right;
+    padding-right: 16px;
 }
 
-/* Управляючі елементи */
-.manageCell {
-    display: flex;
-    place-content: center;
-    place-items: center;
-    gap: 8px;
-    padding: 1.5rem;
+.outflowValue {
+    color: hsl(0, 89%, 72%);
+    font-weight: 600;
+    text-align: right;
+    padding-right: 16px;
 }
 
-/* Перша велика літера для приміток */
+/* Первая буква с заглавной */
 .remarkCell::first-letter {
     text-transform: uppercase;
 }
 
-/* Текст мобільної кнопки по дефолту схований */
-.mobileEditText {
-    display: none;
+/* Ячейка управления */
+.manageCell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
 }
 
-/* Кнопка змін */
+/* Кнопка редактирования */
 .modifyBtn {
     color: hsl(220, 9%, 64%);
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: var(--transition);
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
 }
 
-/* Збільшення іконки при фокусі */
-.modifyBtn svg:hover,
-.modifyBtn svg:focus {
-    transform: scale(1.5);
+.modifyBtn:hover {
+    color: var(--color-white);
+}
+
+.modifyBtn svg {
+    transition: transform 0.3s ease;
+}
+
+.modifyBtn:hover svg {
+    transform: scale(1.2);
     stroke: var(--color-white);
 }
 
-/* Градієнтна кнопка видалення */
+/* Кнопка удаления */
 .eraseBtn {
     width: 69px;
     height: 29px;
@@ -120,177 +105,108 @@ tbody>tr>td.outflowValue {
     font-size: 0.875rem;
     box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
     background-image: linear-gradient(to right, var(--color-accent), #9e40ba 61.46%, #7000ff);
-    transition: var(--transition);
+    transition: all 0.3s ease;
     background-size: 200% 100%;
 }
 
-/* Анімація градієнта при наведенні */
 .eraseBtn:hover,
 .eraseBtn:focus {
     background-position: 100% 50%;
-    transform: var(--scale);
+    transform: scale(1.05);
 }
 
-/* МОБІЛЬНІ СТИЛІ */
+/* Скрытый текст по умолчанию */
+.mobileEditText {
+    display: none;
+}
+
+/* Мобильные стили */
 @media screen and (max-width: 767px) {
 
-    /* Показуємо текст для мобільних */
-    .mobileEditText {
-        display: inline-block;
-        font-size: 1rem;
-    }
-
-    /* Ховер-ефект для тексту */
-    .mobileEditText:hover {
-        transform: var(--scale);
-        color: var(--color-white);
-    }
-
-    /* Скидання масштабування для мобільних */
-    .modifyBtn svg:hover,
-    .modifyBtn svg:focus {
-        transform: none;
-        stroke: var(--color-white-600);
-    }
-
-    /* Ховер для всієї кнопки на мобільних */
-    .modifyBtn:hover,
-    .modifyBtn:focus {
-        transform: var(--scale);
-        color: var(--color-white);
-    }
-
-    /* Зберігаємо анімацію для видалення */
-    .eraseBtn:hover {
-        background-position: 100% 50%;
-        transform: var(--scale);
-    }
-
-    /* Бокова індикація для доходів */
-    .recordLine::after {
-        content: "";
-        position: absolute;
-        inset-block: 0;
-        inset-inline-start: 0;
-        width: 5px;
-        background-color: var(--color-accent);
-        border-start-start-radius: 10px;
-        border-end-start-radius: 10px;
-    }
-
-    /* Індикатор для витрат */
-    .recordLineNegative::after {
-        content: "";
-        position: absolute;
-        inset-block: 0;
-        inset-inline-start: 0;
-        width: 5px;
-        background-color: hsl(18, 100%, 62%);
-        border-start-start-radius: 10px;
-        border-end-start-radius: 10px;
-    }
-
-    /* Позиціонування для псевдоелементів */
+    /* Стили строк */
     .recordLine,
     .recordLineNegative {
         position: relative;
+        display: block;
+        margin-bottom: 8px;
+        /* padding: 12px 0; */
+        background: rgba(82, 59, 126, 0.6);
+        border-radius: 10px;
     }
 
-    /* Флекс-лейаут для мобільних */
-    .recordLine td,
-    .recordLineNegative td {
-        padding: 0.75rem 1.25rem 0.75rem 1.5625rem;
-        display: flex;
+    /* Цветной индикатор слева */
+    .recordLine::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 5px;
+        background-color: var(--color-accent);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
     }
 
-    /* Розміщення контенту в комірках */
+    .recordLineNegative::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 5px;
+        background-color: hsl(18, 100%, 62%);
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+
+    /* Стили ячеек */
     .timeCell,
     .kindCell,
     .groupCell,
     .remarkCell,
-    td.incomeValue,
-    td.outflowValue,
+    .incomeValue,
+    .outflowValue,
     .manageCell {
+        display: flex;
         justify-content: space-between;
+        padding: 8px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.41);
     }
 
-    /* Додаткові стилі для колонок */
-    .kindCell {
-        padding-inline-start: 2rem;
+    .manageCell {
+        border-bottom: none;
+        padding: 12px 20px;
     }
 
-    .groupCell,
-    .remarkCell {
-        padding-inline-start: 1rem;
+    /* Подписи для мобильной версии */
+    .timeLabel,
+    .kindLabel,
+    .groupLabel,
+    .remarkLabel,
+    .sumLabel {
+        font-weight: 600;
+        color: var(--color-white);
     }
 
-    .remarkCell {
-        gap: 5px;
+    /* Текст для кнопки редактирования */
+    .mobileEditText {
+        display: inline-block;
+        font-size: 0.875rem;
     }
 
-    /* Обмеження довжини коментаря */
+    /* Гибкий контейнер для комментария */
     .remarkCell p {
+        margin: 0;
         text-overflow: ellipsis;
         overflow: hidden;
     }
 
-    /* Збереження кольорів для мобільної версії */
-    .recordLine td.incomeValue,
-    table .recordLine td.incomeValue {
+    /* Сохранение цветов для мобильной версии */
+    .incomeValue {
         color: var(--color-accent);
-    }
-
-    .recordLineNegative td.outflowValue,
-    table .recordLineNegative td.outflowValue {
+        font-weight: 600;
+    }.outflowValue {
         color: hsl(0, 89%, 72%);
-    }
-
-    /* Флекс для кнопки редагування */
-    .modifyBtn {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    /* Підписи для мобільних */
-    .timeLabel,
-    .kindLabel,
-    .groupLabel,
-    .remarkLabel {
         font-weight: 600;
     }
-
-    /* Колір для суми на мобільних */
-    .sumLabel {
-        color: var(--color-white);
     }
-}
-
-/* АЛЬТЕРНАТИВНІ МЕТОДИ ПІДВИЩЕННЯ СПЕЦИФІЧНОСТІ */
-
-/* Метод 1: Каскадне підсилення */
-.ledger-view tbody td.incomeValue,
-.ledger-view tbody td.outflowValue {
-    font-weight: 600 !important;
-}
-
-/* Метод 2: Комбінація селекторів */
-.ledger-view table tr:not(.disabled) td[class*="Value"] {
-    font-weight: 600;
-}
-
-/* Метод 3: Через атрибути data */
-td[data-value-type="income"],
-td[data-value-type="expense"] {
-    font-weight: 600;
-}
-
-/* Метод 4: Використання :where() для групування */
-:where(td.incomeValue, td.outflowValue) {
-    font-weight: 600;
-}
-
-/* Метод 5: Логічні комбінації */
-td:is(.incomeValue, .outflowValue):not([data-thin]) {
-    font-weight: 600;
-}

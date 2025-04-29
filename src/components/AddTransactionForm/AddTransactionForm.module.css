@@ -1,0 +1,68 @@
+/* AddTransactionForm.module.css */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.switcher {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.switcher button {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.switcher button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.field label {
+    font-size: 14px;
+}
+
+.field input,
+.field select,
+.field textarea {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.field input[type="number"] {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+.submitButton {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.submitButton:hover {
+    background-color: #0056b3;
+}
