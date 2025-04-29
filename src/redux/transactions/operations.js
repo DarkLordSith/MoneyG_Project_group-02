@@ -100,8 +100,8 @@ export const fetchCategories = createAsyncThunk(
       const token = thunkAPI.getState().auth.token;
       setAuthToken(token);
       
-      const config = type ? { data: { type } } : {};
-      const response = await axiosInstance.post("/transactions/categories", config);
+   //   const config = type ? { data: { type } } : {};
+      const response = await axiosInstance.get("/transactions/categories", type ? { type } : {});
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

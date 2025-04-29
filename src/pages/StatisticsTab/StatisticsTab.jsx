@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Chart from "../../components/Chart/Chart";
 import StatisticsDashboard from "../../components/StatisticsDashboard/StatisticsDashboard";
 import StatisticsTable from "../../components/StatisticsTable/StatisticsTable";
+import Loader from "../../components/Loader/Loader"; 
+
 
 import {
   fetchSummary,
