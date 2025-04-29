@@ -9,18 +9,21 @@
   color: var(--color-white);
   position: relative;
   width: 100%;
-  /* Видаляємо margin-left: calc(-50vw + 50%); - це спричиняє проблеми */
   overflow-x: hidden;
   font-family: "Poppins-Regular", Helvetica, sans-serif;
+
+
 }
 
 /* Головний контейнер дешборду з адаптивними стилями */
 .dashboardPage {
   width: 100%;
+
   max-width: 320px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+
 }
 
 /* Стилі для хедера */
@@ -38,23 +41,23 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #101010;
+
 }
 
 /* Версії фону для різних пристроїв */
 .mobileBg {
   background-image: url("/src/assets/dashboard_images/gradient_mobile.webp");
-  background-color: #101010;
+
 }
 
 .tabletBg {
   background-image: url("/src/assets/dashboard_images/gradient_tablet.webp");
-  background-color: #101010;
+
 }
 
 .desktopBg {
   background-image: url("/src/assets/dashboard_images/gradient_desktop.webp");
-  background-color: #101010;
+
 }
 
 /* Контейнер для вмісту (все крім Header) */
@@ -79,7 +82,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 40px;
 }
 
 .dashboardData {
@@ -115,6 +118,16 @@
   display: none;
 }
 
+@media screen and (max-width: 767px) {
+  .dashboardContainer {
+
+    background-image: url('/src/assets/dashboard_images/modallogtab.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
 /* Стилі для планшетів (768px - 1279px) */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .dashboardPage {
@@ -134,13 +147,13 @@
   }
 
   /* Спеціальні стилі для планшетної версії */
-  .tabletLayout {
+  /* .tabletLayout {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 28px;
     margin-bottom: 28px;
-  }
+  } */
 
   .tabletTopSection {
     display: flex;
@@ -150,8 +163,7 @@
 
   .navigation {
     width: 336px;
-    height: 66px;
-    margin-bottom: 28px;
+    /* height: 66px; */
   }
 
   .balance {
@@ -235,7 +247,7 @@
   .divider {
     display: block;
     width: 1px;
-    height: 100vh;
+    height: 641px;
     background-color: var(--color-white-600);
     box-shadow: 1px 4px 1px 0 rgba(0, 0, 0, 0.25);
   }

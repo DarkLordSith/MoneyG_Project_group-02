@@ -16,7 +16,7 @@
     position: relative;
     width: 533px;
     height: 447px;
-    backdrop-filter: blur(100px);
+    backdrop-filter: blur(50px);
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
     background: var(--color-form-bg);
     border-radius: var(--radius-sm);
@@ -78,11 +78,13 @@
     border-radius: 20px;
     box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
     background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
-    color: white;
-    font-size: 16px;
+    color: #fbfbfb;
+    font-size: 18px;
     font-family: var(--font-main);
-    font-weight: 500;
-    letter-spacing: 1.8px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
 }
@@ -98,11 +100,13 @@
     border: none;
     border-radius: 20px;
     background-color: white;
-    color: #e04b9a;
-    font-size: 16px;
+    color: #623f8b;
+    font-size: 18px;
     font-family: var(--font-main);
-    font-weight: 500;
-    letter-spacing: 1.8px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);

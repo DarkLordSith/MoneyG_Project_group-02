@@ -68,8 +68,6 @@ export const deleteTransaction = createAsyncThunk(
   }
 );
 
-
-
 export const fetchSummary = createAsyncThunk(
   "transactions/fetchSummary",
   async ({ month, year }, thunkAPI) => {
@@ -77,7 +75,7 @@ export const fetchSummary = createAsyncThunk(
       thunkAPI.dispatch(setIsLoading(true));
 
       const token = thunkAPI.getState().auth.token;
-      setAuthToken(token); 
+      setAuthToken(token);
 
       const response = await axiosInstance.get("/transactions/summary", {
         params: { month, year },
@@ -90,28 +88,6 @@ export const fetchSummary = createAsyncThunk(
     }
   }
 );
-
-export const fetchCategories = createAsyncThunk(
-  "transactions/fetchCategories",
-  async ({ type, month, year }, thunkAPI) => {
-    try {
-      thunkAPI.dispatch(setIsLoading(true));
-
-      const token = thunkAPI.getState().auth.token;
-      setAuthToken(token);
-      
-   //   const config = type ? { data: { type } } : {};
-      const response = await axiosInstance.get("/transactions/categories", { params: { type, month, year }, });
-      return response.data.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    } finally {
-      thunkAPI.dispatch(setIsLoading(false));
-    }
-  }
-);
-
-
 
 // fetchSummary
 //export const fetchSummary = createAsyncThunk(
@@ -130,7 +106,6 @@ export const fetchCategories = createAsyncThunk(
 //    }
 //  }
 //);
-
 
 // fetchCategories
 //export const fetchCategories = createAsyncThunk(

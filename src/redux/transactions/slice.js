@@ -4,14 +4,15 @@ import {
   addTransaction,
   deleteTransaction,
   fetchSummary,
+  //  fetchCategories,
   fetchCategories,
 } from "./operations";
 
 const initialState = {
   items: [],
   summary: {
-    income: {}, 
-    expense: {}, 
+    income: {},
+    expense: {},
     totalIncome: 0,
     totalExpense: 0,
     balance: 0,
@@ -71,7 +72,8 @@ const transactionsSlice = createSlice({
       })
       .addCase(fetchSummary.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { income, expense, totalIncome, totalExpense, balance } = action.payload;
+        const { income, expense, totalIncome, totalExpense, balance } =
+          action.payload;
         state.summary = {
           income: income || {},
           expense: expense || {},
@@ -83,6 +85,7 @@ const transactionsSlice = createSlice({
       .addCase(fetchSummary.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      });
       })
 
       
