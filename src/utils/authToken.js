@@ -10,11 +10,13 @@ export const setAuthToken = (token) => {
 
 export const getAuthToken = () => {
   try {
-    const persistedAuth = JSON.parse(localStorage.getItem("persist:auth"));
+    const persistedAuth = JSON.parse(localStorage.getItem("persist:root"));
+
     if (!persistedAuth) return null;
-    const parsedAuth = JSON.parse(persistedAuth.auth).token;
-    const token = JSON.parse(parsedAuth.token);
-    return token !== "null" ? token : null;
+
+    const parsedAuth = JSON.parse(persistedAuth.auth);
+    const token = parsedAuth.token;
+    return token;
   } catch (error) {
     return null;
   }
