@@ -46,7 +46,8 @@ const App = () => {
 
   return (
     <Suspense fallback={<Loader />}>
-      <Routes>
+      <Routes> 
+        
         <Route
           path="/login"
           element={
