@@ -125,3 +125,19 @@ function TransactionItem({ transaction }) {
 }
 
 export default TransactionItem;
+
+// const TransactionsItem = ({ transaction }) => {
+//   const { date, type, category, comment, amount } = transaction;
+
+//   return (
+//     <li>
+//       <span>{date}</span>
+//       <span>{type}</span>
+//       <span>{category}</span>
+//       <span>{comment}</span>
+//       <span>{amount} ₴</span>
+//     </li>
+//   );
+// };
+
+// export default TransactionsItem;

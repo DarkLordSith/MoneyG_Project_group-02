@@ -40,14 +40,11 @@ const App = () => {
     verifyAuth();
   }, [dispatch]);
 
-  if (isRefreshing) {
-    return <Loader />; // Можно пока показывать loader
-  }
+  if (isRefreshing) return <Loader />; // Покажемо лоадер під час перевірки
 
   return (
     <Suspense fallback={<Loader />}>
       <Routes> 
-        
         <Route
           path="/login"
           element={

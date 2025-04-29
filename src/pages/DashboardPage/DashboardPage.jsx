@@ -12,10 +12,10 @@ import Navigation from "../../components/Navigation/Navigation";
 import Balance from "../../components/Balance/Balance";
 import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
 import Currency from "../../components/Currency/Currency";
-// import HomeTab from "../../components/HomeTab/HomeTab";
+import HomeTab from "../HomeTab/HomeTab";
 import StatisticsTab from "../StatisticsTab/StatisticsTab";
 // import CurrencyTab from "../../components/CurrencyTab/CurrencyTab";
-import TransactionList from "../../components/TransactionList/TransactionList";
+// import TransactionList from "../../components/TransactionList/TransactionList";
 
 // Операції
 import { logout } from "../../redux/auth/operations";
@@ -138,8 +138,9 @@ const DashboardPage = () => {
           <div className={styles.mainContent}>
             <Routes>
               <Route index element={<Navigate to="home" />} />
-              <Route path="home" element={<TransactionList />} />{" "}
-              {/* TransactionList Замість <div>Home Tab (он в разработке)</div> */}
+              {/* <Route path="home" element={<TransactionList />} />{" "} */}
+              {/* Замість <div>Home Tab (в разработке)</div> */}
+              <Route path="home" element={<HomeTab />} />
               <Route path="statistics" element={<StatisticsTab />} />
               {isMobile && <Route path="currency" element={<CurrencyTab />} />}
             </Routes>
