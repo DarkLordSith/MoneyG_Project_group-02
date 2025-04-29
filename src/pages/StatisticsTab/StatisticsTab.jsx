@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import Chart from "../../components/Chart/Chart";
 import StatisticsDashboard from "../../components/StatisticsDashboard/StatisticsDashboard";
 import StatisticsTable from "../../components/StatisticsTable/StatisticsTable";
+
 import {
-//  fetchSummary,
-//  fetchCategories,
+  fetchSummary,
+  fetchCategories,
 } from "../../redux/transactions/operations";
 import {
- // selectSummary,
- // selectTotalIncome,
- // selectTotalExpenses,
- // selectBalance,
+  selectSummary,
+  selectTotalIncome,
+  selectTotalExpenses,
+  selectBalance,
  // selectSelectedMonth,
  // selectSelectedYear,
   selectIsLoading,
@@ -21,52 +23,59 @@ import {
 
 import css from './StatisticsTab.module.css'
 
-const fakeData = {
-  expenses: {
-    categories: [
-      { name: 'Food', amount: 500 },
-      { name: 'Transport', amount: 200 },
-      { name: 'Entertainment', amount: 150 },
-      { name: 'Products', amount: 500 },
-      { name: 'Car', amount: 200 },
-      { name: 'Child care', amount: 150 },
-      { name: 'Food', amount: 500 },
-      { name: 'Transport', amount: 200 },
-      { name: 'Entertainment', amount: 150 },
-    ],
-  },
-};
+//const fakeData = {
+//  expenses: {
+//    categories: [
+//      { name: 'Food', amount: 500 },
+//      { name: 'Transport', amount: 200 },
+//      { name: 'Entertainment', amount: 150 },
+//      { name: 'Products', amount: 500 },
+//      { name: 'Car', amount: 200 },
+//      { name: 'Child care', amount: 150 },
+//      { name: 'Food', amount: 500 },
+//      { name: 'Transport', amount: 200 },
+//      { name: 'Entertainment', amount: 150 },
+//    ],
+//  },
+//};
 
-const StatisticsTab = ({ summary, income, expenses }) => {
- //  const dispatch = useDispatch();
+const StatisticsTab = () => {
+   const dispatch = useDispatch();
 
-  //const summary = useSelector(selectSummary);
-  //const income = useSelector(selectTotalIncome);
-  //const expenses = useSelector(selectTotalExpenses);
-  //const balance = useSelector(selectBalance);
+  const summary = useSelector(selectSummary);
+  const income = useSelector(selectTotalIncome);
+  const expenses = useSelector(selectTotalExpenses);
+  const balance = useSelector(selectBalance);
   // const month = useSelector(selectSelectedMonth) ?? new Date().getMonth() + 1;
   // const year = useSelector(selectSelectedYear) ?? new Date().getFullYear();
+ 
   const loading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  //const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+
 
   const now = new Date();
-  const currentMonthIndex = now.getMonth(); // Индекс текущего месяца (0-11)
+  const currentMonthIndex = now.getMonth(); //  (0-11)
   const currentYear = now.getFullYear(); 
 
   const [selectedMonth, setSelectedMonth] = useState(currentMonthIndex);
   const [selectedYear, setSelectedYear] = useState(currentYear);
-  const [categoriesData, setCategoriesData] = useState([]); // для Chart
-  const [balance, setBalance] = useState(income - expenses);
+  //const [categoriesData, setCategoriesData] = useState([]); // для Chart
+  //const [balance, setBalance] = useState(income - expenses);
   
 
 
     useEffect(() => {
-        fetchData(selectedMonth, selectedYear);
-    }, [selectedMonth, selectedYear]);
+    const fetchData = async () => {
+      const period = { month: selectedMonth + 1, year: selectedYear };
+      dispatch(fetchSummary(period));
+    };
+    fetchData();
+  }, [dispatch, selectedMonth, selectedYear]);
 
-    const fetchData = (monthIndex, year) => {
-      if (monthIndex == null || !year) return;
+    //const fetchData = (monthIndex, year) => {
+    //  if (monthIndex == null || !year) return;
        // ЗДЕСЬ ЗАПРОС НА СЕРВЕР ДЛЯ ПОЛУЧЕНИЯ ДАННЫХ ПО СТАТИСТИКЕ
       
        //const period = { month: monthIndex + 1, year: Number(year) };
@@ -78,7 +87,7 @@ const StatisticsTab = ({ summary, income, expenses }) => {
        // const period = monthName === 'All month' ? { year: yearNumber } : { month: monthIndex, year: yearNumber };
 
        
-    };
+    //};
 
     const handleMonthChange = (monthIndex) => {
       setSelectedMonth(monthIndex);
@@ -88,8 +97,8 @@ const StatisticsTab = ({ summary, income, expenses }) => {
         setSelectedYear(Number(year));
   };
   
-  const updateCategories = (categories) => {
-    setCategoriesData(categories);
+    const updateCategories = (categories) => {
+       setCategoriesData(categories);
   };  
 
     if (loading) {

@@ -1,24 +1,26 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import css from './StatisticsTable.module.css';
 
-const fakeData = [
-  { name: 'Main expenses', amount: 7600 },
-  { name: 'Products', amount: 6200 },
-  { name: 'Car', amount: 1600 },
-  { name: 'Self care', amount: 800 },
-  { name: 'Child care', amount: 2025 },
-  { name: 'Household products', amount: 300 },
-  { name: 'Education', amount: 4000 },
-  { name: 'Leisure', amount: 1200 },
-  { name: 'Other expenses', amount: 400 },
-];
+//const fakeData = [
+//  { name: 'Main expenses', amount: 7600 },
+//  { name: 'Products', amount: 6200 },
+//  { name: 'Car', amount: 1600 },
+//  { name: 'Self care', amount: 800 },
+//  { name: 'Child care', amount: 2025 },
+//  { name: 'Household products', amount: 300 },
+//  { name: 'Education', amount: 4000 },
+//  { name: 'Leisure', amount: 1200 },
+//  { name: 'Other expenses', amount: 400 },
+//];
 
-const StatisticsTable = ({ summary, income, expenses, onCategoriesChange }) => {
-  const expensesCategories = summary?.expenses?.categories || fakeData;   //[];
-
-  useEffect(() => {
-    onCategoriesChange(expensesCategories);
-  }, [summary, onCategoriesChange]);
+const StatisticsTable = ({ summary, income, expenses }) => {
+  //const expensesCategories = summary?.expenses?.categories || fakeData;   //[];
+  const expensesCategories = summary?.expense
+    ? Object.entries(summary.expense).map(([name, amount]) => ({ name, amount }))
+    : [];
+  //useEffect(() => {
+ //   onCategoriesChange(expensesCategories);
+ // }, [summary, onCategoriesChange]);
 
 
   const categoryColor = index => {
@@ -54,13 +56,13 @@ const StatisticsTable = ({ summary, income, expenses, onCategoriesChange }) => {
         <div className={css.row}>
           <span className={css.label}>Expenses:</span>
           <span className={css.expensesTotal}>
-            {(expenses ?? 26364.2).toFixed(2)}
+            {(expenses ?? 0).toFixed(2)}
           </span>
         </div>
         <div className={css.row}>
           <span className={css.label}>Income:</span>
           <span className={css.incomeTotal}>
-            {(income ?? 27350).toFixed(2)}
+            {(income ?? 0).toFixed(2)}
           </span>
         </div>
       </div>

@@ -2,7 +2,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance"; // подключаем правильный axiosInstance
 import { setIsLoading } from "../global/slice";
-//import { setAuthToken } from "../../utils/authToken";
+//import { persistor } from "../store";
+import { setAuthToken } from "../../utils/authToken";
 
 // fetchTransactions
 export const fetchTransactions = createAsyncThunk(
@@ -73,6 +74,23 @@ export const fetchSummary = createAsyncThunk(
     }
   }
 );
+
+export const fetchCategories = createAsyncThunk(
+  "transactions/fetchCategories",
+  async (type, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(setIsLoading(true));
+      const config = type ? { data: { type } } : {};
+      const response = await axiosInstance.post("/transactions/categories", config);
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    } finally {
+      thunkAPI.dispatch(setIsLoading(false));
+    }
+  }
+);
+
 
 
 // fetchSummary
