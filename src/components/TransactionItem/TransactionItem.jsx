@@ -22,7 +22,7 @@ function TransactionItem({ transaction, handleEdit, handleRemove }) {
           transaction.type === "income" ? s.incomeValue : s.outflowValue
         }
       >
-        {transaction.sum.toFixed(2)}
+        {transaction.sum?.toFixed(2)}
       </td>
       <td className={s.manageCell}>
         <button type="button" className={s.modifyBtn} onClick={handleEdit}>

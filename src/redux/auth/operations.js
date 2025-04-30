@@ -59,6 +59,7 @@ export const refreshUser = createAsyncThunk(
       setAuthToken(data.data.accessToken);
       return data.data;
     } catch (error) {
+      localStorage.removeItem("persist:root");
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     } finally {
       thunkAPI.dispatch(setIsLoading(false));

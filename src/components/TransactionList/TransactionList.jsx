@@ -18,12 +18,10 @@ const TransactionList = () => {
 
   const handleDeleteTransaction = async (id) => {
     await dispatch(deleteTransaction(id));
-    await dispatch(getCurrentUser);
   };
 
   const handleEditTransaction = async (id) => {
     await dispatch(editTransaction(id));
-    await dispatch(getCurrentUser);
   };
 
   return (

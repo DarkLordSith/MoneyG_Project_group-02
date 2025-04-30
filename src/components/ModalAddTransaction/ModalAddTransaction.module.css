@@ -13,20 +13,25 @@
 
 .modalContainer {
     position: relative;
-    width: 100%;
-    max-width: 400px;
-    border-radius: 20px;
+    width: 540px;
+    height: 511px;
+    border-radius: 8px;
     overflow: hidden;
-    padding: 30px 20px;
+    padding: 40px 20px;
     color: #ffffff;
+    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
 }
 
 .modalBackground {
     position: absolute;
     inset: 0;
-    background-color: rgba(68, 37, 129, 0.95);
-    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(100px);
     z-index: -1;
+    background-image: url('/src/assets/dashboard_images/modallogtab.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .closeButton {
@@ -36,22 +41,15 @@
     z-index: 2;
 }
 
-.closeButton button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-}
-
 .closeIcon {
-    height: 24px;
-    width: 24px;
+    height: 17px;
+    width: 17px;
     color: white;
     cursor: pointer;
 }
 
 .titleContainer {
-    margin-bottom: 25px;
+    margin-bottom: 32px;
     position: relative;
 }
 
@@ -65,12 +63,12 @@
 .toggleContainer {
     display: flex;
     justify-content: center;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 
 .toggleWrapper {
-    width: 220px;
-    height: 40px;
+    width: 258px;
+    height: 44px;
     position: relative;
     display: flex;
     align-items: center;
@@ -82,8 +80,7 @@
     align-items: center;
     cursor: pointer;
     font-size: 14px;
-    color: #fbfbfb;
-    user-select: none;
+    color: #c4c4c4;
 }
 
 .activeOption {
@@ -93,48 +90,51 @@
 
 .toggleSwitch {
     position: relative;
-    width: 48px;
-    height: 24px;
-    background-color: white;
-    border-radius: 12px;
-    margin: 0 12px;
+    width: 80px;
+    height: 40px;
+    background: #fbfbfb;
+    border-radius: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .toggleSlider {
     position: absolute;
-    width: 24px;
-    height: 24px;
+    width: 44px;
+    height: 44px;
     background-color: #FFC107;
     border-radius: 50%;
-    top: 0;
+    top: -2px;
     left: 0;
     transition: all 0.3s ease;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .toggleSlider::before {
     content: "+";
     color: white;
-    font-size: 18px;
+    font-size: 28px;
     font-weight: bold;
 }
 
 .sliderRight {
-    left: 24px;
-    background-color: #666;
+    left: 36px;
+    background-color: #FF6596;
 }
 
 .sliderRight::before {
-    content: "";
+    content: "-";
 }
 
 .inputRowContainer {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 
 .inputWrapper {
@@ -148,7 +148,7 @@
     background-color: transparent;
     color: white;
     font-size: 18px;
-    text-align: left;
+    text-align: center;
     padding: 8px 0;
     outline: none;
 }
@@ -172,8 +172,8 @@
 }
 
 .calendarIcon {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     color: white;
     position: absolute;
     right: 0;
@@ -187,7 +187,7 @@
 }
 
 .commentContainer {
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     position: relative;
 }
 
@@ -210,21 +210,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
+    width: 300px;
+    margin: 0 auto;
 }
 
 .addButton {
-    width: 100%;
-    height: 45px;
-    border-radius: 12px;
-    background: linear-gradient(to right, #FFC107, #E91E63);
-    color: white;
-    font-weight: 500;
-    font-size: 16px;
+    width: 300px;
+    min-height: 50px;
     border: none;
-    cursor: pointer;
-    transition: opacity 0.3s;
+    border-radius: 20px;
+    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
+    color: #fbfbfb;
+    font-size: 18px;
+    font-family: var(--font-main);
+    font-weight: 400;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .addButton:hover {
@@ -232,16 +238,21 @@
 }
 
 .cancelButton {
-    width: 100%;
-    height: 45px;
-    border-radius: 12px;
-    background-color: white;
+    width: 300px;
+    min-height: 50px;
     border: none;
-    color: #666;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border-radius: 20px;
+    background-color: white;
+    color: #623f8b;
+    font-size: 18px;
+    font-family: var(--font-main);
+    font-weight: 400;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .cancelButton:hover {

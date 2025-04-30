@@ -1,146 +1,104 @@
-// import AddTransactionForm from "../AddTransactionForm/AddTransactionForm";
-
-// const ModalAddTransaction = ({ onClose }) => {
-//   return (
-//     <div onClick={onClose}>
-//       <div onClick={(e) => e.stopPropagation()}>
-//         <AddTransactionForm onClose={onClose} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ModalAddTransaction;
-
-import React, { useState, useEffect } from "react";
-import { Calendar, X } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { X } from "lucide-react";
 import styles from "./ModalAddTransaction.module.css";
+import AddTransactionForm from "../AddTransactionForm/AddTransactionForm";
 
-const ModalAddTransaction = ({ isOpen, onClose }) => {
-  const [isIncome, setIsIncome] = useState(true);
-  const [amount, setAmount] = useState("0.00");
-  const [date, setDate] = useState("07.07.2023");
-  const [comment, setComment] = useState("");
+const ModalAddTransaction = ({ closeModal }) => {
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isIncome, setIsIncome] = useState(false); // За замовчуванням тип "витрати" (expense)
+  const modalRef = useRef(null);
 
   useEffect(() => {
-    if (!isOpen) return;
-
-    const handleEscapeKey = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscapeKey);
+    // Блокуємо прокрутку body, коли модальне вікно відкрите
     document.body.style.overflow = "hidden";
 
+    // Повертаємо прокрутку при закритті модального вікна
     return () => {
-      document.removeEventListener("keydown", handleEscapeKey);
       document.body.style.overflow = "auto";
     };
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
+  }, []);
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      closeModal();
     }
   };
 
   const toggleTransactionType = () => {
     setIsIncome(!isIncome);
+    setIsFormVisible(true); // Показуємо форму при переключенні типу транзакції
   };
 
   return (
-    <div className={styles.modalOverlay} onClick={handleBackdropClick}>
+    <div
+      className={styles.modalOverlay}
+      onClick={handleBackdropClick}
+      ref={modalRef}
+    >
       <div
         className={styles.modalContainer}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Overlay background */}
+        {/* Фон модального вікна */}
         <div className={styles.modalBackground}></div>
 
-        {/* Close button */}
+        {/* Кнопка закриття */}
         <div className={styles.closeButton}>
-          <button onClick={onClose}>
+          <button onClick={closeModal}>
             <X className={styles.closeIcon} />
           </button>
         </div>
 
-        {/* Title */}
+        {/* Заголовок */}
         <div className={styles.titleContainer}>
           <h2 className={styles.title}>Add transaction</h2>
         </div>
 
-        {/* Toggle between Income and Expense */}
+        {/* Перемикач між доходом і витратою */}
         <div className={styles.toggleContainer}>
           <div className={styles.toggleWrapper}>
             <div
               className={`${styles.toggleOption} ${isIncome ? styles.activeOption : ""}`}
-              onClick={() => setIsIncome(true)}
+              onClick={() => {
+                setIsIncome(true);
+                setIsFormVisible(true);
+              }}
             >
               Income
             </div>
 
-            <div className={styles.toggleSwitch}>
+            <div
+              className={styles.toggleSwitch}
+              onClick={toggleTransactionType}
+            >
               <div
                 className={`${styles.toggleSlider} ${isIncome ? "" : styles.sliderRight}`}
-                onClick={toggleTransactionType}
               ></div>
             </div>
 
             <div
               className={`${styles.toggleOption} ${!isIncome ? styles.activeOption : ""}`}
-              onClick={() => setIsIncome(false)}
+              onClick={() => {
+                setIsIncome(false);
+                setIsFormVisible(true);
+              }}
             >
               Expense
             </div>
           </div>
         </div>
 
-        {/* Amount and Date Inputs */}
-        <div className={styles.inputRowContainer}>
-          <div className={styles.inputWrapper}>
-            <input
-              type="text"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className={styles.amountInput}
-            />
-            <div className={styles.inputUnderline}></div>
-          </div>
-
-          <div className={styles.inputWrapper}>
-            <div className={styles.dateInputContainer}>
-              <input
-                type="text"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                className={styles.dateInput}
-              />
-              <Calendar className={styles.calendarIcon} />
-            </div>
-            <div className={styles.inputUnderline}></div>
-          </div>
-        </div>
-
-        {/* Comment input */}
-        <div className={styles.commentContainer}>
-          <input
-            type="text"
-            placeholder="Comment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            className={styles.commentInput}
+        {/* Відображаємо форму, тільки якщо вона видима */}
+        {isFormVisible && (
+          <AddTransactionForm
+            closeModal={closeModal}
+            transactionType={isIncome ? "income" : "expense"}
           />
-          <div className={styles.inputUnderline}></div>
-        </div>
+        )}
 
-        {/* Action buttons */}
+        {/* Кнопка Cancel */}
         <div className={styles.buttonsContainer}>
-          <button className={styles.addButton}>ADD</button>
-          <button className={styles.cancelButton} onClick={onClose}>
+          <button className={styles.cancelButton} onClick={closeModal}>
             CANCEL
           </button>
         </div>
