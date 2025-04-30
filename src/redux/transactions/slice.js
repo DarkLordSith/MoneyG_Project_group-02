@@ -98,7 +98,7 @@ const transactionsSlice = createSlice({
   state.isLoading = false;
   const { data } = action.payload;
 
-  // Преобразуем категории в массивы
+
   state.incomeCategories = Object.entries(data.income || {});
   state.expenseCategories = Object.entries(data.expense || {});
 })
