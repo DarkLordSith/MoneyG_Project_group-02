@@ -1,44 +1,39 @@
-//import { useEffect } from "react";
-//import { useDispatch, useSelector } from "react-redux";
-//import {
-//  fetchTransactions,
-//  fetchCategories,
-//} from "../../redux/transactions/operations";
-//import { transactionsSelectors } from "../../redux/transactions/selectors";
-//import { selectIsLoading } from "../../redux/global/slice";
-//import TransactionsList from "../../components/TransactionList/TransactionList";
-//import Loader from "../../components/Loader/Loader";
-// import s from "./HomeTab.module.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTransactions } from "../../redux/transactions/operations";
+import { selectTransactions } from "../../redux/transactions/selectors";
+import { selectIsLoading } from "../../redux/transactions/selectors";
+import TransactionsList from "../../components/TransactionList/TransactionList";
+import Loader from "../../components/Loader/Loader";
 
-//const HomeTab = () => {
-//  const dispatch = useDispatch();
-//  const transactions = useSelector(transactionsSelectors.selectTransactions);
-//  const isLoading = useSelector(selectIsLoading);
+const HomeTab = () => {
+  const dispatch = useDispatch();
+  const transactions = useSelector(selectTransactions);
+  const isLoading = useSelector(selectIsLoading);
 
-//  useEffect(() => {
-//    dispatch(fetchTransactions());
-//    dispatch(fetchCategories());
-//  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchTransactions());
+  }, [dispatch]);
 
-//  return (
-//    <div className={s.homeTabContainer}>
-//      {isLoading && <Loader />}
-//      {!isLoading && (
-//        <>
-//          {transactions.length > 0 ? (
-//            <TransactionsList />
-//          ) : (
-//            <div className={s.emptyContainer}>
-//              <p>Немає транзакцій. Додайте свою першу транзакцію!</p>
- //           </div>
-//          )}
-//        </>
-//      )}
- //   </div>
-//  );
-//};
+  return (
+    <div>
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <>
+          {transactions.length > 0 ? (
+            <TransactionsList />
+          ) : (
+            <div>
+              <p>Немає транзакцій. Додайте свою першу транзакцію!</p>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
 
-//export default HomeTab;
+export default HomeTab;
 
 /*
 СКЕЛЕТ ДЛЯ ТЕБЕ:
@@ -75,5 +70,3 @@
 //     </section>
 //   );
 // };
-
-// export default HomeTab;

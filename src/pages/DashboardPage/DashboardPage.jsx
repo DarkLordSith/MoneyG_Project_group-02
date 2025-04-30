@@ -12,7 +12,7 @@ import Navigation from "../../components/Navigation/Navigation";
 import Balance from "../../components/Balance/Balance";
 import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
 import Currency from "../../components/Currency/Currency";
-// import HomeTab from "../HomeTab/HomeTab";
+import HomeTab from "../HomeTab/HomeTab";
 import StatisticsTab from "../StatisticsTab/StatisticsTab";
 // import CurrencyTab from "../../components/CurrencyTab/CurrencyTab";
 // import TransactionList from "../../components/TransactionList/TransactionList";
@@ -139,7 +139,7 @@ const DashboardPage = () => {
             <Routes>
               <Route index element={<Navigate to="home" />} />
               {/* <Route path="home" element={<TransactionList />} />{" "} */}
-              {/* <Route path="home" element={<HomeTab />} /> */}
+              <Route path="home" element={<HomeTab />} />
               <Route path="statistics" element={<StatisticsTab />} />
               {isMobile && <Route path="currency" element={<CurrencyTab />} />}
             </Routes>
