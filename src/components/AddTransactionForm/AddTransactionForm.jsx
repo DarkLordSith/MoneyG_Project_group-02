@@ -53,7 +53,7 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
     resolver: yupResolver(schema),
     defaultValues: {
       type: transactionType || "expense", // Використовуємо переданий тип або "expense" за замовчуванням
-      sum: "",
+      sum: 0,
       date: new Date(),
       category: "",
       comment: "",

@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
 import { setIsLoading } from "../global/slice";
 import { setAuthToken } from "../../utils/authToken";
+import { getCurrentUser } from "../auth/operations";
 
 // fetchTransactions
 export const fetchTransactions = createAsyncThunk(
@@ -39,6 +40,9 @@ export const addTransaction = createAsyncThunk(
         "/transactions/",
         transactionData
       );
+      thunkAPI.dispatch(fetchTransactions());
+      thunkAPI.dispatch(getCurrentUser());
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -55,6 +59,8 @@ export const deleteTransaction = createAsyncThunk(
     try {
       thunkAPI.dispatch(setIsLoading(true));
       await axiosInstance.delete(`/transactions/${id}`);
+      thunkAPI.dispatch(fetchTransactions());
+      thunkAPI.dispatch(getCurrentUser());
       return id;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -96,6 +102,8 @@ export const editTransaction = createAsyncThunk(
           body,
         }
       );
+      thunkAPI.dispatch(fetchTransactions());
+      thunkAPI.dispatch(getCurrentUser());
       return response;
     } catch {
     } finally {
