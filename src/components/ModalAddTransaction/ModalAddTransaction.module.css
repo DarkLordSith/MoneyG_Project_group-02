@@ -1,0 +1,249 @@
+.modalOverlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(44, 29, 86, 0.6);
+    z-index: 1000;
+}
+
+.modalContainer {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 30px 20px;
+    color: #ffffff;
+}
+
+.modalBackground {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(68, 37, 129, 0.95);
+    backdrop-filter: blur(5px);
+    z-index: -1;
+}
+
+.closeButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+}
+
+.closeButton button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.closeIcon {
+    height: 24px;
+    width: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+.titleContainer {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: normal;
+    color: #fbfbfb;
+    text-align: center;
+}
+
+.toggleContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.toggleWrapper {
+    width: 220px;
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toggleOption {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fbfbfb;
+    user-select: none;
+}
+
+.activeOption {
+    color: #ffc107;
+    font-weight: 500;
+}
+
+.toggleSwitch {
+    position: relative;
+    width: 48px;
+    height: 24px;
+    background-color: white;
+    border-radius: 12px;
+    margin: 0 12px;
+}
+
+.toggleSlider {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: #FFC107;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggleSlider::before {
+    content: "+";
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.sliderRight {
+    left: 24px;
+    background-color: #666;
+}
+
+.sliderRight::before {
+    content: "";
+}
+
+.inputRowContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.inputWrapper {
+    position: relative;
+    width: 45%;
+}
+
+.amountInput {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 18px;
+    text-align: left;
+    padding: 8px 0;
+    outline: none;
+}
+
+.dateInputContainer {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.dateInput {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    text-align: left;
+    padding: 8px 0;
+    padding-right: 30px;
+    outline: none;
+}
+
+.calendarIcon {
+    width: 20px;
+    height: 20px;
+    color: white;
+    position: absolute;
+    right: 0;
+}
+
+.inputUnderline {
+    height: 1px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-top: 4px;
+}
+
+.commentContainer {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.commentInput {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 8px 0;
+    outline: none;
+}
+
+.commentInput::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.addButton {
+    width: 100%;
+    height: 45px;
+    border-radius: 12px;
+    background: linear-gradient(to right, #FFC107, #E91E63);
+    color: white;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    text-transform: uppercase;
+}
+
+.addButton:hover {
+    opacity: 0.9;
+}
+
+.cancelButton {
+    width: 100%;
+    height: 45px;
+    border-radius: 12px;
+    background-color: white;
+    border: none;
+    color: #666;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+}
+
+.cancelButton:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
