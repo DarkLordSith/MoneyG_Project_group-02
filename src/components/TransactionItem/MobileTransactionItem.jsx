@@ -35,7 +35,7 @@ function MobileTransactionItem({ transaction, handleEdit, handleRemove }) {
         }
       >
         <span className={s.sumLabel}>Sum</span>
-        {transaction.sum.toFixed(2)}
+        {transaction.sum ? transaction.sum.toFixed(2) : "0.00"}
       </td>
       <td className={s.manageCell}>
         <button type="button" className={s.eraseBtn} onClick={handleRemove}>

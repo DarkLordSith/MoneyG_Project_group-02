@@ -7,6 +7,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./AddTransactionForm.module.css";
 
+import { addTransaction } from "../../redux/transactions/operations";
+
 // Схема валідації форми
 const schema = yup.object().shape({
   type: yup.string().required("Оберіть тип транзакції"),
@@ -18,15 +20,15 @@ const schema = yup.object().shape({
   date: yup.date().required("Оберіть дату"),
   category: yup.string().when("type", {
     is: "expense",
-    then: yup.string().required("Оберіть категорію витрат"),
-    otherwise: yup.string(),
+    then: () => yup.string().required("Оберіть категорію витрат"),
+    otherwise: () => yup.string().nullable(),
   }),
   comment: yup.string().required("Введіть коментар"),
 });
 
 const AddTransactionForm = ({ closeModal, transactionType }) => {
   // Закоментовано, щоб уникнути помилки
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // Категорії транзакцій
   const categories = [
@@ -70,19 +72,18 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
 
   const onSubmit = async (data) => {
     try {
-      // Приклад відправки даних через dispatch
-      // await dispatch(addTransaction(data)).unwrap();
-      console.log("Відправлені дані:", data);
+      const payload = {
+        ...data,
+        date: new Date(data.date).toISOString(), // Формат для бекенду
+        category: data.type === "income" ? "Incomes" : data.category,
+      };
+      console.log("Що відправляється:", payload);
+      await dispatch(addTransaction(payload)).unwrap();
+      console.log("Відправлені дані:", payload);
 
-      // В реальному проєкті тут буде відправка до Redux через dispatch
-      // та перевірка успішного завершення операції
-
-      // Закриваємо модальне вікно після успішного додавання
-      closeModal();
+      closeModal(); // Закрити модалку після успіху
     } catch (error) {
       console.error("Помилка при додаванні транзакції:", error);
-      // В реальному проєкті тут буде обробка помилок
-      // toast.error(`Помилка при додаванні: ${error.message || "Спробуйте ще раз"}`);
     }
   };
 
@@ -119,10 +120,7 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
           <select {...register("category")}>
             <option value="">Select a category</option>
             {categories.map((category) => (
-              <option
-                key={category}
-                value={category.toLowerCase().replace(/\s+/g, "_")}
-              >
+              <option key={category} value={category}>
                 {category}
               </option>
             ))}
