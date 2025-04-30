@@ -1,168 +1,126 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {  useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchSummary,
+ // fetchSummary,
   fetchCategories,
 } from "../../redux/transactions/operations";
 import {
-  selectTransactions,
-  selectExpenseCategories,
-  selectIncomeCategories,
-  selectIsLoading,
-  selectError
+  selectSummaryData,
 } from "../../redux/transactions/selectors";
 
 import Chart from "../../components/Chart/Chart";
 import StatisticsDashboard from "../../components/StatisticsDashboard/StatisticsDashboard";
 import StatisticsTable from "../../components/StatisticsTable/StatisticsTable";
-import Loader from "../../components/Loader/Loader"; 
+import Loader from "../../components/Loader/Loader";
 
-
-import css from './StatisticsTab.module.css'
-
-//const fakeData = {
-//  expenses: {
-//    categories: [
-//      { name: 'Food', amount: 500 },
-//      { name: 'Transport', amount: 200 },
-//      { name: 'Entertainment', amount: 150 },
-//      { name: 'Products', amount: 500 },
-//      { name: 'Car', amount: 200 },
-//      { name: 'Child care', amount: 150 },
-//      { name: 'Food', amount: 500 },
-//      { name: 'Transport', amount: 200 },
-//      { name: 'Entertainment', amount: 150 },
-//    ],
-//  },
-//};
-
+import css from './StatisticsTab.module.css';
 
 const StatisticsTab = () => {
-   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
- 
-  const transactions = useSelector(selectTransactions);
-  const expenseCategories = useSelector(selectExpenseCategories);
-  const incomeCategories = useSelector(selectIncomeCategories);
+  const {
+    income = {},
+    expense = {},
+    totalIncome,
+    totalExpense,
+ //   balance,
+  } = useSelector(selectSummaryData);
 
-
-  //const balance = useSelector(selectBalance);
-  // const month = useSelector(selectSelectedMonth) ?? new Date().getMonth() + 1;
-  // const year = useSelector(selectSelectedYear) ?? new Date().getFullYear();
- 
-  const loading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-  //const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-
+  const loading = useSelector(state => state.transactions.loading);
+  const error = useSelector(state => state.transactions.error);
 
   const now = new Date();
-  const currentMonthIndex = now.getMonth(); //  (0-11)
-  const currentYear = now.getFullYear(); 
+  const currentMonthIndex = now.getMonth();
+  const currentYear = now.getFullYear();
 
   const [selectedMonth, setSelectedMonth] = useState(currentMonthIndex);
   const [selectedYear, setSelectedYear] = useState(currentYear);
+
+  const fetchCategoriesData = (month, year) => {
+  dispatch(fetchCategories({ month: month + 1, year }));
+};
+
+
+  //useEffect(() => {
+ // //const period = { month: selectedMonth + 1, year: selectedYear };
   
+  //// Запрос для получения категорий
+  //dispatch(fetchCategories(period));
+//}, [dispatch, selectedMonth, selectedYear]);
 
 
-    useEffect(() => {
-      const period = { month: selectedMonth + 1, year: selectedYear };
-      dispatch(fetchSummary(period));
-      dispatch(fetchCategories({ type: "EXPENSE", ...period }));
-      dispatch(fetchCategories({ type: "INCOME", ...period }));
-    }, [dispatch, selectedMonth, selectedYear]);
-  
-  const income = useMemo(() => {
-    return transactions
-      .filter((item) => item.type === "INCOME")
-      .reduce((sum, item) => sum + item.amount, 0);
-  }, [transactions]);
+  const handleMonthChange = (monthIndex) => {
+  setSelectedMonth(monthIndex);
+  fetchCategoriesData(monthIndex, selectedYear);
+};
 
-  const expenses = useMemo(() => {
-    return transactions
-      .filter((item) => item.type === "EXPENSE")
-      .reduce((sum, item) => sum + item.amount, 0);
-  }, [transactions]);
+const handleYearChange = (year) => {
+  const numericYear = Number(year);
+  setSelectedYear(numericYear);
+  fetchCategoriesData(selectedMonth, numericYear);
+};
 
 
-    const handleMonthChange = (monthIndex) => {
-      setSelectedMonth(monthIndex);
-    };
+  if (loading) {
+    return <Loader />;
+  }
 
-    const handleYearChange = year => {
-        setSelectedYear(Number(year));
-  };
-    
+  if (error) {
+    return (
+      <div className={css.statisticsTab}>
+        <p className={css.error}>{error}</p>
+      </div>
+    );
+  }
 
-    if (loading) {
-        return <Loader />;
-    }
+  const incomeCategoriesData = Object.entries(income).map(([name, amount]) => ({
+    name,
+    amount,
+   
+  }));
 
-    if (error) {
-        return (
-            <div className={css.statisticsTab}>
-                <p className={css.error}>{error}</p>
-            </div>
-        );
-    }
-  
-  // Преобразование категорий
-   const expenseCategoriesData = expenseCategories && Array.isArray(expenseCategories)
-    ? expenseCategories.map(([name, amount]) => ({
-        name,
-        amount,
-        type: 'expense',
-    }))
-    : [];
+  const expenseCategoriesData = Object.entries(expense).map(([name, amount]) => ({
+    name,
+    amount,
+   
+  }));
 
-  const incomeCategoriesData = incomeCategories && Array.isArray(incomeCategories)
-    ? incomeCategories.map(([name, amount]) => ({
-        name,
-        amount,
-        type: 'income',
-    }))
-    : [];
-
-
-
-    
- 
   return (
     <div className={css.statisticsTab}>
       <div>
         <h2 className={css.headerStat}>Statistics</h2>
         <div className={css.chartSection}>
           <Chart
-            income={income}
-            expenses={expenses}
-            expenseCategories={expenseCategoriesData || []}
-
+            income={totalIncome}
+            expenses={totalExpense}
+            expenseCategories={expenseCategoriesData}
           />
         </div>
       </div>
 
       <div className={css.tableSection}>
-         <div className={css.statisticsDashboard}>   
+        <div className={css.statisticsDashboard}>
           <StatisticsDashboard
             selectedMonth={selectedMonth}
             selectedYear={selectedYear}
             onMonthChange={handleMonthChange}
-            onYearChange={handleYearChange} />
+            onYearChange={handleYearChange}
+          />
         </div>
-       
+
         <StatisticsTable
-          income={income}
-          expenses={expenses}
+          income={totalIncome}
+          expenses={totalExpense}
           expenseCategories={expenseCategoriesData}
           incomeCategories={incomeCategoriesData}
         />
       </div>
     </div>
-
-  )
+  );
 };
 
-export default StatisticsTab;   
+export default StatisticsTab;
+
 
 
   

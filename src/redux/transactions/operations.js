@@ -114,13 +114,18 @@ export const editTransaction = createAsyncThunk(
 
 export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
-  async ({ month, year, type }, thunkAPI) => {
+  async ({ month, year }, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
+
+      const token = thunkAPI.getState().auth.token;
+      setAuthToken(token);
+      
       const response = await axiosInstance.get("/transactions/categories", {
-        params: { month, year, type },
+        params: { month, year },  
       });
-      return { type, data: response.data };
+      return { data: response.data.data };  
+
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
@@ -128,7 +133,6 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
-
 
 
 

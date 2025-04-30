@@ -91,24 +91,25 @@ const transactionsSlice = createSlice({
 
       
   .addCase(fetchCategories.pending, (state) => {
-    state.isLoading = true;
-    state.error = null;
-  })
-  .addCase(fetchCategories.fulfilled, (state, action) => {
-  state.isLoading = false;
-  const { type, data } = action.payload;
-
-  if (type === "INCOME") {
-    state.incomeCategories = data;
-  } else if (type === "EXPENSE") {
-    state.expenseCategories = data;
-  }
+  state.isLoading = true;
+  state.error = null;
 })
+.addCase(fetchCategories.fulfilled, (state, action) => {
+  state.isLoading = false;
+  const { data } = action.payload;
 
-  .addCase(fetchCategories.rejected, (state, action) => {
-    state.isLoading = false;
-    state.error = action.payload;
-  }); 
+  // Преобразуем категории в массивы
+  state.incomeCategories = Object.entries(data.income || {});
+  state.expenseCategories = Object.entries(data.expense || {});
+})
+.addCase(fetchCategories.rejected, (state, action) => {
+  state.isLoading = false;
+  state.error = action.payload;
+});
+
+    
+    
+    
   },
 });
 
