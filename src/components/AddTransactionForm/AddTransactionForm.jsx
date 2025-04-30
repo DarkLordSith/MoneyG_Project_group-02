@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
+import { Calendar } from "lucide-react";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./AddTransactionForm.module.css";
 
@@ -27,8 +28,8 @@ const schema = yup.object().shape({
 });
 
 const AddTransactionForm = ({ closeModal, transactionType }) => {
-  // Закоментовано, щоб уникнути помилки
   const dispatch = useDispatch();
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   // Категорії транзакцій
   const categories = [
@@ -52,8 +53,8 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      type: transactionType || "expense", // Використовуємо переданий тип або "expense" за замовчуванням
-      sum: 0,
+      type: transactionType || "expense",
+      sum: "",
       date: new Date(),
       category: "",
       comment: "",
@@ -61,7 +62,7 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
   });
 
   // Встановлюємо тип транзакції при отриманні нових пропсів
-  React.useEffect(() => {
+  useEffect(() => {
     if (transactionType) {
       setValue("type", transactionType);
     }
@@ -70,18 +71,39 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
   const type = watch("type");
   const selectedDate = watch("date");
 
+  // Форматирование даты для отображения
+  const formatDate = (date) => {
+    if (!date) {
+      return "";
+    }
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+
+  // Обработчик клика на иконку календаря
+  const handleCalendarIconClick = () => {
+    setIsCalendarOpen(true);
+  };
+
+  // Обработчик закрытия календаря
+  const handleCalendarClose = () => {
+    setIsCalendarOpen(false);
+  };
+
   const onSubmit = async (data) => {
     try {
       const payload = {
         ...data,
-        date: new Date(data.date).toISOString(), // Формат для бекенду
+        date: new Date(data.date).toISOString(),
         category: data.type === "income" ? "Incomes" : data.category,
       };
       console.log("Що відправляється:", payload);
       await dispatch(addTransaction(payload)).unwrap();
       console.log("Відправлені дані:", payload);
 
-      closeModal(); // Закрити модалку після успіху
+      closeModal();
     } catch (error) {
       console.error("Помилка при додаванні транзакції:", error);
     }
@@ -89,32 +111,9 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      {/* Приховуємо радіо кнопки, так як вони керуються через перемикач у батьківському компоненті */}
       <input type="hidden" {...register("type")} value={type} />
 
-      {/* Поле для введення суми */}
-      <div className={styles.field}>
-        <input
-          type="number"
-          placeholder="0.00"
-          step="0.01"
-          {...register("sum")}
-        />
-        {errors.sum && <p className={styles.error}>{errors.sum.message}</p>}
-      </div>
-
-      {/* Поле для вибору дати */}
-      <div className={styles.field}>
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setValue("date", date)}
-          dateFormat="dd/MM/yyyy"
-          className={styles.datePicker}
-        />
-        {errors.date && <p className={styles.error}>{errors.date.message}</p>}
-      </div>
-
-      {/* Поле для вибору категорії (тільки для типу "витрати") */}
+      {/* Поле выбора категории (только для Expense) */}
       {type === "expense" && (
         <div className={styles.field}>
           <select {...register("category")}>
@@ -125,24 +124,88 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
               </option>
             ))}
           </select>
+          <div className={styles.inputUnderline}></div>
           {errors.category && (
             <p className={styles.error}>{errors.category.message}</p>
           )}
         </div>
       )}
 
-      {/* Поле для введення коментаря */}
+      {/* Поле для суммы и даты в одной строке */}
+      <div
+        className={styles.field}
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
+        <div style={{ width: "45%" }}>
+          <input
+            type="number"
+            placeholder="0.00"
+            step="0.01"
+            {...register("sum")}
+          />
+          <div className={styles.inputUnderline}></div>
+          {errors.sum && <p className={styles.error}>{errors.sum.message}</p>}
+        </div>
+
+        <div style={{ width: "45%" }} className={styles.datePickerContainer}>
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => {
+              setValue("date", date);
+              if (isCalendarOpen) {
+                setIsCalendarOpen(false);
+              }
+            }}
+            dateFormat="dd.MM.yyyy"
+            open={isCalendarOpen}
+            onCalendarClose={handleCalendarClose}
+            customInput={
+              <input
+                type="text"
+                className={styles.dateInput}
+                value={formatDate(selectedDate)}
+                readOnly
+                onClick={(e) => e.preventDefault()}
+              />
+            }
+            popperProps={{
+              positionFixed: true,
+            }}
+          />
+          <Calendar
+            className={styles.calendarIcon}
+            onClick={handleCalendarIconClick}
+          />
+          <div className={styles.inputUnderline}></div>
+          {errors.date && <p className={styles.error}>{errors.date.message}</p>}
+        </div>
+      </div>
+
+      {/* Поле для комментария */}
       <div className={styles.field}>
-        <input type="text" placeholder="Comment" {...register("comment")} />
+        <input
+          type="text"
+          placeholder="Comment"
+          {...register("comment")}
+          className={errors.comment ? styles.errorInput : ""}
+        />
+        <div className={styles.inputUnderline}></div>
         {errors.comment && (
           <p className={styles.error}>{errors.comment.message}</p>
         )}
       </div>
 
-      {/* Кнопка для додавання транзакції */}
+      {/* Кнопки действий */}
       <div className={styles.buttonsContainer}>
         <button type="submit" className={styles.submitButton}>
-          Add
+          ADD
+        </button>
+        <button
+          type="button"
+          className={styles.cancelButton}
+          onClick={closeModal}
+        >
+          CANCEL
         </button>
       </div>
     </form>
