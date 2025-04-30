@@ -1,40 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./ButtonAddTransactions.module.css";
-
-// Компонент для модального вікна
-const ModalAddTransaction = ({ closeModal }) => {
-  return (
-    <div className={styles.modal}>
-      <div className={styles.modalContent}>
-        <h2>Додати транзакцію</h2>
-        <button onClick={closeModal} className={styles.closeButton}>
-          Закрити
-        </button>
-        {/* Тут можна додати форму для додавання транзакції */}
-      </div>
-    </div>
-  );
-};
+import ModalAddTransaction from "../ModalAddTransaction/ModalAddTransaction";
 
 const ButtonAddTransactions = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleClick = () => {
-    // В реальному додатку тут відкриватиметься модальне вікно
-    setShowModal(true);
-    alert("В реальному додатку тут відкриватиметься ModalAddTransaction");
+  // Функція для відкриття модального вікна
+  const openModal = () => {
+    setIsModalOpen(true);
   };
 
+  // Функція для закриття модального вікна
   const closeModal = () => {
-    setShowModal(false);
+    setIsModalOpen(false);
   };
+
+  // Обробник для клавіші Escape
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    if (isModalOpen) {
+      // Додаємо слухач клавіатури, коли модальне вікно відкрите
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    // Очищаємо слухач при розмонтуванні компонента або закритті модального вікна
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isModalOpen]);
 
   return (
-    <div>
+    <>
       <button
         type="button"
         className={styles.addButton}
-        onClick={handleClick}
+        onClick={openModal}
         aria-label="Add transaction"
       >
         <svg
@@ -53,24 +58,9 @@ const ButtonAddTransactions = () => {
         </svg>
       </button>
 
-      {/* Умовно рендеримо ModalAddTransaction, якщо showModal true */}
-      {showModal && <ModalAddTransaction closeModal={closeModal} />}
-    </div>
+      {isModalOpen && <ModalAddTransaction closeModal={closeModal} />}
+    </>
   );
 };
 
 export default ButtonAddTransactions;
-
-// const ButtonAddTransaction = () => {
-//   const openModal = () => {
-//     console.log("Open ModalAddTransaction");
-//   };
-
-//   return (
-//     <button onClick={openModal} aria-label="Add transaction">
-//       +
-//     </button>
-//   );
-// };
-
-// export default ButtonAddTransaction;

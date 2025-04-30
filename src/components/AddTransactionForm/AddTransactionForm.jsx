@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
-import { addTransaction } from "../../redux/transactions/operations";
-import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import styles from "./AddTransactionForm.module.css";
 
+// Схема валідації форми
 const schema = yup.object().shape({
   type: yup.string().required("Оберіть тип транзакції"),
   sum: yup
@@ -24,8 +24,22 @@ const schema = yup.object().shape({
   comment: yup.string().required("Введіть коментар"),
 });
 
-const AddTransactionForm = ({ onClose }) => {
-  const dispatch = useDispatch();
+const AddTransactionForm = ({ closeModal, transactionType }) => {
+  // Закоментовано, щоб уникнути помилки
+  // const dispatch = useDispatch();
+
+  // Категорії транзакцій
+  const categories = [
+    "Main expenses",
+    "Products",
+    "Car",
+    "Self care",
+    "Child care",
+    "Household products",
+    "Education",
+    "Leisure",
+    "Other expenses",
+  ];
 
   const {
     register,
@@ -36,7 +50,7 @@ const AddTransactionForm = ({ onClose }) => {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      type: "expense",
+      type: transactionType || "expense", // Використовуємо переданий тип або "expense" за замовчуванням
       sum: "",
       date: new Date(),
       category: "",
@@ -44,103 +58,97 @@ const AddTransactionForm = ({ onClose }) => {
     },
   });
 
+  // Встановлюємо тип транзакції при отриманні нових пропсів
+  React.useEffect(() => {
+    if (transactionType) {
+      setValue("type", transactionType);
+    }
+  }, [transactionType, setValue]);
+
   const type = watch("type");
+  const selectedDate = watch("date");
 
   const onSubmit = async (data) => {
     try {
-      await dispatch(addTransaction(data)).unwrap();
-      toast.success("Транзакція додана успішно!");
-      onClose();
+      // Приклад відправки даних через dispatch
+      // await dispatch(addTransaction(data)).unwrap();
+      console.log("Відправлені дані:", data);
+
+      // В реальному проєкті тут буде відправка до Redux через dispatch
+      // та перевірка успішного завершення операції
+
+      // Закриваємо модальне вікно після успішного додавання
+      closeModal();
     } catch (error) {
-      toast.error(
-        `Помилка при додаванні: ${error.message || "Спробуйте ще раз."}`
-      );
+      console.error("Помилка при додаванні транзакції:", error);
+      // В реальному проєкті тут буде обробка помилок
+      // toast.error(`Помилка при додаванні: ${error.message || "Спробуйте ще раз"}`);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label>
-          <input
-            type="radio"
-            value="expense"
-            {...register("type")}
-            defaultChecked
-          />{" "}
-          Витрата
-        </label>
-        <label>
-          <input type="radio" value="income" {...register("type")} /> Дохід
-        </label>
+    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      {/* Приховуємо радіо кнопки, так як вони керуються через перемикач у батьківському компоненті */}
+      <input type="hidden" {...register("type")} value={type} />
+
+      {/* Поле для введення суми */}
+      <div className={styles.field}>
+        <input
+          type="number"
+          placeholder="0.00"
+          step="0.01"
+          {...register("sum")}
+        />
+        {errors.sum && <p className={styles.error}>{errors.sum.message}</p>}
       </div>
 
-      <input type="number" placeholder="Сума" {...register("sum")} />
-      {errors.sum && <p>{errors.sum.message}</p>}
+      {/* Поле для вибору дати */}
+      <div className={styles.field}>
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setValue("date", date)}
+          dateFormat="dd/MM/yyyy"
+          className={styles.datePicker}
+        />
+        {errors.date && <p className={styles.error}>{errors.date.message}</p>}
+      </div>
 
-      <DatePicker
-        selected={watch("date")}
-        onChange={(date) => setValue("date", date)}
-        dateFormat="dd/MM/yyyy"
-      />
-      {errors.date && <p>{errors.date.message}</p>}
-
+      {/* Поле для вибору категорії (тільки для типу "витрати") */}
       {type === "expense" && (
-        <>
+        <div className={styles.field}>
           <select {...register("category")}>
-            <option value="">Оберіть категорію</option>
-            <option value="products">Продукти</option>
-            <option value="transport">Транспорт</option>
-            {/* додай інші категорії */}
+            <option value="">Select a category</option>
+            {categories.map((category) => (
+              <option
+                key={category}
+                value={category.toLowerCase().replace(/\s+/g, "_")}
+              >
+                {category}
+              </option>
+            ))}
           </select>
-          {errors.category && <p>{errors.category.message}</p>}
-        </>
+          {errors.category && (
+            <p className={styles.error}>{errors.category.message}</p>
+          )}
+        </div>
       )}
 
-      <input type="text" placeholder="Коментар" {...register("comment")} />
-      {errors.comment && <p>{errors.comment.message}</p>}
+      {/* Поле для введення коментаря */}
+      <div className={styles.field}>
+        <input type="text" placeholder="Comment" {...register("comment")} />
+        {errors.comment && (
+          <p className={styles.error}>{errors.comment.message}</p>
+        )}
+      </div>
 
-      <button type="submit">Add</button>
-      <button type="button" onClick={onClose}>
-        Cancel
-      </button>
+      {/* Кнопка для додавання транзакції */}
+      <div className={styles.buttonsContainer}>
+        <button type="submit" className={styles.submitButton}>
+          Add
+        </button>
+      </div>
     </form>
   );
 };
 
 export default AddTransactionForm;
-
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as yup from "yup";
-
-// const schema = yup.object().shape({
-//   sum: yup.number().required(),
-//   date: yup.date().required(),
-//   category: yup.string().required(),
-//   comment: yup.string().required(),
-// });
-
-// const AddTransactionForm = ({ onClose }) => {
-//   const { register, handleSubmit } = useForm({ resolver: yupResolver(schema) });
-
-//   const onSubmit = (data) => {
-//     // dispatch addTransaction
-//     onClose();
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <input {...register("sum")} placeholder="Amount" />
-//       <input {...register("date")} type="date" />
-//       <select {...register("category")}>
-//         {/* options */}
-//       </select>
-//       <input {...register("comment")} placeholder="Comment" />
-//       <button type="submit">Add</button>
-//       <button type="button" onClick={onClose}>Cancel</button>
-//     </form>
-//   );
-// };
-
-// export default AddTransactionForm;
