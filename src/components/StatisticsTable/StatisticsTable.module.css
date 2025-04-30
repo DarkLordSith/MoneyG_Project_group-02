@@ -107,6 +107,15 @@
   font-weight: 700;
 }
 
+.oDataText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
 @media (min-width: 768px) {
   .tableHeader {
     width: 336px;

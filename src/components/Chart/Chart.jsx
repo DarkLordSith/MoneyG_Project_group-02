@@ -2,6 +2,7 @@ import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { motion } from "framer-motion";
 import { Chart as ChartJS, ArcElement } from 'chart.js';
+import { getColorByCategory } from '../../utils/categoryColors';
 import css from './Chart.module.css';
 
 ChartJS.register(ArcElement);
@@ -26,7 +27,7 @@ const Chart = ({
   expenses = 0,
   expenseCategories = [],
 }) => {
-  const hasExpenses = expenseCategories?.length > 0;
+  const hasExpenses = Array.isArray(expenseCategories) && expenseCategories.length > 0;
 
   const labels = hasExpenses
     ? expenseCategories.map(item => item.name)
@@ -35,6 +36,10 @@ const Chart = ({
   const amounts = hasExpenses
     ? expenseCategories.map(item => item.amount)
     : [1]; // иначе чарт не отрисуется
+  
+  const backgroundColor = hasExpenses
+  ? expenseCategories.map(cat => getColorByCategory(cat.name))
+  : ['#ccc'];
 
   const data = {
     labels: labels,
@@ -42,10 +47,7 @@ const Chart = ({
       {
         label: 'Expenses ₴',
         data: amounts,
-        backgroundColor: [
-          '#FED057', '#FFD8D0', '#FD9498', '#C5BAFF', '#6E78E8',
-          '#4A56E2', '#81E1FF', '#24CCA7', '#00AD84', '#D35400'
-        ],
+        backgroundColor,
         borderWidth: 0,
       },
     ],
@@ -84,7 +86,7 @@ const Chart = ({
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <p className={css.emptyText}>No expenses found</p>
+          <p className={css.emptyText}>Витрати не знайдені</p>
         </motion.div>
       )}
     </div>
