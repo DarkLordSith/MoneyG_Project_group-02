@@ -5,6 +5,7 @@ import { selectTransactions } from "../../redux/transactions/selectors";
 import { selectIsLoading } from "../../redux/transactions/selectors";
 import TransactionsList from "../../components/TransactionList/TransactionList";
 import Loader from "../../components/Loader/Loader";
+import ButtonAddTransactions from "../../components/ButtonAddTransactions/ButtonAddTransactions";
 
 const HomeTab = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const HomeTab = () => {
           )}
         </>
       )}
+      <ButtonAddTransactions />
     </div>
   );
 };
