@@ -12,7 +12,7 @@ const shadowPlugin = {
   beforeDraw: (chart) => {
     const ctx = chart.ctx;
     ctx.save();
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; 
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.8)'; 
     ctx.shadowBlur = 40;                      
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
@@ -23,7 +23,7 @@ const shadowPlugin = {
 };
 
 const Chart = ({
-  income = 0,
+ // income = 0,
   expenses = 0,
   expenseCategories = [],
 }) => {
@@ -66,9 +66,9 @@ const Chart = ({
     maintainAspectRatio: false,
   };
 
-  const safeIncome = isNaN(income) ? 0 : Number(income);
+  //const safeIncome = isNaN(income) ? 0 : Number(income);
   const safeExpenses = isNaN(expenses) ? 0 : Number(expenses);
-  const balance = safeIncome - safeExpenses;
+ // const balance = safeIncome - safeExpenses;
 
   return (
     <div className={css.chartContainer}>

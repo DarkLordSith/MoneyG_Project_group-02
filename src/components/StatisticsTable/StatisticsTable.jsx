@@ -3,7 +3,7 @@ import { getColorByCategory } from '../../utils/categoryColors';
 
 import css from './StatisticsTable.module.css';
 
-const StatisticsTable = ({ income = 0, expenses = 0, incomeCategories = [], expenseCategories = [] }) => {
+const StatisticsTable = ({ income = 0, expenses = 0, expenseCategories = [] }) => {
   const formatCurrency = (value) => {
     if (isNaN(value)) return '₴ 0.00';
     return `₴ ${Number(value).toFixed(2)}`;
