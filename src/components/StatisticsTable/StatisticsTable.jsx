@@ -30,7 +30,7 @@ const StatisticsTable = ({ income = 0, expenses = 0, incomeCategories = [], expe
   if (!hasData) {
     return (
       <div className={css.tableStat}>
-        <p className={css.noDataText}>Немає доступних записів за вибраний період</p>
+        <p className={css.noDataText}>No records available for the selected period</p>
       </div>
     );
   }

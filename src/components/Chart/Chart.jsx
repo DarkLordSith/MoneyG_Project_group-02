@@ -86,7 +86,7 @@ const Chart = ({
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <p className={css.emptyText}>Витрати не знайдені</p>
+          <p className={css.emptyText}>Expenses not found</p>
         </motion.div>
       )}
     </div>
