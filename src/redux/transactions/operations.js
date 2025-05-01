@@ -1,7 +1,7 @@
 // import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
-import { setIsLoading } from "../global/slice";
+import { startLoading, stopLoading } from "../global/slice";
 import { setAuthToken } from "../../utils/authToken";
 import { getCurrentUser } from "../auth/operations";
 
@@ -10,7 +10,7 @@ export const fetchTransactions = createAsyncThunk(
   "transactions/fetchAll",
   async (_, thunkAPI) => {
     try {
-      thunkAPI.dispatch(setIsLoading(true));
+      thunkAPI.dispatch(startLoading());
 
       const token = thunkAPI.getState().auth.token;
       setAuthToken(token);
@@ -21,7 +21,7 @@ export const fetchTransactions = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
-      thunkAPI.dispatch(setIsLoading(false));
+      thunkAPI.dispatch(stopLoading());
     }
   }
 );
@@ -31,7 +31,7 @@ export const addTransaction = createAsyncThunk(
   "transactions/add",
   async (transactionData, thunkAPI) => {
     try {
-      thunkAPI.dispatch(setIsLoading(true));
+      thunkAPI.dispatch(startLoading());
 
       const token = thunkAPI.getState().auth.token;
       setAuthToken(token);
@@ -47,7 +47,7 @@ export const addTransaction = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
-      thunkAPI.dispatch(setIsLoading(false));
+      thunkAPI.dispatch(stopLoading());
     }
   }
 );
@@ -56,6 +56,8 @@ export const editTransaction = createAsyncThunk(
   "transactions/editTransaction",
   async ({ id, body }, thunkAPI) => {
     try {
+      thunkAPI.dispatch(startLoading());
+
       const response = await axiosInstance.patch(`/transactions/${id}`, body);
       thunkAPI.dispatch(fetchTransactions());
       thunkAPI.dispatch(getCurrentUser());
@@ -64,6 +66,8 @@ export const editTransaction = createAsyncThunk(
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Failed to edit"
       );
+    } finally {
+      thunkAPI.dispatch(stopLoading());
     }
   }
 );
@@ -73,7 +77,7 @@ export const deleteTransaction = createAsyncThunk(
   "transactions/delete",
   async (id, thunkAPI) => {
     try {
-      thunkAPI.dispatch(setIsLoading(true));
+      thunkAPI.dispatch(startLoading());
       await axiosInstance.delete(`/transactions/${id}`);
       thunkAPI.dispatch(fetchTransactions());
       thunkAPI.dispatch(getCurrentUser());
@@ -81,7 +85,7 @@ export const deleteTransaction = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
-      thunkAPI.dispatch(setIsLoading(false));
+      thunkAPI.dispatch(stopLoading());
     }
   }
 );
@@ -90,7 +94,7 @@ export const fetchSummary = createAsyncThunk(
   "transactions/fetchSummary",
   async ({ month, year }, thunkAPI) => {
     try {
-      thunkAPI.dispatch(setIsLoading(true));
+      thunkAPI.dispatch(startLoading());
 
       const token = thunkAPI.getState().auth.token;
       setAuthToken(token);
@@ -102,7 +106,7 @@ export const fetchSummary = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
-      thunkAPI.dispatch(setIsLoading(false));
+      thunkAPI.dispatch(stopLoading());
     }
   }
 );
@@ -111,7 +115,7 @@ export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
   async ({ month, year }, thunkAPI) => {
     try {
-      thunkAPI.dispatch(setIsLoading(true));
+      thunkAPI.dispatch(startLoading());
 
       const token = thunkAPI.getState().auth.token;
       setAuthToken(token);
@@ -123,7 +127,7 @@ export const fetchCategories = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
-      thunkAPI.dispatch(setIsLoading(false));
+      thunkAPI.dispatch(stopLoading());
     }
   }
 );

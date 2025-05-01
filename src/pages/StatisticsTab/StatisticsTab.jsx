@@ -20,7 +20,7 @@ const StatisticsTab = () => {
     totalExpense,
   } = useSelector(selectSummary);
 
-  const loading = useSelector((state) => state.transactions.loading);
+  const isLoading = useSelector((state) => state.global.isLoading);
   const error = useSelector((state) => state.transactions.error);
 
   const now = new Date();
@@ -43,7 +43,7 @@ const StatisticsTab = () => {
     setSelectedYear(Number(year));
   };
 
-  if (loading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -60,10 +60,12 @@ const StatisticsTab = () => {
     amount,
   }));
 
-  const expenseCategoriesData = Object.entries(expense).map(([name, amount]) => ({
-    name,
-    amount,
-  }));
+  const expenseCategoriesData = Object.entries(expense).map(
+    ([name, amount]) => ({
+      name,
+      amount,
+    })
+  );
 
   return (
     <div className={css.statisticsTab}>
@@ -100,8 +102,3 @@ const StatisticsTab = () => {
 };
 
 export default StatisticsTab;
-
-
-
-
-  
