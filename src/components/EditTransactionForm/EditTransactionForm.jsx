@@ -1,114 +1,116 @@
+// components/EditTransactionForm/EditTransactionForm.jsx
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+import * as yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { updateTransaction } from "../../redux/transactions/operations"; // Операція для оновлення транзакції
+import css from "./EditTransactionForm.module.css";
+import { useDispatch } from "react-redux";
+import { editTransaction } from "../../redux/transactions/operations";
 import { toast } from "react-toastify";
-import styles from "./EditTransactionForm.module.css"; // Стилі для форми
 
-// Схема валідації
-const validationSchema = Yup.object({
-  sum: Yup.number()
-    .required("Поле обов'язкове")
-    .positive("Сума повинна бути позитивною"),
-  date: Yup.date().required("Поле обов'язкове").nullable(),
-  comment: Yup.string()
-    .required("Поле обов'язкове")
-    .max(255, "Максимальна кількість символів 255"),
+const schema = yup.object().shape({
+  amount: yup
+    .number()
+    .typeError("Sum must be a number")
+    .positive("Sum must be positive")
+    .required("Sum is required"),
+  date: yup.date().required("Date is required"),
+  comment: yup.string().max(50, "Max 50 characters"),
 });
 
-const EditTransactionForm = ({ transaction, onClose }) => {
+export const EditTransactionForm = ({ transaction, onClose }) => {
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
+    watch,
   } = useForm({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(schema),
     defaultValues: {
-      sum: transaction.sum,
+      amount: transaction.amount,
       date: new Date(transaction.date),
-      comment: transaction.comment,
+      comment: transaction.comment || "",
     },
   });
 
-  // Обробка сабміту форми
+  useEffect(() => {
+    setValue("amount", transaction.amount);
+  }, [transaction.amount, setValue]);
+
   const onSubmit = async (data) => {
     try {
-      // Відправка запиту на оновлення транзакції
+      const payload = {
+        sum: data.amount,
+        type: transaction.type,
+        category: transaction.category,
+        comment: data.comment,
+        date: new Date(data.date).toISOString(),
+      };
+      console.log("Submitting:", payload);
       await dispatch(
-        updateTransaction({ id: transaction.id, ...data })
+        editTransaction({ id: transaction._id, body: payload })
       ).unwrap();
-      toast.success("Транзакція оновлена успішно!");
-      onClose(); // Закриття модалки
-    } catch {
-      toast.error("Помилка при оновленні транзакції. Перевірте дані.");
+      toast.success("Transaction updated");
+      onClose();
+    } catch (err) {
+      toast.error(err.message || "Error updating transaction");
     }
   };
 
-  // Заповнення полів форми при редагуванні
-  useEffect(() => {
-    setValue("sum", transaction.sum);
-    setValue("date", new Date(transaction.date));
-    setValue("comment", transaction.comment);
-  }, [transaction, setValue]);
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <div className={styles.formGroup}>
-        <label htmlFor="sum" className={styles.label}>
-          Сума
-        </label>
-        <input
-          id="sum"
-          type="number"
-          step="0.01"
-          {...register("sum")}
-          className={`${styles.input} ${errors.sum ? styles.error : ""}`}
-        />
-        {errors.sum && <p className={styles.errorText}>{errors.sum.message}</p>}
+    <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
+      <h2 className={css.title}>Edit transaction</h2>
+      <div className={css.typeLabelWrapper}>
+        <span
+          className={
+            '${css.typeLabel} ${transaction.type === "income" ? css.income:css.expense'
+          }
+        >
+          {" "}
+          {transaction.type === "income" ? "Income" : "Expense"}
+        </span>
       </div>
+      {/* Sum */}
+      <label>
+        <input type="number" step="0.01" {...register("amount")} />
+        {errors.amount && <p className={css.error}>{errors.amount.message}</p>}
+      </label>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="date" className={styles.label}>
-          Дата
-        </label>
+      {/* Date */}
+      <label>
         <DatePicker
-          id="date"
-          selected={new Date(transaction.date)}
+          selected={watch("date")}
           onChange={(date) => setValue("date", date)}
-          dateFormat="yyyy/MM/dd"
-          className={`${styles.input} ${errors.date ? styles.error : ""}`}
+          dateFormat="dd/MM/yyyy"
+          className={css.datePicker}
         />
-        {errors.date && (
-          <p className={styles.errorText}>{errors.date.message}</p>
-        )}
-      </div>
+        {errors.date && <p className={css.error}>{errors.date.message}</p>}
+      </label>
 
-      <div className={styles.formGroup}>
-        <label htmlFor="comment" className={styles.label}>
-          Коментар
-        </label>
-        <textarea
-          id="comment"
+      {/* Comment */}
+      <div className={css.field}>
+        <input
+          type="text"
+          placeholder="Comment"
+          className={errors.comment ? css.inputError : ""}
           {...register("comment")}
-          className={`${styles.textarea} ${errors.comment ? styles.error : ""}`}
         />
         {errors.comment && (
-          <p className={styles.errorText}>{errors.comment.message}</p>
+          <p className={css.error}>{errors.comment.message}</p>
         )}
       </div>
 
-      <div className={styles.buttons}>
-        <button type="button" onClick={onClose} className={styles.cancelButton}>
-          Cancel
-        </button>
-        <button type="submit" className={styles.saveButton}>
+      <div className={css.buttons}>
+        <button type="submit" className={css.submitButton}>
           Save
+        </button>
+        <button type="button" onClick={onClose} className={css.cancelButton}>
+          Cancel
         </button>
       </div>
     </form>
@@ -116,37 +118,3 @@ const EditTransactionForm = ({ transaction, onClose }) => {
 };
 
 export default EditTransactionForm;
-
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as yup from "yup";
-
-// const schema = yup.object().shape({
-//   sum: yup.number().required(),
-//   date: yup.date().required(),
-//   comment: yup.string().required(),
-// });
-
-// const EditTransactionForm = ({ transaction, onClose }) => {
-//   const { register, handleSubmit } = useForm({
-//     defaultValues: transaction,
-//     resolver: yupResolver(schema),
-//   });
-
-//   const onSubmit = (data) => {
-//     // dispatch updateTransaction
-//     onClose();
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <input {...register("sum")} placeholder="Amount" />
-//       <input {...register("date")} type="date" />
-//       <input {...register("comment")} placeholder="Comment" />
-//       <button type="submit">Save</button>
-//       <button type="button" onClick={onClose}>Cancel</button>
-//     </form>
-//   );
-// };
-
-// export default EditTransactionForm;

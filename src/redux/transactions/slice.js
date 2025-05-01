@@ -4,7 +4,7 @@ import {
   addTransaction,
   deleteTransaction,
   fetchSummary,
-  //  fetchCategories,
+  editTransaction,
   fetchCategories,
 } from "./operations";
 
@@ -62,6 +62,25 @@ const transactionsSlice = createSlice({
         }
       })
 
+      .addCase(editTransaction.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(editTransaction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const updatedTransaction = action.payload;
+        const index = state.items.findIndex(
+          (t) => t._id === updatedTransaction._id
+        );
+        if (index !== -1) {
+          state.items[index] = updatedTransaction;
+        }
+      })
+      .addCase(editTransaction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
       .addCase(deleteTransaction.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item._id !== action.payload);
       })
@@ -87,28 +106,25 @@ const transactionsSlice = createSlice({
         state.error = action.payload;
       })
 
-  
+      .addCase(fetchCategories.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { type, data } = action.payload;
 
-      
-  .addCase(fetchCategories.pending, (state) => {
-    state.isLoading = true;
-    state.error = null;
-  })
-  .addCase(fetchCategories.fulfilled, (state, action) => {
-  state.isLoading = false;
-  const { type, data } = action.payload;
+        if (type === "INCOME") {
+          state.incomeCategories = data;
+        } else if (type === "EXPENSE") {
+          state.expenseCategories = data;
+        }
+      })
 
-  if (type === "INCOME") {
-    state.incomeCategories = data;
-  } else if (type === "EXPENSE") {
-    state.expenseCategories = data;
-  }
-})
-
-  .addCase(fetchCategories.rejected, (state, action) => {
-    state.isLoading = false;
-    state.error = action.payload;
-  }); 
+      .addCase(fetchCategories.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
 });
 

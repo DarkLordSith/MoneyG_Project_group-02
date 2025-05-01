@@ -95,17 +95,18 @@ export const editTransaction = createAsyncThunk(
   async ({ id, body }, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
-      const response = await axiosInstance.edit(
-        "/transactions/:transactionId",
-        {
-          params: { id },
-          body,
-        }
-      );
+
+      const response = await axiosInstance.patch(`/transactions/${id}`, body);
+
+      // Обновление транзакций и баланса
       thunkAPI.dispatch(fetchTransactions());
       thunkAPI.dispatch(getCurrentUser());
-      return response;
-    } catch {
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to edit transaction"
+      );
     } finally {
       thunkAPI.dispatch(setIsLoading(false));
     }
@@ -128,7 +129,3 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
-
-
-
-

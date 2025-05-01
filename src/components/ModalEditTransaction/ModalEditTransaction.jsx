@@ -1,59 +1,34 @@
+// components/ModalEditTransaction/ModalEditTransaction.jsx
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import EditTransactionForm from "../EditTransactionForm/EditTransactionForm";
-import styles from "./ModalEditTransaction.module.css";
+import css from "./ModalEditTransaction.module.css";
+import { EditTransactionForm } from "../EditTransactionForm/EditTransactionForm";
+import { IoClose } from "react-icons/io5";
 
-const ModalEditTransaction = ({ onClose }) => {
+const modalRoot = document.getElementById("modal-root");
+
+export const ModalEditTransaction = ({ transaction, onClose }) => {
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+    const handleEscape = (e) => {
+      if (e.key === "Escape") onClose();
     };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
   }, [onClose]);
 
   const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+    if (e.target === e.currentTarget) onClose();
   };
 
   return ReactDOM.createPortal(
-    <div className={styles.backdrop} onClick={handleBackdropClick}>
-      <div className={styles.modal}>
-        <button
-          type="button"
-          className={styles.closeButton}
-          onClick={onClose}
-          aria-label="Close modal"
-        >
-          ✕
+    <div className={css.backdrop} onClick={handleBackdropClick}>
+      <div className={css.modal}>
+        <button type="button" className={css.closeBtn} onClick={onClose}>
+          <IoClose size={24} />
         </button>
-        <EditTransactionForm onClose={onClose} />
+        <EditTransactionForm transaction={transaction} onClose={onClose} />
       </div>
     </div>,
-    document.getElementById("modal-root")
+    modalRoot
   );
 };
-
-export default ModalEditTransaction;
-
-// import EditTransactionForm from "../EditTransactionForm/EditTransactionForm";
-
-// const ModalEditTransaction = ({ transaction, onClose }) => {
-//   return (
-//     <div onClick={onClose}>
-//       <div onClick={(e) => e.stopPropagation()}>
-//         <EditTransactionForm transaction={transaction} onClose={onClose} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ModalEditTransaction;

@@ -9,9 +9,9 @@ import useMedia from "../../hooks/useMedia";
 import s from "./TransactionList.module.css";
 import { selectTransactions } from "../../redux/transactions/selectors";
 import MobileTransactionItem from "../TransactionItem/MobileTransactionItem";
-import { getCurrentUser } from "../../redux/auth/operations";
+// import { getCurrentUser } from "../../redux/auth/operations";
 
-const TransactionList = () => {
+const TransactionList = ({ onEdit }) => {
   const dispatch = useDispatch();
   const transactions = useSelector(selectTransactions);
   const { isMobile } = useMedia();
@@ -20,9 +20,9 @@ const TransactionList = () => {
     await dispatch(deleteTransaction(id));
   };
 
-  const handleEditTransaction = async (id) => {
-    await dispatch(editTransaction(id));
-  };
+  // const handleEditTransaction = async (id) => {
+  //   await dispatch(editTransaction(id));
+  // };
 
   return (
     <>
@@ -37,11 +37,11 @@ const TransactionList = () => {
             {!isMobile && (
               <thead className={s.gridHeader}>
                 <tr className={s.headRow}>
-                  <th className={s.dateSection}>Дата</th>
-                  <th className={s.typeSection}>Тип</th>
-                  <th className={s.categorySection}>Категорія</th>
-                  <th className={s.noteSection}>Коментар</th>
-                  <th className={s.valueSection}>Сума</th>
+                  <th className={s.dateSection}>Data</th>
+                  <th className={s.typeSection}>Type</th>
+                  <th className={s.categorySection}>Category</th>
+                  <th className={s.noteSection}>Comment</th>
+                  <th className={s.valueSection}>Amount</th>
                   <th className={s.controlsSection}></th>
                 </tr>
               </thead>
@@ -52,12 +52,14 @@ const TransactionList = () => {
                   <MobileTransactionItem
                     key={operation._id}
                     transaction={operation}
-                    handleEdit={handleEditTransaction}
+                    onEdit={onEdit}
+                    // handleEdit={handleEditTransaction}
                   />
                 ) : (
                   <TransactionItem
                     key={operation._id}
                     transaction={operation}
+                    onEdit={onEdit}
                     handleRemove={handleDeleteTransaction}
                   />
                 )
