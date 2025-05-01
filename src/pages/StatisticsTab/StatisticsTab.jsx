@@ -1,19 +1,14 @@
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
- // fetchSummary,
-  fetchCategories,
-} from "../../redux/transactions/operations";
-import {
-  selectSummaryData,
-} from "../../redux/transactions/selectors";
+import { fetchSummary } from "../../redux/transactions/operations";
+import { selectSummary } from "../../redux/transactions/selectors";
 
 import Chart from "../../components/Chart/Chart";
 import StatisticsDashboard from "../../components/StatisticsDashboard/StatisticsDashboard";
 import StatisticsTable from "../../components/StatisticsTable/StatisticsTable";
 import Loader from "../../components/Loader/Loader";
 
-import css from './StatisticsTab.module.css';
+import css from "./StatisticsTab.module.css";
 
 const StatisticsTab = () => {
   const dispatch = useDispatch();
@@ -23,11 +18,10 @@ const StatisticsTab = () => {
     expense = {},
     totalIncome,
     totalExpense,
- //   balance,
-  } = useSelector(selectSummaryData);
+  } = useSelector(selectSummary);
 
-  const loading = useSelector(state => state.transactions.loading);
-  const error = useSelector(state => state.transactions.error);
+  const loading = useSelector((state) => state.transactions.loading);
+  const error = useSelector((state) => state.transactions.error);
 
   const now = new Date();
   const currentMonthIndex = now.getMonth();
@@ -36,30 +30,18 @@ const StatisticsTab = () => {
   const [selectedMonth, setSelectedMonth] = useState(currentMonthIndex);
   const [selectedYear, setSelectedYear] = useState(currentYear);
 
-  const fetchCategoriesData = (month, year) => {
-  dispatch(fetchCategories({ month: month + 1, year }));
-};
-
-
-  //useEffect(() => {
- // //const period = { month: selectedMonth + 1, year: selectedYear };
-  
-  //// Запрос для получения категорий
-  //dispatch(fetchCategories(period));
-//}, [dispatch, selectedMonth, selectedYear]);
-
+  useEffect(() => {
+    const period = { month: selectedMonth + 1, year: selectedYear };
+    dispatch(fetchSummary(period));
+  }, [dispatch, selectedMonth, selectedYear]);
 
   const handleMonthChange = (monthIndex) => {
-  setSelectedMonth(monthIndex);
-  fetchCategoriesData(monthIndex, selectedYear);
-};
+    setSelectedMonth(monthIndex);
+  };
 
-const handleYearChange = (year) => {
-  const numericYear = Number(year);
-  setSelectedYear(numericYear);
-  fetchCategoriesData(selectedMonth, numericYear);
-};
-
+  const handleYearChange = (year) => {
+    setSelectedYear(Number(year));
+  };
 
   if (loading) {
     return <Loader />;
@@ -76,13 +58,11 @@ const handleYearChange = (year) => {
   const incomeCategoriesData = Object.entries(income).map(([name, amount]) => ({
     name,
     amount,
-   
   }));
 
   const expenseCategoriesData = Object.entries(expense).map(([name, amount]) => ({
     name,
     amount,
-   
   }));
 
   return (
@@ -120,6 +100,7 @@ const handleYearChange = (year) => {
 };
 
 export default StatisticsTab;
+
 
 
 
