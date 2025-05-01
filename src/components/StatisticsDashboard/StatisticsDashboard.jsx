@@ -11,10 +11,7 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 const years = Array.from({ length: new Date().getFullYear() - 2020 + 1 }, (_, i) => `${2020 + i}`);
 
 const StatisticsDashboard = ({ selectedMonth, selectedYear, onMonthChange, onYearChange }) => {
-  //const selectedMonth = useSelector(selectSelectedMonth) ?? 0;
-  //const selectedYear = useSelector(selectSelectedYear) ?? currentYear;
-  //const currentMonthIndex = new Date().getMonth(); 
-  //const currentYear = new Date().getFullYear(); 
+  
   
 
   return (

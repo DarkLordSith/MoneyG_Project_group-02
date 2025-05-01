@@ -12,7 +12,7 @@ const shadowPlugin = {
   beforeDraw: (chart) => {
     const ctx = chart.ctx;
     ctx.save();
-    ctx.shadowColor = 'rgba(0, 0, 0, 0.4)'; 
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; 
     ctx.shadowBlur = 40;                      
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
