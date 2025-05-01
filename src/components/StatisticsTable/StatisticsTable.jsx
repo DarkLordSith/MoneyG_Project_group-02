@@ -9,17 +9,15 @@ const StatisticsTable = ({ income = 0, expenses = 0, incomeCategories = [], expe
     return `₴ ${Number(value).toFixed(2)}`;
   };
 
+  // Просто объединяем уже отформатированные массивы
   const allCategories = [
-    ...Object.entries(expenseCategories).map(([name, amount], index) => ({
-      name,
-      amount: parseFloat(amount) || 0,
-      id: `expense-${name}-${index}`
+    ...expenseCategories.map((item, index) => ({
+      ...item,
+      id: `expense-${item.name}-${index}`
     })),
-    ...Object.entries(incomeCategories).map(([name, amount], index) => ({
-      name,
-      amount: parseFloat(amount) || 0,
-
-      id: `income-${name}-${index}`
+    ...incomeCategories.map((item, index) => ({
+      ...item,
+      id: `income-${item.name}-${index}`
     }))
   ];
 
@@ -53,7 +51,6 @@ const StatisticsTable = ({ income = 0, expenses = 0, incomeCategories = [], expe
               </td>
               <td className={css.categoryName}>{item.name}</td>
               <td className={css.amount}>
-          
                 {formatCurrency(item.amount)}
               </td>
             </tr>
