@@ -21,14 +21,48 @@
     overflow: hidden;
     padding: 40px 20px;
     color: #ffffff;
+    /* backdrop-filter: blur(100px);
     box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.1); */
     display: flex;
     flex-direction: column;
     transition: height 0.3s ease;
 }
 
+/* Мобильная версия модалки */
+.modalContainerMobile {
+    width: 320px;
+    height: 600px;
+    padding: 40px 20px;
+}
+
+/* Версия для планшетов */
+.modalContainerTablet {
+    width: 540px;
+    height: 511px;
+    padding: 40px 73px;
+}
+
+/* Версия для десктопов */
+.modalContainerDesktop {
+    width: 540px;
+    height: 511px;
+    padding: 40px 73px;
+}
+
 /* Добавляем класс для Expense контейнера */
 .expenseContainer {
+    height: 589px !important;
+}
+
+/* Мобильная версия для expense */
+.modalContainerMobile.expenseContainer {
+    height: 650px !important;
+}
+
+/* Версия Expense для планшетов и десктопов */
+.modalContainerTablet.expenseContainer,
+.modalContainerDesktop.expenseContainer {
     height: 589px !important;
 }
 
@@ -42,6 +76,22 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Псевдоэлемент для эффекта размытия и заливки */
+.modalBackground::before {
+    content: '';
+    position: absolute;
+    width: 768px;
+    height: 854px;
+    border-radius: 100%;
+    /* background-color: rgba(47, 21, 176, 0.73); */
+    filter: blur(200px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
 }
 
 .closeButton {
@@ -70,10 +120,46 @@
     text-align: center;
 }
 
+
+/* Оставляем исходное значение для мобильных устройств */
+.modalContainerMobile .titleContainer {
+    margin-bottom: 32px;
+}
+
+/* Новые стили для заголовка мобильной версии */
+.modalContainerMobile .title {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 24px;
+    text-align: center;
+    color: #fbfbfb;
+}
+
+/* Новые стили для заголовка планшетной и десктопной версии */
+.modalContainerTablet .title,
+.modalContainerDesktop .title {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 30px;
+    text-align: center;
+    color: #fbfbfb;
+}
+
+/* Отступ для titleContainer на планшетах и десктопах */
+.modalContainerTablet .titleContainer,
+.modalContainerDesktop .titleContainer {
+    margin-bottom: 40px;
+}
+
 .toggleContainer {
     display: flex;
     justify-content: center;
     margin-bottom: 40px;
+}
+
+/* Стили для мобильного переключателя */
+.toggleContainerMobile {
+    margin-bottom: 30px;
 }
 
 .toggleWrapper {
@@ -95,9 +181,20 @@
     padding: 0 10px;
 }
 
-.activeOption {
-    color: #ffc107;
-    font-weight: 500;
+/* Новые стили для активных опций */
+.activeIncome {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 16px;
+    text-align: right;
+    color: #ffb627;
+}
+
+.activeExpense {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 16px;
+    color: #ff868d;
 }
 
 .toggleSwitch {
@@ -115,7 +212,8 @@
     position: absolute;
     width: 44px;
     height: 44px;
-    background-color: #FFC107;
+    background-color: #ffb627;
+    /* Цвет для Income */
     border-radius: 50%;
     top: -2px;
     left: 0;
@@ -125,22 +223,28 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 0V20' stroke='%23FBFBFB' stroke-width='2' /%3E%3Cpath d='M0 10L20 10' stroke='%23FBFBFB' stroke-width='2' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
+/* Удаляем псевдоэлемент ::before */
 .toggleSlider::before {
-    content: "+";
-    color: white;
-    font-size: 28px;
-    font-weight: bold;
+    content: none;
 }
 
 .sliderRight {
     left: 36px;
     background-color: #FF6596;
+    /* Цвет для Expense */
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='2' viewBox='0 0 20 2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1L20 0.999999' stroke='white' stroke-width='2' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
+/* Удаляем псевдоэлемент ::before для sliderRight */
 .sliderRight::before {
-    content: "-";
+    content: none;
 }
 
 /* Стили для AddTransactionForm */
@@ -266,6 +370,11 @@
     margin: 0 auto;
 }
 
+/* Стили для кнопок на мобильных */
+.buttonsContainerMobile {
+    width: 100%;
+}
+
 .addButton {
     width: 300px;
     min-height: 50px;
@@ -304,4 +413,12 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+/* Стили для кнопки отмены на мобильных */
+.cancelButtonMobile {
+    border-radius: 20px;
+    width: 280px;
+    height: 50px;
 }

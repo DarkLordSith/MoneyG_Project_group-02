@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
+import { useMediaQuery } from "react-responsive";
 import styles from "./ModalAddTransaction.module.css";
 import AddTransactionForm from "../AddTransactionForm/AddTransactionForm";
 
 const ModalAddTransaction = ({ closeModal }) => {
   const [isIncome, setIsIncome] = useState(false); // За замовчуванням тип "витрати" (expense)
   const modalRef = useRef(null);
+
+  // Добавляем определение медиа-запросов
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isDesktop = useMediaQuery({ minWidth: 1280 });
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
 
   useEffect(() => {
     // Блокуємо прокрутку body, коли модальне вікно відкрите
@@ -37,6 +43,38 @@ const ModalAddTransaction = ({ closeModal }) => {
     setIsIncome(!isIncome);
   };
 
+  // Применяем классы на основе медиа-запросов
+  const modalContainerClasses = [
+    styles.modalContainer,
+    !isIncome ? styles.expenseContainer : "",
+    isMobile ? styles.modalContainerMobile : "",
+    isTablet ? styles.modalContainerTablet : "",
+    isDesktop ? styles.modalContainerDesktop : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const toggleContainerClasses = [
+    styles.toggleContainer,
+    isMobile ? styles.toggleContainerMobile : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const buttonsContainerClasses = [
+    styles.buttonsContainer,
+    isMobile ? styles.buttonsContainerMobile : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const cancelButtonClasses = [
+    styles.cancelButton,
+    isMobile ? styles.cancelButtonMobile : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div
       className={styles.modalOverlay}
@@ -44,7 +82,7 @@ const ModalAddTransaction = ({ closeModal }) => {
       ref={modalRef}
     >
       <div
-        className={`${styles.modalContainer} ${!isIncome ? styles.expenseContainer : ""}`}
+        className={modalContainerClasses}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Фон модального вікна */}
@@ -63,10 +101,10 @@ const ModalAddTransaction = ({ closeModal }) => {
         </div>
 
         {/* Перемикач між доходом і витратою */}
-        <div className={styles.toggleContainer}>
+        <div className={toggleContainerClasses}>
           <div className={styles.toggleWrapper}>
             <div
-              className={`${styles.toggleOption} ${isIncome ? styles.activeOption : ""}`}
+              className={`${styles.toggleOption} ${isIncome ? styles.activeIncome : ""}`}
               onClick={() => setIsIncome(true)}
             >
               Income
@@ -82,7 +120,7 @@ const ModalAddTransaction = ({ closeModal }) => {
             </div>
 
             <div
-              className={`${styles.toggleOption} ${!isIncome ? styles.activeOption : ""}`}
+              className={`${styles.toggleOption} ${!isIncome ? styles.activeExpense : ""}`}
               onClick={() => setIsIncome(false)}
             >
               Expense
@@ -97,8 +135,8 @@ const ModalAddTransaction = ({ closeModal }) => {
         />
 
         {/* Кнопка Cancel */}
-        <div className={styles.buttonsContainer}>
-          <button className={styles.cancelButton} onClick={closeModal}>
+        <div className={buttonsContainerClasses}>
+          <button className={cancelButtonClasses} onClick={closeModal}>
             CANCEL
           </button>
         </div>

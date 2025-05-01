@@ -1,0 +1,118 @@
+/* CustomSelect.module.css */
+
+.customSelect {
+    position: relative;
+    width: 100%;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Заголовок селекта (видимая часть когда закрыт) */
+.selectHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Стиль при выбранной опции */
+.customSelect.hasValue .selectHeader,
+.selectHeader span:not(:empty) {
+    color: white;
+}
+
+/* Стрелка селектора */
+.arrow {
+    width: 18px;
+    height: 9px;
+    transition: transform 0.3s ease;
+}
+
+/* Переворачиваем стрелку когда список открыт */
+.arrowUp {
+    width: 18px;
+    height: 9px;
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+/* Контейнер для опций (выпадающий список) */
+.optionsContainer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 320px;
+    /* Высота как на скриншоте */
+    overflow-y: auto;
+    z-index: 10;
+    margin-top: 4px;
+    border-radius: 8px;
+    backdrop-filter: blur(100px);
+    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+    background: linear-gradient(360deg, rgba(83, 61, 186, 0.7) 0%, rgba(80, 48, 154, 0.7) 35.94%, rgba(106, 70, 165, 0.7) 61.04%, rgba(133, 93, 175, 0.7) 100%);
+}
+
+/* Стилизация скроллбара */
+.optionsContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+.optionsContainer::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.optionsContainer::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+}
+
+/* Отдельная опция в выпадающем списке */
+.option {
+    padding: 16px;
+    /* Увеличенный отступ как на скриншоте */
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+    color: white;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+/* Убираем синий фон у первой опции */
+.option:first-child {
+    background-color: transparent;
+}
+
+/* Стили для опции с курсором */
+.option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ff868d;
+    /* Добавленный стиль для изменения цвета текста при наведении */
+}
+
+/* Выбранная опция */
+.option.selected {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Опция Car с красным текстом как на скриншоте */
+.option[data-value="Car"] {
+    color: #FF6596;
+    /* Розово-красный цвет для элемента "Car" */
+}
+
+/* Линия после каждой опции (кроме последней) */
+.option:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
