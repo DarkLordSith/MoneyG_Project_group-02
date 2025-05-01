@@ -6,7 +6,7 @@ const formatLocalDate = (isoDate) => {
   return new Date(isoDate).toLocaleDateString("uk-UA", settings);
 };
 
-function MobileTransactionItem({ transaction, handleEdit, handleRemove }) {
+function MobileTransactionItem({ transaction, onEdit, handleRemove }) {
   return (
     <tr
       className={
@@ -41,7 +41,11 @@ function MobileTransactionItem({ transaction, handleEdit, handleRemove }) {
         <button type="button" className={s.eraseBtn} onClick={handleRemove}>
           Delete
         </button>
-        <button type="button" className={s.modifyBtn} onClick={handleEdit}>
+        <button
+          type="button"
+          className={s.modifyBtn}
+          onClick={() => onEdit(transaction)}
+        >
           <LuPencil style={{ width: "14px", height: "14px" }} />
           <span className={s.mobileEditText}>Edit</span>
         </button>

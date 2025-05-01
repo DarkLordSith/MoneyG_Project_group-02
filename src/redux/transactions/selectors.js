@@ -10,6 +10,11 @@ export const selectBalance = (state) => state.transactions.balance;
 export const selectExpenseCategories = (state) => state.transactions.expenseCategories;
 export const selectIncomeCategories = (state) => state.transactions.incomeCategories;
 
-
 export const selectSelectedMonth = (state) => state.transactions.selectedMonth;
 export const selectSelectedYear = (state) => state.transactions.selectedYear;
+
+
+export const selectSummaryCategories = (state) => [
+  ...Object.entries(state.transactions.summary.income),
+  ...Object.entries(state.transactions.summary.expense),
+];
