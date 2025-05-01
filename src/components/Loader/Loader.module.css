@@ -6,7 +6,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(220deg, #6d54eb 28.31%, #652392 66.76%);
+    background: linear-gradient(220deg, rgba(109, 84, 235, 0.7) 28.31%, rgba(101, 35, 146, 0.7) 66.76%);
     display: flex;
     align-items: center;
     justify-content: center;

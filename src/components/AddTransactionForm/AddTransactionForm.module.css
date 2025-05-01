@@ -4,38 +4,14 @@
     flex-direction: column;
     width: 100%;
     margin-bottom: 20px;
+    position: relative;
 }
 
 .field {
     position: relative;
     margin-bottom: 24px;
-}
-
-/* Стили для селекта категории */
-.field select {
-    width: 100%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    font-size: 14px;
-    padding: 8px 0;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-}
-
-.field select option {
-    background-color: #4a2a7c;
-    color: white;
-}
-
-/* Стили для иконки выпадающего списка */
-.field select {
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 0 center;
-    background-size: 14px;
-    padding-right: 20px;
+    min-height: 40px;
+    /* Минимальная высота для всех полей */
 }
 
 /* Линия под полями ввода */
@@ -62,13 +38,49 @@
     margin-bottom: 0;
 }
 
+/* Модификаторы для мобильных устройств */
+.formMobile {
+    padding: 0 10px;
+}
+
+.inputRowMobile {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.buttonsContainerMobile {
+    margin-top: 20px;
+}
+
+.submitButtonMobile {
+    border-radius: 20px;
+    width: 280px;
+    height: 50px;
+}
+
+/* Модификаторы для планшетов */
+.formTablet {
+    /* padding: 0 15px; */
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+/* Модификаторы для десктопов */
+.formDesktop {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
 /* Поле для введения суммы */
 .field input[type="number"] {
     width: 100%;
     border: none;
     background-color: transparent;
     color: white;
-    font-size: 14px;
+    font-size: 18px;
+    font-family: var(--font-family);
+    font-weight: 400;
     padding: 8px 0;
     outline: none;
     -webkit-appearance: none;
@@ -87,7 +99,9 @@
     border: none;
     background-color: transparent !important;
     color: white !important;
-    font-size: 14px;
+    font-size: 18px !important;
+    font-family: var(--font-family) !important;
+    font-weight: 400 !important;
     padding: 8px 0 !important;
     padding-right: 30px !important;
     outline: none;
@@ -101,8 +115,10 @@
     transform: translateY(-50%);
     width: 16px;
     height: 16px;
-    color: white;
+    color: #734aef;
+    ;
     pointer-events: none;
+
 }
 
 /* Кастомизация datepicker */
@@ -150,7 +166,9 @@
     border: none;
     background-color: transparent;
     color: white;
-    font-size: 14px;
+    font-size: 18px;
+    font-family: var(--font-family);
+    font-weight: 400;
     padding: 8px 0;
     outline: none;
 }
@@ -159,11 +177,20 @@
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* Сообщения об ошибках */
+/* Сообщения об ошибках - абсолютное позиционирование */
 .error {
     color: #ff6b6b;
     font-size: 12px;
-    margin-top: 4px;
+    font-family: var(--font-family);
+    position: absolute;
+    left: 0;
+    bottom: -18px;
+    height: 16px;
+    /* Фиксированная высота */
+    margin: 0;
+    /* Убираем внешние отступы */
+    z-index: 1;
+    /* Для того чтобы текст был поверх других элементов */
 }
 
 /* Контейнер кнопок */
@@ -173,24 +200,59 @@
     margin-top: 32px;
 }
 
+/* Модификаторы для контейнера кнопок на планшетах и десктопах */
+.formTablet .buttonsContainer,
+.formDesktop .buttonsContainer {
+    margin: 0;
+}
+
 /* Кнопка добавления */
 .submitButton {
+    display: block;
     width: 300px;
-    min-height: 50px;
+    height: 50px;
+    margin: 0 auto;
+    margin-top: 20px;
     border: none;
     border-radius: 20px;
     box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
-    background: linear-gradient(90deg, #FFA54F 0%, #FF6596 100%);
-    color: #ffffff;
+    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
+    color: #fbfbfb;
     font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    font-family: var(--font-family);
+    font-weight: 400;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
+/* Обертка для кнопки на мобильных устройствах */
+.mobileButtonWrapper {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+
 .submitButton:hover {
     opacity: 0.9;
+}
+
+/* Стили для мобильных устройств */
+.submitButtonMobile {
+    border-radius: 20px;
+    width: 280px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Пустой контейнер для дополнительных элементов */
+.emptyButtonsContainer {
+    display: none;
 }

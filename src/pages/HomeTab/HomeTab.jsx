@@ -42,7 +42,7 @@ const HomeTab = () => {
             />
           ) : (
             <div>
-              <p>Немає транзакцій. Додайте свою першу транзакцію!</p>
+              <p>No transactions. Add your first transaction!</p>
             </div>
           )}
         </>
