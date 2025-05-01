@@ -59,39 +59,3 @@ const HomeTab = () => {
 };
 
 export default HomeTab;
-
-/*
-СКЕЛЕТ ДЛЯ ТЕБЕ:
-
-- Тут ми одразу диспатчимо операції отримання транзакцій і категорій
-- Виводимо Loader під час завантаження
-- Якщо транзакції є — рендеримо TransactionsList
-- Якщо немає — показуємо заглушку
-- Важливо: верстку моб/планшет/десктоп налаштовуємо через CSS у HomeTab.module.css
-*/
-
-// import { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchTransactions } from "../../redux/transactions/operations";
-// import TransactionsList from "../TransactionsList/TransactionsList";
-// import ButtonAddTransaction from "../ButtonAddTransaction/ButtonAddTransaction";
-
-// const HomeTab = () => {
-//   const dispatch = useDispatch();
-//   const transactions = useSelector((state) => state.transactions.items);
-
-//   useEffect(() => {
-//     dispatch(fetchTransactions());
-//   }, [dispatch]);
-
-//   return (
-//     <section>
-//       {transactions.length ? (
-//         <TransactionsList transactions={transactions} />
-//       ) : (
-//         <p>No transactions yet</p>
-//       )}
-//       <ButtonAddTransaction />
-//     </section>
-//   );
-// };

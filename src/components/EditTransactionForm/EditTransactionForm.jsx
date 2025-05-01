@@ -40,7 +40,9 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
 
   useEffect(() => {
     setValue("amount", transaction.amount);
-  }, [transaction.amount, setValue]);
+    setValue("date", new Date(transaction.date));
+    setValue("comment", transaction.comment || "");
+  }, [transaction.amount, transaction.date, transaction.comment, setValue]);
 
   const onSubmit = async (data) => {
     try {
@@ -67,9 +69,7 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
       <h2 className={css.title}>Edit transaction</h2>
       <div className={css.typeLabelWrapper}>
         <span
-          className={
-            '${css.typeLabel} ${transaction.type === "income" ? css.income:css.expense'
-          }
+          className={`${css.typeLabel} ${transaction.type === "income" ? css.income : css.expense}`}
         >
           {" "}
           {transaction.type === "income" ? "Income" : "Expense"}

@@ -1,4 +1,4 @@
-// src/redux/transactions/operations.js
+// import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
 import { setIsLoading } from "../global/slice";
@@ -52,6 +52,22 @@ export const addTransaction = createAsyncThunk(
   }
 );
 
+export const editTransaction = createAsyncThunk(
+  "transactions/editTransaction",
+  async ({ id, body }, thunkAPI) => {
+    try {
+      const response = await axiosInstance.patch(`/transactions/${id}`, body);
+      thunkAPI.dispatch(fetchTransactions());
+      thunkAPI.dispatch(getCurrentUser());
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to edit"
+      );
+    }
+  }
+);
+
 // deleteTransaction
 export const deleteTransaction = createAsyncThunk(
   "transactions/delete",
@@ -90,27 +106,6 @@ export const fetchSummary = createAsyncThunk(
     }
   }
 );
-export const editTransaction = createAsyncThunk(
-  "transactions/editTransaction",
-  async ({ id, body }, thunkAPI) => {
-    try {
-      thunkAPI.dispatch(setIsLoading(true));
-      const response = await axiosInstance.edit(
-        "/transactions/:transactionId",
-        {
-          params: { id },
-          body,
-        }
-      );
-      thunkAPI.dispatch(fetchTransactions());
-      thunkAPI.dispatch(getCurrentUser());
-      return response;
-    } catch {
-    } finally {
-      thunkAPI.dispatch(setIsLoading(false));
-    }
-  }
-);
 
 export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
@@ -120,12 +115,11 @@ export const fetchCategories = createAsyncThunk(
 
       const token = thunkAPI.getState().auth.token;
       setAuthToken(token);
-      
-      const response = await axiosInstance.get("/transactions/categories", {
-        params: { month, year },  
-      });
-      return { data: response.data.data };  
 
+      const response = await axiosInstance.get("/transactions/categories", {
+        params: { month, year },
+      });
+      return { data: response.data.data };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
@@ -133,6 +127,3 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
-
-
-
