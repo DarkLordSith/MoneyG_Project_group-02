@@ -6,7 +6,7 @@ const formatLocalDate = (isoDate) => {
   return new Date(isoDate).toLocaleDateString("uk-UA", settings);
 };
 
-function TransactionItem({ transaction, handleEdit, handleRemove }) {
+function TransactionItem({ transaction, onEdit, handleRemove }) {
   const deleteTransaction = (id) => handleRemove(id);
 
   return (
@@ -25,7 +25,11 @@ function TransactionItem({ transaction, handleEdit, handleRemove }) {
         {transaction.sum?.toFixed(2)}
       </td>
       <td className={s.manageCell}>
-        <button type="button" className={s.modifyBtn} onClick={handleEdit}>
+        <button
+          type="button"
+          className={s.modifyBtn}
+          onClick={() => onEdit(transaction)}
+        >
           <LuPencil style={{ width: "14px", height: "14px" }} />
         </button>
         <button

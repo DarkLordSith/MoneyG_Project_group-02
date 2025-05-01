@@ -1,59 +1,50 @@
+// components/ModalEditTransaction/ModalEditTransaction.jsx
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import EditTransactionForm from "../EditTransactionForm/EditTransactionForm";
-import styles from "./ModalEditTransaction.module.css";
+import { X } from "lucide-react";
+import css from "./ModalEditTransaction.module.css";
+import { EditTransactionForm } from "../EditTransactionForm/EditTransactionForm";
+import { IoClose } from "react-icons/io5";
 
-const ModalEditTransaction = ({ onClose }) => {
+const modalRoot = document.getElementById("modal-root");
+
+export const ModalEditTransaction = ({ transaction, onClose }) => {
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+    const handleEscape = (e) => {
+      if (e.key === "Escape") onClose();
     };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
   }, [onClose]);
 
   const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
+    if (e.target === e.currentTarget) onClose();
   };
 
+  // if (!transaction || transaction.amount === undefined) return null;
+
   return ReactDOM.createPortal(
-    <div className={styles.backdrop} onClick={handleBackdropClick}>
-      <div className={styles.modal}>
-        <button
-          type="button"
-          className={styles.closeButton}
-          onClick={onClose}
-          aria-label="Close modal"
-        >
-          ✕
-        </button>
-        <EditTransactionForm onClose={onClose} />
+    <div className={css.modalOverlay} onClick={handleBackdropClick}>
+      <div
+        className={`${css.modalContainer} ${transaction.type === "expense" ? css.expenseContainer : ""}`}
+      >
+        <div className={css.modalBackground} />
+        <div className={css.closeButton}>
+          <button onClick={onClose}>
+            <X className={css.closeIcon} />
+          </button>
+        </div>
+        <div className={css.titleContainer}>
+          <h2 className={css.title}>Edit transaction</h2>
+        </div>
+        <EditTransactionForm transaction={transaction} onClose={onClose} />
+        <div className={css.buttonsContainer}>
+          <button className={css.cancelButton} onClick={onClose}>
+            CANCEL
+          </button>
+        </div>
       </div>
     </div>,
-    document.getElementById("modal-root")
+    modalRoot
   );
 };
-
-export default ModalEditTransaction;
-
-// import EditTransactionForm from "../EditTransactionForm/EditTransactionForm";
-
-// const ModalEditTransaction = ({ transaction, onClose }) => {
-//   return (
-//     <div onClick={onClose}>
-//       <div onClick={(e) => e.stopPropagation()}>
-//         <EditTransactionForm transaction={transaction} onClose={onClose} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ModalEditTransaction;

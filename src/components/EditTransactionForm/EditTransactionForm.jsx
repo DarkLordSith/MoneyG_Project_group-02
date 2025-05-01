@@ -1,113 +1,162 @@
+// components/EditTransactionForm/EditTransactionForm.jsx
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+import * as yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { updateTransaction } from "../../redux/transactions/operations"; // Операція для оновлення транзакції
+import css from "./EditTransactionForm.module.css";
+import { useDispatch } from "react-redux";
+import { editTransaction } from "../../redux/transactions/operations";
 import { toast } from "react-toastify";
-import styles from "./EditTransactionForm.module.css"; // Стилі для форми
 
-// Схема валідації
-const validationSchema = Yup.object({
-  sum: Yup.number()
-    .required("Поле обов'язкове")
-    .positive("Сума повинна бути позитивною"),
-  date: Yup.date().required("Поле обов'язкове").nullable(),
-  comment: Yup.string()
-    .required("Поле обов'язкове")
-    .max(255, "Максимальна кількість символів 255"),
+const schema = yup.object().shape({
+  amount: yup
+    .number()
+    .typeError("Sum must be a number")
+    .positive("Sum must be positive")
+    .required("Sum is required"),
+  date: yup.date().required("Date is required"),
+  comment: yup.string().max(50, "Max 50 characters"),
 });
 
-const EditTransactionForm = ({ transaction, onClose }) => {
+export const EditTransactionForm = ({ transaction, onClose }) => {
   const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     formState: { errors },
+    watch,
   } = useForm({
-    resolver: yupResolver(validationSchema),
-    defaultValues: {
-      sum: transaction.sum,
-      date: new Date(transaction.date),
-      comment: transaction.comment,
-    },
+    resolver: yupResolver(schema),
+    // defaultValues: {
+    //   amount: transaction.amount || "",
+    //   date: new Date(transaction.date),
+    //   comment: transaction.comment || "",
+    // },
   });
 
-  // Обробка сабміту форми
+  useEffect(() => {
+    if (!transaction) return;
+    console.log("transaction.amount", transaction.amount);
+    reset({
+      amount: transaction.amount || "",
+      date: new Date(transaction.date),
+      comment: transaction.comment || "",
+    });
+  }, [transaction, reset]);
+
+  // useEffect(() => {
+  //   setValue("amount", transaction.amount);
+  //   setValue("date", new Date(transaction.date));
+  //   setValue("comment", transaction.comment || "");
+  // }, [transaction.amount, transaction.date, transaction.comment, setValue]);
+
   const onSubmit = async (data) => {
     try {
-      // Відправка запиту на оновлення транзакції
+      const payload = {
+        sum: data.amount,
+        type: transaction.type,
+        category: transaction.category,
+        comment: data.comment,
+        date: new Date(data.date).toISOString(),
+      };
+      console.log("Submitting:", payload);
       await dispatch(
-        updateTransaction({ id: transaction.id, ...data })
+        editTransaction({ id: transaction._id, body: payload })
       ).unwrap();
-      toast.success("Транзакція оновлена успішно!");
-      onClose(); // Закриття модалки
-    } catch {
-      toast.error("Помилка при оновленні транзакції. Перевірте дані.");
+      toast.success("Transaction updated");
+      onClose();
+    } catch (err) {
+      toast.error(err.message || "Error updating transaction");
     }
   };
 
-  // Заповнення полів форми при редагуванні
-  useEffect(() => {
-    setValue("sum", transaction.sum);
-    setValue("date", new Date(transaction.date));
-    setValue("comment", transaction.comment);
-  }, [transaction, setValue]);
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <div className={styles.formGroup}>
-        <label htmlFor="sum" className={styles.label}>
-          Сума
-        </label>
+    <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
+      {/* <div className={css.field}>
+        <span
+          className={`${css.typeLabel} ${transaction.type === "income" ? css.income : css.expense}`}
+        >
+          {transaction.type === "income" ? "Income" : "Expense"}
+        </span>
+      </div> */}
+      <div className={css.toggleContainer}>
+        <p
+          className={
+            transaction.type === "income" ? css.activeIncome : css.inactive
+          }
+        >
+          Income
+        </p>
+        <span className={css.separator}>/</span>
+        <p
+          className={
+            transaction.type === "expense" ? css.activeExpense : css.inactive
+          }
+        >
+          Expense
+        </p>
+      </div>
+      <div className={css.selectWrapper}>
+        <span className={css.selectInput}>{transaction.category}</span>
+        <div className={css.inputUnderline} />
+      </div>
+      {/* Sum */}
+      <div className={css.inputRowContainer}>
+        <div className={css.inputRow}>
+          <div className={css.field}>
+            <input type="number" step="0.01" {...register("amount")} />
+            {errors.amount && (
+              <p className={css.error}>{errors.amount.message}</p>
+            )}
+          </div>
+
+          {/* Date */}
+          <div className={`${css.field} ${css.datePickerWrapper}`}>
+            <DatePicker
+              selected={watch("date")}
+              onChange={(date) => setValue("date", date)}
+              dateFormat="dd/MM/yyyy"
+              className={css.datePicker}
+            />
+            <svg
+              className={css.calendarIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>{" "}
+            {errors.date && <p className={css.error}>{errors.date.message}</p>}
+          </div>
+        </div>
+      </div>
+
+      {/* Comment */}
+      <div className={css.field}>
         <input
-          id="sum"
-          type="number"
-          step="0.01"
-          {...register("sum")}
-          className={`${styles.input} ${errors.sum ? styles.error : ""}`}
-        />
-        {errors.sum && <p className={styles.errorText}>{errors.sum.message}</p>}
-      </div>
-
-      <div className={styles.formGroup}>
-        <label htmlFor="date" className={styles.label}>
-          Дата
-        </label>
-        <DatePicker
-          id="date"
-          selected={new Date(transaction.date)}
-          onChange={(date) => setValue("date", date)}
-          dateFormat="yyyy/MM/dd"
-          className={`${styles.input} ${errors.date ? styles.error : ""}`}
-        />
-        {errors.date && (
-          <p className={styles.errorText}>{errors.date.message}</p>
-        )}
-      </div>
-
-      <div className={styles.formGroup}>
-        <label htmlFor="comment" className={styles.label}>
-          Коментар
-        </label>
-        <textarea
-          id="comment"
+          type="text"
+          placeholder="Comment"
+          className={errors.comment ? css.inputError : ""}
           {...register("comment")}
-          className={`${styles.textarea} ${errors.comment ? styles.error : ""}`}
         />
         {errors.comment && (
-          <p className={styles.errorText}>{errors.comment.message}</p>
+          <p className={css.error}>{errors.comment.message}</p>
         )}
       </div>
 
-      <div className={styles.buttons}>
-        <button type="button" onClick={onClose} className={styles.cancelButton}>
-          Cancel
-        </button>
-        <button type="submit" className={styles.saveButton}>
+      <div className={css.buttonsContainer}>
+        <button type="submit" className={css.submitButton}>
           Save
         </button>
       </div>
@@ -116,37 +165,3 @@ const EditTransactionForm = ({ transaction, onClose }) => {
 };
 
 export default EditTransactionForm;
-
-// import { useForm } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as yup from "yup";
-
-// const schema = yup.object().shape({
-//   sum: yup.number().required(),
-//   date: yup.date().required(),
-//   comment: yup.string().required(),
-// });
-
-// const EditTransactionForm = ({ transaction, onClose }) => {
-//   const { register, handleSubmit } = useForm({
-//     defaultValues: transaction,
-//     resolver: yupResolver(schema),
-//   });
-
-//   const onSubmit = (data) => {
-//     // dispatch updateTransaction
-//     onClose();
-//   };
-
-//   return (
-//     <form onSubmit={handleSubmit(onSubmit)}>
-//       <input {...register("sum")} placeholder="Amount" />
-//       <input {...register("date")} type="date" />
-//       <input {...register("comment")} placeholder="Comment" />
-//       <button type="submit">Save</button>
-//       <button type="button" onClick={onClose}>Cancel</button>
-//     </form>
-//   );
-// };
-
-// export default EditTransactionForm;

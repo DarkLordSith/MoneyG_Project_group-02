@@ -1,55 +1,49 @@
-/* EditTransactionForm.module.css */
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+@import "../AddTransactionForm/AddTransactionForm.module.css";
+.toggleContainer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.field {
-    display: flex;
-    flex-direction: column;
+.toggleWrapper {
+  width: 258px;
+  height: 44px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-input,
-textarea,
-button {
-    padding: 8px;
-    font-size: 14px;
-    margin-top: 8px;
+.toggleOption {
+  display: flex;
+  align-items: center;
+  cursor: default;
+  font-size: 14px;
+  color: #c4c4c4;
+  z-index: 2;
+  padding: 0 10px;
 }
 
-textarea {
-    resize: vertical;
+/* .activeOption {
+  color: #ff6596;
+  font-weight: 500;
+} */
+
+.activeIncome {
+  color: #ffb627;
 }
 
-.error {
-    border: 1px solid red;
+.activeExpense {
+  color: #ff6596;
 }
 
-.errorMessage {
-    color: red;
-    font-size: 12px;
+.inactive {
+  color: rgba(255, 255, 255, 0.6);
 }
 
-.buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.cancelButton,
-.saveButton {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.cancelButton {
-    background-color: #ccc;
-}
-
-.saveButton {
-    background-color: #4caf50;
-    color: white;
+.separator {
+  color: white;
 }
