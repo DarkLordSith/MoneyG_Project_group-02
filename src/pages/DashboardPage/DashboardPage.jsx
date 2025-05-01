@@ -1,7 +1,13 @@
 // DashboardPage.jsx;
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { useMediaQuery } from "react-responsive";
 
@@ -43,6 +49,14 @@ const DashboardPage = () => {
       // dispatch(fetchBalance());
     }
   }, [dispatch, isLoggedIn, token]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isMobile && location.pathname === "/dashboard/currency") {
+      navigate("/dashboard");
+    }
+  });
 
   const handleOpenLogoutModal = () => {
     setIsLogoutModalOpen(true);
