@@ -89,30 +89,8 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      {/* Приховуємо радіо кнопки, так як вони керуються через перемикач у батьківському компоненті */}
+      {/* Приховуємо радіо кнопки */}
       <input type="hidden" {...register("type")} value={type} />
-
-      {/* Поле для введення суми */}
-      <div className={styles.field}>
-        <input
-          type="number"
-          placeholder="0.00"
-          step="0.01"
-          {...register("sum")}
-        />
-        {errors.sum && <p className={styles.error}>{errors.sum.message}</p>}
-      </div>
-
-      {/* Поле для вибору дати */}
-      <div className={styles.field}>
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setValue("date", date)}
-          dateFormat="dd/MM/yyyy"
-          className={styles.datePicker}
-        />
-        {errors.date && <p className={styles.error}>{errors.date.message}</p>}
-      </div>
 
       {/* Поле для вибору категорії (тільки для типу "витрати") */}
       {type === "expense" && (
@@ -131,6 +109,47 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
         </div>
       )}
 
+      {/* Строка с суммой и датой */}
+      <div className={styles.inputRow}>
+        {/* Поле для введення суми */}
+        <div className={styles.field}>
+          <input
+            type="number"
+            placeholder="0.00"
+            step="0.01"
+            {...register("sum")}
+          />
+          {errors.sum && <p className={styles.error}>{errors.sum.message}</p>}
+        </div>
+
+        {/* Поле для вибору дати */}
+        <div className={styles.field}>
+          <div className={styles.datePickerWrapper}>
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date) => setValue("date", date)}
+              dateFormat="dd.MM.yyyy"
+              className={styles.datePicker}
+            />
+            <svg
+              className={styles.calendarIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          {errors.date && <p className={styles.error}>{errors.date.message}</p>}
+        </div>
+      </div>
+
       {/* Поле для введення коментаря */}
       <div className={styles.field}>
         <input type="text" placeholder="Comment" {...register("comment")} />
@@ -142,7 +161,7 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
       {/* Кнопка для додавання транзакції */}
       <div className={styles.buttonsContainer}>
         <button type="submit" className={styles.submitButton}>
-          Add
+          ADD
         </button>
       </div>
     </form>
