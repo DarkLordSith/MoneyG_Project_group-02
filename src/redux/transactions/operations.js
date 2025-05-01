@@ -95,18 +95,17 @@ export const editTransaction = createAsyncThunk(
   async ({ id, body }, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
-
-      const response = await axiosInstance.patch(`/transactions/${id}`, body);
-
-      // Обновление транзакций и баланса
+      const response = await axiosInstance.edit(
+        "/transactions/:transactionId",
+        {
+          params: { id },
+          body,
+        }
+      );
       thunkAPI.dispatch(fetchTransactions());
       thunkAPI.dispatch(getCurrentUser());
-
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Failed to edit transaction"
-      );
+      return response;
+    } catch {
     } finally {
       thunkAPI.dispatch(setIsLoading(false));
     }
@@ -115,13 +114,18 @@ export const editTransaction = createAsyncThunk(
 
 export const fetchCategories = createAsyncThunk(
   "transactions/fetchCategories",
-  async ({ month, year, type }, thunkAPI) => {
+  async ({ month, year }, thunkAPI) => {
     try {
       thunkAPI.dispatch(setIsLoading(true));
+
+      const token = thunkAPI.getState().auth.token;
+      setAuthToken(token);
+      
       const response = await axiosInstance.get("/transactions/categories", {
-        params: { month, year, type },
+        params: { month, year },  
       });
-      return { type, data: response.data };
+      return { data: response.data.data };  
+
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
@@ -129,3 +133,6 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
+
+
+

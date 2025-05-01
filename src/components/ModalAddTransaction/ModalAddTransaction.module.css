@@ -8,18 +8,28 @@
     right: 0;
     bottom: 0;
     background-color: rgba(44, 29, 86, 0.6);
-    z-index: 1000;
+    z-index: 9999;
+    isolation: isolate;
 }
 
 .modalContainer {
     position: relative;
     width: 540px;
     height: 511px;
+    /* Default height for Income */
     border-radius: 8px;
     overflow: hidden;
     padding: 40px 20px;
     color: #ffffff;
     box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    transition: height 0.3s ease;
+}
+
+/* Добавляем класс для Expense контейнера */
+.expenseContainer {
+    height: 589px !important;
 }
 
 .modalBackground {
@@ -81,6 +91,8 @@
     cursor: pointer;
     font-size: 14px;
     color: #c4c4c4;
+    z-index: 2;
+    padding: 0 10px;
 }
 
 .activeOption {
@@ -131,15 +143,54 @@
     content: "-";
 }
 
+/* Стили для AddTransactionForm */
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.selectWrapper {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.selectInput {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 14px;
+    padding: 8px 0;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+}
+
+.selectInput option {
+    background-color: #4a2a7c;
+    color: white;
+}
+
+.selectArrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
 .inputRowContainer {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 40px;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .inputWrapper {
     position: relative;
-    width: 45%;
+    width: 48%;
 }
 
 .amountInput {
@@ -147,8 +198,8 @@
     border: none;
     background-color: transparent;
     color: white;
-    font-size: 18px;
-    text-align: center;
+    font-size: 14px;
+    text-align: left;
     padding: 8px 0;
     outline: none;
 }
@@ -164,7 +215,7 @@
     border: none;
     background-color: transparent;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     text-align: left;
     padding: 8px 0;
     padding-right: 30px;
@@ -172,8 +223,8 @@
 }
 
 .calendarIcon {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     color: white;
     position: absolute;
     right: 0;
@@ -182,12 +233,12 @@
 .inputUnderline {
     height: 1px;
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
     margin-top: 4px;
 }
 
 .commentContainer {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     position: relative;
 }
 
@@ -196,7 +247,7 @@
     border: none;
     background-color: transparent;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
     padding: 8px 0;
     outline: none;
@@ -253,8 +304,4 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.cancelButton:hover {
-    background-color: rgba(255, 255, 255, 0.9);
 }

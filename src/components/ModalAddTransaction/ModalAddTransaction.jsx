@@ -4,7 +4,6 @@ import styles from "./ModalAddTransaction.module.css";
 import AddTransactionForm from "../AddTransactionForm/AddTransactionForm";
 
 const ModalAddTransaction = ({ closeModal }) => {
-  const [isFormVisible, setIsFormVisible] = useState(false);
   const [isIncome, setIsIncome] = useState(false); // За замовчуванням тип "витрати" (expense)
   const modalRef = useRef(null);
 
@@ -12,11 +11,21 @@ const ModalAddTransaction = ({ closeModal }) => {
     // Блокуємо прокрутку body, коли модальне вікно відкрите
     document.body.style.overflow = "hidden";
 
+    // Добавляем обработчик клавиши Escape
+    const handleEscKey = (e) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscKey);
+
     // Повертаємо прокрутку при закритті модального вікна
     return () => {
       document.body.style.overflow = "auto";
+      window.removeEventListener("keydown", handleEscKey);
     };
-  }, []);
+  }, [closeModal]);
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -26,7 +35,6 @@ const ModalAddTransaction = ({ closeModal }) => {
 
   const toggleTransactionType = () => {
     setIsIncome(!isIncome);
-    setIsFormVisible(true); // Показуємо форму при переключенні типу транзакції
   };
 
   return (
@@ -36,7 +44,7 @@ const ModalAddTransaction = ({ closeModal }) => {
       ref={modalRef}
     >
       <div
-        className={styles.modalContainer}
+        className={`${styles.modalContainer} ${!isIncome ? styles.expenseContainer : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Фон модального вікна */}
@@ -59,10 +67,7 @@ const ModalAddTransaction = ({ closeModal }) => {
           <div className={styles.toggleWrapper}>
             <div
               className={`${styles.toggleOption} ${isIncome ? styles.activeOption : ""}`}
-              onClick={() => {
-                setIsIncome(true);
-                setIsFormVisible(true);
-              }}
+              onClick={() => setIsIncome(true)}
             >
               Income
             </div>
@@ -78,23 +83,18 @@ const ModalAddTransaction = ({ closeModal }) => {
 
             <div
               className={`${styles.toggleOption} ${!isIncome ? styles.activeOption : ""}`}
-              onClick={() => {
-                setIsIncome(false);
-                setIsFormVisible(true);
-              }}
+              onClick={() => setIsIncome(false)}
             >
               Expense
             </div>
           </div>
         </div>
 
-        {/* Відображаємо форму, тільки якщо вона видима */}
-        {isFormVisible && (
-          <AddTransactionForm
-            closeModal={closeModal}
-            transactionType={isIncome ? "income" : "expense"}
-          />
-        )}
+        {/* Форма всегда видима */}
+        <AddTransactionForm
+          closeModal={closeModal}
+          transactionType={isIncome ? "income" : "expense"}
+        />
 
         {/* Кнопка Cancel */}
         <div className={styles.buttonsContainer}>
