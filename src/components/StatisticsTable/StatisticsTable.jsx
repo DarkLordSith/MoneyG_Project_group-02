@@ -15,10 +15,10 @@ const StatisticsTable = ({ income = 0, expenses = 0, incomeCategories = [], expe
       ...item,
       id: `expense-${item.name}-${index}`
     })),
-    ...incomeCategories.map((item, index) => ({
-      ...item,
-      id: `income-${item.name}-${index}`
-    }))
+//    ...incomeCategories.map((item, index) => ({
+//      ...item,
+//      id: `income-${item.name}-${index}`
+//    }))
   ];
 
   const sortedCategories = allCategories

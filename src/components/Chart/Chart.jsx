@@ -76,7 +76,7 @@ const Chart = ({
         <>
           <Doughnut data={data} options={options} plugins={[shadowPlugin]} />
           <div className={css.chartCenter}>
-            <span>{`₴ ${balance.toFixed(2)}`}</span>
+            <span>{`₴ ${safeExpenses.toFixed(2)}`}</span>
           </div>
         </>
       ) : (
