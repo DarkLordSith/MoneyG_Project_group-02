@@ -1,4 +1,3 @@
-// components/EditTransactionForm/EditTransactionForm.jsx
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,10 +5,12 @@ import * as yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import css from "./EditTransactionForm.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editTransaction } from "../../redux/transactions/operations";
 import { toast } from "react-toastify";
+import { selectCategories } from "../../redux/transactions/selectors";
 
+// Валідація форми
 const schema = yup.object().shape({
   amount: yup
     .number()
@@ -18,10 +19,12 @@ const schema = yup.object().shape({
     .required("Sum is required"),
   date: yup.date().required("Date is required"),
   comment: yup.string().max(50, "Max 50 characters"),
+  category: yup.string().required("Category is required"),
 });
 
 export const EditTransactionForm = ({ transaction, onClose }) => {
   const dispatch = useDispatch();
+  const categories = useSelector(selectCategories);
 
   const {
     register,
@@ -32,42 +35,38 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
     watch,
   } = useForm({
     resolver: yupResolver(schema),
-    // defaultValues: {
-    //   amount: transaction.amount || "",
-    //   date: new Date(transaction.date),
-    //   comment: transaction.comment || "",
-    // },
+    defaultValues: {
+      amount: transaction?.amount || "",
+      date: transaction?.date ? new Date(transaction.date) : new Date(),
+      comment: transaction?.comment || "",
+      category: transaction?.category || "",
+    },
   });
 
   useEffect(() => {
     if (!transaction) return;
-    console.log("transaction.amount", transaction.amount);
     reset({
-      amount: transaction.amount || "",
+      amount: transaction.amount,
       date: new Date(transaction.date),
       comment: transaction.comment || "",
+      category: transaction.category || "",
     });
   }, [transaction, reset]);
-
-  // useEffect(() => {
-  //   setValue("amount", transaction.amount);
-  //   setValue("date", new Date(transaction.date));
-  //   setValue("comment", transaction.comment || "");
-  // }, [transaction.amount, transaction.date, transaction.comment, setValue]);
 
   const onSubmit = async (data) => {
     try {
       const payload = {
         sum: data.amount,
         type: transaction.type,
-        category: transaction.category,
+        category: data.category,
         comment: data.comment,
         date: new Date(data.date).toISOString(),
       };
-      console.log("Submitting:", payload);
+
       await dispatch(
         editTransaction({ id: transaction._id, body: payload })
       ).unwrap();
+
       toast.success("Transaction updated");
       onClose();
     } catch (err) {
@@ -77,13 +76,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
-      {/* <div className={css.field}>
-        <span
-          className={`${css.typeLabel} ${transaction.type === "income" ? css.income : css.expense}`}
-        >
-          {transaction.type === "income" ? "Income" : "Expense"}
-        </span>
-      </div> */}
       <div className={css.toggleContainer}>
         <p
           className={
@@ -101,21 +93,42 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
           Expense
         </p>
       </div>
-      <div className={css.selectWrapper}>
-        <span className={css.selectInput}>{transaction.category}</span>
-        <div className={css.inputUnderline} />
+
+      {/* Category Select */}
+      <div className={css.field}>
+        <select
+          className={`${css.selectInput} ${errors.category ? css.inputError : ""}`}
+          {...register("category")}
+        >
+          <option value="">Select category</option>
+          {categories
+            .filter((cat) => cat.type === transaction.type)
+            .map((cat) => (
+              <option key={cat._id} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
+        </select>
+        {errors.category && (
+          <p className={css.error}>{errors.category.message}</p>
+        )}
       </div>
-      {/* Sum */}
+
+      {/* Sum + Date */}
       <div className={css.inputRowContainer}>
         <div className={css.inputRow}>
           <div className={css.field}>
-            <input type="number" step="0.01" {...register("amount")} />
+            <input
+              type="number"
+              step="0.01"
+              placeholder="0.00"
+              {...register("amount")}
+            />
             {errors.amount && (
               <p className={css.error}>{errors.amount.message}</p>
             )}
           </div>
 
-          {/* Date */}
           <div className={`${css.field} ${css.datePickerWrapper}`}>
             <DatePicker
               selected={watch("date")}
@@ -136,7 +149,7 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
               <line x1="16" y1="2" x2="16" y2="6"></line>
               <line x1="8" y1="2" x2="8" y2="6"></line>
               <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>{" "}
+            </svg>
             {errors.date && <p className={css.error}>{errors.date.message}</p>}
           </div>
         </div>
