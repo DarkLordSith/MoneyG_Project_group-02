@@ -1,7 +1,7 @@
 // src/redux/auth/operations.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
-import { persistor } from "../store";
+// import { persistor } from "../store";
 import { setIsLoading } from "../global/slice";
 import { setAuthToken } from "../../utils/authToken";
 
@@ -41,7 +41,8 @@ export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
     thunkAPI.dispatch(setIsLoading(true));
     await axiosInstance.post("/auth/logout");
-    await persistor.purge();
+    // await persistor.purge();
+    setAuthToken(null);
     return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || error.message);
