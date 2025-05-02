@@ -1,11 +1,9 @@
-// DashboardPage.jsx;
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { useMediaQuery } from "react-responsive";
 
-// Компоненти
 import Loader from "../../components/Loader/Loader";
 import Header from "../../components/Header/Header";
 import Navigation from "../../components/Navigation/Navigation";
@@ -14,10 +12,7 @@ import ModalLogOut from "../../components/ModalLogOut/ModalLogOut";
 import Currency from "../../components/Currency/Currency";
 import HomeTab from "../HomeTab/HomeTab";
 import StatisticsTab from "../StatisticsTab/StatisticsTab";
-// import CurrencyTab from "../../components/CurrencyTab/CurrencyTab";
-// import TransactionList from "../../components/TransactionList/TransactionList";
 
-// Операції
 import { logout } from "../../redux/auth/operations";
 
 import styles from "./DashboardPage.module.css";
@@ -35,7 +30,6 @@ const DashboardPage = () => {
   const isDesktop = useMediaQuery({ minWidth: 1280 });
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
 
-  // Зчитуємо шлях для рендерингу компоненту Balance в моб версії
   const location = useLocation();
 
   useEffect(() => {

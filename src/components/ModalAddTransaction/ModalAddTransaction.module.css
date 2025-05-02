@@ -16,51 +16,35 @@
     position: relative;
     width: 540px;
     height: 511px;
-    /* Default height for Income */
     border-radius: 8px;
     overflow: hidden;
     padding: 40px 20px;
     color: #ffffff;
-    /* backdrop-filter: blur(100px);
-    box-shadow: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
-    background: rgba(255, 255, 255, 0.1); */
     display: flex;
     flex-direction: column;
     transition: height 0.3s ease;
 }
 
-/* Мобильная версия модалки */
 .modalContainerMobile {
     width: 320px;
     height: 600px;
-    padding: 40px 20px;
 }
 
-/* Версия для планшетов */
-.modalContainerTablet {
-    width: 540px;
-    height: 511px;
-    padding: 40px 73px;
-}
-
-/* Версия для десктопов */
+.modalContainerTablet,
 .modalContainerDesktop {
     width: 540px;
     height: 511px;
     padding: 40px 73px;
 }
 
-/* Добавляем класс для Expense контейнера */
 .expenseContainer {
     height: 589px !important;
 }
 
-/* Мобильная версия для expense */
 .modalContainerMobile.expenseContainer {
     height: 650px !important;
 }
 
-/* Версия Expense для планшетов и десктопов */
 .modalContainerTablet.expenseContainer,
 .modalContainerDesktop.expenseContainer {
     height: 589px !important;
@@ -79,14 +63,12 @@
     overflow: hidden;
 }
 
-/* Псевдоэлемент для эффекта размытия и заливки */
 .modalBackground::before {
     content: '';
     position: absolute;
     width: 768px;
     height: 854px;
     border-radius: 100%;
-    /* background-color: rgba(47, 21, 176, 0.73); */
     filter: blur(200px);
     top: 50%;
     left: 50%;
@@ -120,32 +102,13 @@
     text-align: center;
 }
 
-
-/* Оставляем исходное значение для мобильных устройств */
-.modalContainerMobile .titleContainer {
-    margin-bottom: 32px;
-}
-
-/* Новые стили для заголовка мобильной версии */
-.modalContainerMobile .title {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 24px;
-    text-align: center;
-    color: #fbfbfb;
-}
-
-/* Новые стили для заголовка планшетной и десктопной версии */
 .modalContainerTablet .title,
 .modalContainerDesktop .title {
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 30px;
-    text-align: center;
-    color: #fbfbfb;
 }
 
-/* Отступ для titleContainer на планшетах и десктопах */
 .modalContainerTablet .titleContainer,
 .modalContainerDesktop .titleContainer {
     margin-bottom: 40px;
@@ -157,7 +120,6 @@
     margin-bottom: 40px;
 }
 
-/* Стили для мобильного переключателя */
 .toggleContainerMobile {
     margin-bottom: 30px;
 }
@@ -181,19 +143,19 @@
     padding: 0 10px;
 }
 
-/* Новые стили для активных опций */
-.activeIncome {
+.activeIncome,
+.activeExpense {
     font-family: var(--font-family);
     font-weight: 600;
     font-size: 16px;
+}
+
+.activeIncome {
     text-align: right;
     color: #ffb627;
 }
 
 .activeExpense {
-    font-family: var(--font-family);
-    font-weight: 600;
-    font-size: 16px;
     color: #ff868d;
 }
 
@@ -213,7 +175,6 @@
     width: 44px;
     height: 44px;
     background-color: #ffb627;
-    /* Цвет для Income */
     border-radius: 50%;
     top: -2px;
     left: 0;
@@ -228,26 +189,14 @@
     background-position: center;
 }
 
-/* Удаляем псевдоэлемент ::before */
-.toggleSlider::before {
-    content: none;
-}
-
 .sliderRight {
     left: 36px;
     background-color: #FF6596;
-    /* Цвет для Expense */
     background-image: url("data:image/svg+xml,%3Csvg width='20' height='2' viewBox='0 0 20 2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1L20 0.999999' stroke='white' stroke-width='2' /%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
 }
 
-/* Удаляем псевдоэлемент ::before для sliderRight */
-.sliderRight::before {
-    content: none;
-}
-
-/* Стили для AddTransactionForm */
 .formContainer {
     display: flex;
     flex-direction: column;
@@ -297,7 +246,9 @@
     width: 48%;
 }
 
-.amountInput {
+.amountInput,
+.dateInput,
+.commentInput {
     width: 100%;
     border: none;
     background-color: transparent;
@@ -315,15 +266,7 @@
 }
 
 .dateInput {
-    width: 100%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    font-size: 14px;
-    text-align: left;
-    padding: 8px 0;
     padding-right: 30px;
-    outline: none;
 }
 
 .calendarIcon {
@@ -346,21 +289,11 @@
     position: relative;
 }
 
-.commentInput {
-    width: 100%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    font-size: 14px;
-    font-weight: normal;
-    padding: 8px 0;
-    outline: none;
-}
-
 .commentInput::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
 
+/* Обновленные стили для кнопок */
 .buttonsContainer {
     display: flex;
     flex-direction: column;
@@ -370,19 +303,21 @@
     margin: 0 auto;
 }
 
-/* Стили для кнопок на мобильных */
 .buttonsContainerMobile {
-    width: 100%;
+    width: 280px;
 }
 
-.addButton {
+.buttonsContainerTablet,
+.buttonsContainerDesktop {
+    width: 300px;
+}
+
+.addButton,
+.cancelButton {
     width: 300px;
     min-height: 50px;
     border: none;
     border-radius: 20px;
-    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
-    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
-    color: #fbfbfb;
     font-size: 18px;
     font-family: var(--font-main);
     font-weight: 400;
@@ -391,6 +326,24 @@
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.addButtonMobile,
+.cancelButtonMobile {
+    width: 280px;
+}
+
+.addButtonTablet,
+.addButtonDesktop,
+.cancelButtonTablet,
+.cancelButtonDesktop {
+    width: 300px;
+}
+
+.addButton {
+    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
+    color: #fbfbfb;
 }
 
 .addButton:hover {
@@ -398,27 +351,34 @@
 }
 
 .cancelButton {
-    width: 300px;
-    min-height: 50px;
-    border: none;
-    border-radius: 20px;
     background-color: white;
     color: #623f8b;
-    font-size: 18px;
-    font-family: var(--font-main);
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    gap: 20px;
 }
 
-/* Стили для кнопки отмены на мобильных */
-.cancelButtonMobile {
-    border-radius: 20px;
-    width: 280px;
-    height: 50px;
+/* Добавьте эти стили в ваш файл ModalAddTransaction.module.css */
+
+.addButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background: linear-gradient(167deg, #a678c9 0%, #9e40ba 61.46%, #7000ff 90.54%);
+}
+
+/* Добавьте это, если хотите анимацию загрузки */
+@keyframes pulse {
+    0% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0.7;
+    }
+}
+
+.addButton:disabled {
+    animation: pulse 1.5s infinite;
 }

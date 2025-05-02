@@ -1,4 +1,5 @@
 @import "../AddTransactionForm/AddTransactionForm.module.css";
+
 .toggleContainer {
   display: flex;
   justify-content: center;
