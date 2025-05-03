@@ -1,10 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
-import { selectToken, selectIsRefreshing } from "./redux/auth/selectors";
+import { selectIsRefreshing } from "./redux/auth/selectors";
 import { refreshUser, getCurrentUser } from "./redux/auth/operations";
 import { getAuthToken } from "./utils/authToken";
+import { fetchTransactions } from "./redux/transactions/operations";
 
 import Layout from "./components/Layout/Layout";
 import Loader from "./components/Loader/Loader";
@@ -24,16 +26,18 @@ const App = () => {
     const verifyAuth = async () => {
       const token = getAuthToken();
 
-      if (!token) {
-        console.log("Нет токена — не отправляем refresh и current");
-        return;
-      }
+      if (!token) return;
 
       try {
-        await dispatch(refreshUser()).unwrap();
-        await dispatch(getCurrentUser()).unwrap();
+        const refreshResult = await dispatch(refreshUser());
+        if (refreshUser.rejected.match(refreshResult)) return;
+
+        const currentResult = await dispatch(getCurrentUser());
+        if (getCurrentUser.rejected.match(currentResult)) return;
+
+        await dispatch(fetchTransactions());
       } catch (error) {
-        console.error("Ошибка при верификации токена:", error);
+        toast.error("Сессія недійсна. Увійдіть знову.", error);
       }
     };
 

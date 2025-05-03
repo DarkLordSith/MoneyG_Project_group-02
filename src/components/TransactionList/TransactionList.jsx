@@ -1,15 +1,10 @@
-import React from "react"; //
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteTransaction,
-  editTransaction,
-} from "../../redux/transactions/operations";
+import { deleteTransaction } from "../../redux/transactions/operations";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import useMedia from "../../hooks/useMedia";
 import s from "./TransactionList.module.css";
 import { selectTransactions } from "../../redux/transactions/selectors";
 import MobileTransactionItem from "../TransactionItem/MobileTransactionItem";
-// import { getCurrentUser } from "../../redux/auth/operations";
 
 const TransactionList = ({ onEdit }) => {
   const dispatch = useDispatch();
@@ -19,10 +14,6 @@ const TransactionList = ({ onEdit }) => {
   const handleDeleteTransaction = async (id) => {
     await dispatch(deleteTransaction(id));
   };
-
-  // const handleEditTransaction = async (id) => {
-  //   await dispatch(editTransaction(id));
-  // };
 
   return (
     <>
@@ -47,23 +38,25 @@ const TransactionList = ({ onEdit }) => {
               </thead>
             )}
             <tbody className={s.gridBody}>
-              {transactions.map((operation) =>
-                isMobile ? (
-                  <MobileTransactionItem
-                    key={operation._id}
-                    transaction={operation}
-                    onEdit={onEdit}
-                    // handleEdit={handleEditTransaction}
-                  />
-                ) : (
-                  <TransactionItem
-                    key={operation._id}
-                    transaction={operation}
-                    onEdit={onEdit}
-                    handleRemove={handleDeleteTransaction}
-                  />
-                )
-              )}
+              {Array.isArray(transactions) &&
+                transactions
+                  .filter((item) => item && item._id)
+                  .map((operation) =>
+                    isMobile ? (
+                      <MobileTransactionItem
+                        key={operation._id}
+                        transaction={operation}
+                        onEdit={onEdit}
+                      />
+                    ) : (
+                      <TransactionItem
+                        key={operation._id}
+                        transaction={operation}
+                        onEdit={onEdit}
+                        handleRemove={handleDeleteTransaction}
+                      />
+                    )
+                  )}
             </tbody>
           </table>
         </>

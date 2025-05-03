@@ -7,6 +7,8 @@ const formatLocalDate = (isoDate) => {
 };
 
 function MobileTransactionItem({ transaction, onEdit, handleRemove }) {
+  if (!transaction || !transaction._id) return null;
+
   return (
     <tr
       className={

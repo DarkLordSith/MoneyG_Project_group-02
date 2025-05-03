@@ -7,7 +7,7 @@ const formatLocalDate = (isoDate) => {
 };
 
 function TransactionItem({ transaction, onEdit, handleRemove }) {
-  const deleteTransaction = (id) => handleRemove(id);
+  if (!transaction || !transaction._id) return null;
 
   return (
     <tr className={s.recordLine}>

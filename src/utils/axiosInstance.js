@@ -34,7 +34,6 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       if (isRefreshing) {
-        console.log("[⏳ AXIOS] Waiting for token refresh...");
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         }).then((token) => {

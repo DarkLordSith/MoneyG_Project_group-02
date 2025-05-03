@@ -41,7 +41,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
 
   useEffect(() => {
     if (!transaction) return;
-    console.log("transaction.amount", transaction.amount);
     reset({
       amount: transaction.amount || "",
       date: new Date(transaction.date),
@@ -64,7 +63,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
         comment: data.comment,
         date: new Date(data.date).toISOString(),
       };
-      console.log("Submitting:", payload);
       await dispatch(
         editTransaction({ id: transaction._id, body: payload })
       ).unwrap();
@@ -77,13 +75,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
-      {/* <div className={css.field}>
-        <span
-          className={`${css.typeLabel} ${transaction.type === "income" ? css.income : css.expense}`}
-        >
-          {transaction.type === "income" ? "Income" : "Expense"}
-        </span>
-      </div> */}
       <div className={css.toggleContainer}>
         <p
           className={
