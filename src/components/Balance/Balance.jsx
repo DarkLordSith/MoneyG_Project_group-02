@@ -1,4 +1,3 @@
-// src/components/Balance/Balance.jsx
 import React from "react";
 import { useSelector } from "react-redux";
 import styles from "./Balance.module.css";

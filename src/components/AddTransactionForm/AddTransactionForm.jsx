@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,11 +7,9 @@ import { useMediaQuery } from "react-responsive";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./AddTransactionForm.module.css";
-import CustomSelect from "../CustomSelect/CustomSelect"; // Импорт нашего кастомного селекта
-
+import CustomSelect from "../CustomSelect/CustomSelect";
 import { addTransaction } from "../../redux/transactions/operations";
 
-// Схема валідації форми
 const schema = yup.object().shape({
   type: yup.string().required("Select transaction type"),
   sum: yup
@@ -28,100 +26,132 @@ const schema = yup.object().shape({
   comment: yup.string().required("Enter a comment"),
 });
 
-const AddTransactionForm = ({ closeModal, transactionType }) => {
-  // Добавляем определение медиа-запросов
+const categories = [
+  "Main expenses",
+  "Products",
+  "Car",
+  "Self care",
+  "Child care",
+  "Household products",
+  "Education",
+  "Leisure",
+  "Other expenses",
+];
+
+const AddTransactionForm = ({
+  closeModal,
+  transactionType,
+  transactionToEdit,
+  onFormRef,
+  showErrors = false,
+}) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 1280 });
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
-
   const dispatch = useDispatch();
-
-  // Категорії транзакцій
-  const categories = [
-    "Main expenses",
-    "Products",
-    "Car",
-    "Self care",
-    "Child care",
-    "Household products",
-    "Education",
-    "Leisure",
-    "Other expenses",
-  ];
 
   const {
     register,
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
+    trigger,
+    formState: { errors, isValid },
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      type: transactionType || "expense", // Використовуємо переданий тип або "expense" за замовчуванням
-      sum: 0,
-      date: new Date(),
-      category: "",
-      comment: "",
+      type: transactionToEdit?.type || transactionType || "expense",
+      sum: transactionToEdit?.sum || "",
+      date: transactionToEdit?.date
+        ? new Date(transactionToEdit.date)
+        : new Date(),
+      category: transactionToEdit?.category || "",
+      comment: transactionToEdit?.comment || "",
     },
+    mode: "onChange",
   });
 
-  // Встановлюємо тип транзакції при отриманні нових пропсів
-  React.useEffect(() => {
-    if (transactionType) {
+  useEffect(() => {
+    if (transactionType && !transactionToEdit) {
       setValue("type", transactionType);
     }
-  }, [transactionType, setValue]);
+    if (transactionToEdit) {
+      setValue("type", transactionToEdit.type);
+      setValue("sum", transactionToEdit.sum);
+      setValue("date", new Date(transactionToEdit.date));
+      setValue(
+        "category",
+        transactionToEdit.category === "Incomes"
+          ? ""
+          : transactionToEdit.category
+      );
+      setValue("comment", transactionToEdit.comment);
+    }
+  }, [transactionType, transactionToEdit, setValue]);
+
+  useEffect(() => {
+    if (showErrors) {
+      trigger();
+    }
+  }, [showErrors, trigger]);
 
   const type = watch("type");
   const selectedDate = watch("date");
   const selectedCategory = watch("category");
 
-  // Обработчик изменения категории в нашем кастомном селекте
-  const handleCategoryChange = (event) => {
-    setValue("category", event.target.value, { shouldValidate: true });
-  };
+  const onSubmit = useCallback(
+    async (data) => {
+      try {
+        const payload = {
+          ...data,
+          date: new Date(data.date).toISOString(),
+          category: data.type === "income" ? "Incomes" : data.category,
+        };
 
-  const onSubmit = async (data) => {
-    try {
-      const payload = {
-        ...data,
-        date: new Date(data.date).toISOString(), // Формат для бекенду
-        category: data.type === "income" ? "Incomes" : data.category,
-      };
+        if (transactionToEdit) {
+          console.log("Обновление транзакции:", {
+            id: transactionToEdit.id,
+            ...payload,
+          });
+        } else {
+          await dispatch(addTransaction(payload)).unwrap();
+        }
+        closeModal();
+      } catch (error) {
+        console.error("Ошибка при операции с транзакцией:", error);
+      }
+    },
+    [transactionToEdit, closeModal, dispatch]
+  );
 
-      await dispatch(addTransaction(payload)).unwrap();
+  const submitHandler = useCallback(
+    () => handleSubmit(onSubmit)(),
+    [handleSubmit, onSubmit]
+  );
 
-      closeModal(); // Закрити модалку після успіху
-    } catch (error) {
-      console.error("Помилка при додаванні транзакції:", error);
+  useEffect(() => {
+    if (onFormRef) {
+      onFormRef(submitHandler, isValid);
     }
-  };
+  }, [submitHandler, isValid, onFormRef]);
 
-  // Адаптивные стили на основе медиа-запросов
   const formClasses = `${styles.form} ${isMobile ? styles.formMobile : ""} ${isTablet ? styles.formTablet : ""} ${isDesktop ? styles.formDesktop : ""}`;
 
-  const buttonContainerClasses = `${styles.buttonsContainer} ${isMobile ? styles.buttonsContainerMobile : ""}`;
-
-  const buttonClasses = `${styles.submitButton} ${isMobile ? styles.submitButtonMobile : ""}`;
-
   return (
-    <form className={formClasses} onSubmit={handleSubmit(onSubmit)}>
-      {/* Приховуємо радіо кнопки */}
+    <form className={formClasses} onSubmit={(e) => e.preventDefault()}>
       <input type="hidden" {...register("type")} value={type} />
 
-      {/* Поле для вибору категорії (тільки для типу "витрати") */}
       {type === "expense" && (
         <div className={styles.field}>
-          {/* Заменяем стандартный select на наш кастомный компонент */}
           <CustomSelect
             options={categories}
-            onChange={handleCategoryChange}
+            onChange={(e) =>
+              setValue("category", e.target.value, { shouldValidate: true })
+            }
             placeholder="Select a category"
-            value={selectedCategory}
+            value={selectedCategory || ""}
             name="category"
           />
-          {/* Скрытое поле для работы с react-hook-form */}
           <input
             type="hidden"
             {...register("category")}
@@ -133,29 +163,30 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
         </div>
       )}
 
-      {/* Изменяем структуру в зависимости от устройства */}
       <div
         className={`${styles.inputRow} ${isMobile ? styles.inputRowMobile : ""}`}
       >
-        {/* Поле для введення суми */}
         <div className={styles.field}>
           <input
             type="number"
             placeholder="0.00"
             step="0.01"
             {...register("sum")}
+            className={styles.noArrows}
           />
           {errors.sum && <p className={styles.error}>{errors.sum.message}</p>}
         </div>
 
-        {/* Поле для вибору дати */}
         <div className={styles.field}>
           <div className={styles.datePickerWrapper}>
             <DatePicker
               selected={selectedDate}
-              onChange={(date) => setValue("date", date)}
+              onChange={(date) =>
+                setValue("date", date, { shouldValidate: true })
+              }
               dateFormat="dd.MM.yyyy"
               className={styles.datePicker}
+              placeholderText="DD.MM.YYYY"
             />
             <svg
               className={styles.calendarIcon}
@@ -176,21 +207,12 @@ const AddTransactionForm = ({ closeModal, transactionType }) => {
         </div>
       </div>
 
-      {/* Поле для введення коментаря */}
       <div className={styles.field}>
         <input type="text" placeholder="Comment" {...register("comment")} />
         {errors.comment && (
           <p className={styles.error}>{errors.comment.message}</p>
         )}
       </div>
-
-      {/* Пустой контейнер для кнопок */}
-      <div className={buttonContainerClasses}></div>
-
-      {/* Кнопка вынесена за пределы контейнера и размещена под ним */}
-      <button type="submit" className={buttonClasses}>
-        ADD
-      </button>
     </form>
   );
 };

@@ -40,7 +40,11 @@ function MobileTransactionItem({ transaction, onEdit, handleRemove }) {
         {transaction.sum ? transaction.sum?.toFixed(2) : "0.00"}
       </td>
       <td className={s.manageCell}>
-        <button type="button" className={s.eraseBtn} onClick={handleRemove}>
+        <button
+          type="button"
+          className={s.eraseBtn}
+          onClick={() => handleRemove(transaction._id)}
+        >
           Delete
         </button>
         <button

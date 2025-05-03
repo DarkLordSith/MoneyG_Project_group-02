@@ -18,11 +18,11 @@
 /* Головний контейнер дешборду з адаптивними стилями */
 .dashboardPage {
   width: 100%;
-
-  max-width: 320px;
+  min-width: 320px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+
 
 }
 
@@ -191,9 +191,8 @@
 /* Стилі для десктопів (1280px і більше) */
 @media screen and (min-width: 1280px) {
   .dashboardPage {
-    width: 100%;
-    max-width: 1280px;
-    min-height: 100vh;
+    min-width: 1280px;
+    min-height: 721px;
   }
 
   .header {
@@ -203,7 +202,7 @@
 
   .contentWrapper {
     flex-direction: row;
-    max-width: 1280px;
+    min-width: 1280px;
     min-height: calc(100vh - 80px);
     /* Висота екрану мінус висота хедера */
     gap: 0;

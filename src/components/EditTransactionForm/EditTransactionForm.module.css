@@ -1,49 +1,234 @@
-@import "../AddTransactionForm/AddTransactionForm.module.css";
-.toggleContainer {
+/* EditTransactionForm.module.css */
+.formContainer {
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 32px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.toggleWrapper {
-  width: 258px;
-  height: 44px;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
   position: relative;
+}
+
+.fieldGroup {
+  position: relative;
+  margin-bottom: 24px;
+  min-height: 40px;
+}
+
+.fieldGroup::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.inputRow {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
 }
 
-.toggleOption {
+.inputRow .fieldGroup {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.fieldGroup input[type="number"],
+.fieldGroup input[type="text"] {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 18px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  padding: 8px 0;
+  outline: none;
+}
+
+/* Скрываем стрелки в полях с типом number */
+.fieldGroup input[type="number"] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* Дополнительное правило для Chrome, Safari, Edge, Opera */
+.fieldGroup input[type="number"]::-webkit-inner-spin-button,
+.fieldGroup input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dateContainer {
   display: flex;
   align-items: center;
-  cursor: default;
-  font-size: 14px;
-  color: #c4c4c4;
-  z-index: 2;
-  padding: 0 10px;
+  position: relative;
 }
 
-/* .activeOption {
-  color: #ff6596;
-  font-weight: 500;
-} */
-
-.activeIncome {
-  color: #ffb627;
+.dateInput {
+  width: 100%;
+  border: none;
+  background-color: transparent !important;
+  color: white !important;
+  font-size: 18px !important;
+  font-family: var(--font-family) !important;
+  font-weight: 400 !important;
+  padding: 8px 0 !important;
+  padding-right: 30px !important;
+  outline: none;
 }
 
-.activeExpense {
-  color: #ff6596;
+.calendarSvg {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: #734aef;
+  pointer-events: none;
 }
 
-.inactive {
+:global(.react-datepicker__input-container),
+:global(.react-datepicker-wrapper) {
+  width: 100%;
+}
+
+:global(.react-datepicker) {
+  background-color: #4a2a7c;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:global(.react-datepicker__header) {
+  background-color: #3d2164;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+:global(.react-datepicker__current-month),
+:global(.react-datepicker__day-name),
+:global(.react-datepicker__day) {
+  color: white;
+}
+
+:global(.react-datepicker__day:hover) {
+  background-color: #7000ff;
+}
+
+:global(.react-datepicker__day--selected) {
+  background-color: #ffc107;
+  color: #4a2a7c;
+}
+
+.fieldGroup input::placeholder {
   color: rgba(255, 255, 255, 0.6);
 }
 
-.separator {
+.errorText {
+  color: #ff6b6b;
+  font-size: 12px;
+  font-family: var(--font-family);
+  position: absolute;
+  left: 0;
+  bottom: -18px;
+  height: 16px;
+  margin: 0;
+  z-index: 1;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.submitBtn {
+  display: block;
+  width: 300px;
+  height: 50px;
+  margin: 0 auto;
+  margin-top: 20px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+  background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
+  color: #fbfbfb;
+  font-size: 18px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitBtn:hover {
+  opacity: 0.9;
+}
+
+/* Стили для переключателя типа транзакции */
+.typeToggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+/* Стили для Income */
+.incomeActive {
+  color: #ffb627;
+  font-weight: 700;
+  padding: 5px 10px;
+}
+
+/* Стили для Expense */
+.expenseActive {
+  color: #ff6596;
+  font-weight: 700;
+  padding: 5px 10px;
+
+
+}
+
+.typeInactive {
+  color: rgba(255, 255, 255, 0.6);
+  padding: 5px 10px;
+}
+
+.divider {
+  margin: 0 10px;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+}
+
+.categorySelect {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.categoryValue {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
   color: white;
+  font-size: 18px;
+}
+
+.underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.inputError {
+  border-color: #ff6b6b;
 }

@@ -1,5 +1,3 @@
-/* src/components/Header/Header.module.css */
-
 .header {
     position: fixed;
     top: 0;
@@ -89,7 +87,6 @@
     color: var(--color-white-600);
 }
 
-/* Адаптивные стили для мобильных */
 @media screen and (max-width: 767px) {
     .header {
         height: 60px;
@@ -133,13 +130,11 @@
         margin: 0 8px;
     }
 
-    /* Специальный эффект тени для мобильного меню */
     .mobileMenu {
         box-shadow: 0 4px 40px 0 rgba(0, 0, 0, 0.25), inset 0 -3px 2px 0 rgba(0, 0, 0, 0.1);
     }
 }
 
-/* Адаптивные стили для планшетов */
 @media screen and (min-width: 768px) and (max-width: 1279px) {
     .header {
         height: 80px;
@@ -182,7 +177,6 @@
     }
 }
 
-/* Адаптивные стили для десктопа */
 @media screen and (min-width: 1280px) {
     .header {
         height: 80px;

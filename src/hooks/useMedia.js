@@ -1,4 +1,3 @@
-// src/hooks/useMedia.js
 import { useMediaQuery } from "react-responsive";
 
 /**
