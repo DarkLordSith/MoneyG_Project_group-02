@@ -5,28 +5,21 @@ import styles from "./ModalAddTransaction.module.css";
 import AddTransactionForm from "../AddTransactionForm/AddTransactionForm";
 
 const ModalAddTransaction = ({ closeModal }) => {
-  const [isIncome, setIsIncome] = useState(false); // За замовчуванням тип "витрати" (expense)
+  const [isIncome, setIsIncome] = useState(false);
+  const [showErrors, setShowErrors] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const modalRef = useRef(null);
-
-  // Добавляем определение медиа-запросов
+  const formRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 1280 });
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1279 });
 
   useEffect(() => {
-    // Блокуємо прокрутку body, коли модальне вікно відкрите
     document.body.style.overflow = "hidden";
-
-    // Добавляем обработчик клавиши Escape
     const handleEscKey = (e) => {
-      if (e.key === "Escape") {
-        closeModal();
-      }
+      if (e.key === "Escape") closeModal();
     };
-
     window.addEventListener("keydown", handleEscKey);
-
-    // Повертаємо прокрутку при закритті модального вікна
     return () => {
       document.body.style.overflow = "auto";
       window.removeEventListener("keydown", handleEscKey);
@@ -34,16 +27,19 @@ const ModalAddTransaction = ({ closeModal }) => {
   }, [closeModal]);
 
   const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      closeModal();
-    }
+    if (e.target === e.currentTarget) closeModal();
   };
 
-  const toggleTransactionType = () => {
-    setIsIncome(!isIncome);
+  const toggleTransactionType = () => setIsIncome(!isIncome);
+
+  const getClasses = (baseClass, mobileClass, tabletClass, desktopClass) => {
+    const classes = [baseClass];
+    if (isMobile && mobileClass) classes.push(mobileClass);
+    if (isTablet && tabletClass) classes.push(tabletClass);
+    if (isDesktop && desktopClass) classes.push(desktopClass);
+    return classes.filter(Boolean).join(" ");
   };
 
-  // Применяем классы на основе медиа-запросов
   const modalContainerClasses = [
     styles.modalContainer,
     !isIncome ? styles.expenseContainer : "",
@@ -54,26 +50,28 @@ const ModalAddTransaction = ({ closeModal }) => {
     .filter(Boolean)
     .join(" ");
 
-  const toggleContainerClasses = [
-    styles.toggleContainer,
-    isMobile ? styles.toggleContainerMobile : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const handleFormRef = (formSubmitHandler, isValid) => {
+    formRef.current = {
+      submitHandler: formSubmitHandler,
+      isValid: isValid,
+    };
+  };
 
-  const buttonsContainerClasses = [
-    styles.buttonsContainer,
-    isMobile ? styles.buttonsContainerMobile : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const handleAddTransaction = async () => {
+    setShowErrors(true);
 
-  const cancelButtonClasses = [
-    styles.cancelButton,
-    isMobile ? styles.cancelButtonMobile : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+    if (formRef.current && formRef.current.isValid && !isSubmitting) {
+      try {
+        setIsSubmitting(true);
+        await formRef.current.submitHandler();
+        closeModal();
+      } catch (error) {
+        console.error("Ошибка при добавлении транзакции:", error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    }
+  };
 
   return (
     <div
@@ -85,23 +83,23 @@ const ModalAddTransaction = ({ closeModal }) => {
         className={modalContainerClasses}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Фон модального вікна */}
         <div className={styles.modalBackground}></div>
-
-        {/* Кнопка закриття */}
         <div className={styles.closeButton}>
           <button onClick={closeModal}>
             <X className={styles.closeIcon} />
           </button>
         </div>
 
-        {/* Заголовок */}
         <div className={styles.titleContainer}>
           <h2 className={styles.title}>Add transaction</h2>
         </div>
 
-        {/* Перемикач між доходом і витратою */}
-        <div className={toggleContainerClasses}>
+        <div
+          className={getClasses(
+            styles.toggleContainer,
+            styles.toggleContainerMobile
+          )}
+        >
           <div className={styles.toggleWrapper}>
             <div
               className={`${styles.toggleOption} ${isIncome ? styles.activeIncome : ""}`}
@@ -109,7 +107,6 @@ const ModalAddTransaction = ({ closeModal }) => {
             >
               Income
             </div>
-
             <div
               className={styles.toggleSwitch}
               onClick={toggleTransactionType}
@@ -118,7 +115,6 @@ const ModalAddTransaction = ({ closeModal }) => {
                 className={`${styles.toggleSlider} ${isIncome ? "" : styles.sliderRight}`}
               ></div>
             </div>
-
             <div
               className={`${styles.toggleOption} ${!isIncome ? styles.activeExpense : ""}`}
               onClick={() => setIsIncome(false)}
@@ -128,15 +124,43 @@ const ModalAddTransaction = ({ closeModal }) => {
           </div>
         </div>
 
-        {/* Форма всегда видима */}
         <AddTransactionForm
           closeModal={closeModal}
           transactionType={isIncome ? "income" : "expense"}
+          onFormRef={handleFormRef}
+          showErrors={showErrors}
         />
 
-        {/* Кнопка Cancel */}
-        <div className={buttonsContainerClasses}>
-          <button className={cancelButtonClasses} onClick={closeModal}>
+        <div
+          className={getClasses(
+            styles.buttonsContainer,
+            styles.buttonsContainerMobile,
+            styles.buttonsContainerTablet,
+            styles.buttonsContainerDesktop
+          )}
+        >
+          <button
+            type="button"
+            className={getClasses(
+              styles.addButton,
+              styles.addButtonMobile,
+              styles.addButtonTablet,
+              styles.addButtonDesktop
+            )}
+            onClick={handleAddTransaction}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "ADDING..." : "ADD"}
+          </button>
+          <button
+            className={getClasses(
+              styles.cancelButton,
+              styles.cancelButtonMobile,
+              styles.cancelButtonTablet,
+              styles.cancelButtonDesktop
+            )}
+            onClick={closeModal}
+          >
             CANCEL
           </button>
         </div>

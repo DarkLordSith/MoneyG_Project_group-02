@@ -3,7 +3,7 @@ import { ClipLoader } from "react-spinners";
 import { useSelector } from "react-redux";
 import s from "./Loader.module.css";
 
-const MIN_LOADER_TIME = 300; // Минимальное время отображения лоадера в мс
+const MIN_LOADER_TIME = 300;
 
 const Loader = () => {
   const isLoading = useSelector((state) => state.global?.isLoading);
@@ -13,10 +13,8 @@ const Loader = () => {
     let timeoutId;
 
     if (isLoading) {
-      // Показываем лоадер немедленно при isLoading=true
       setShouldShow(true);
     } else {
-      // При isLoading=false даем лоадеру минимальное время отображения
       timeoutId = setTimeout(() => {
         setShouldShow(false);
       }, MIN_LOADER_TIME);
@@ -27,7 +25,6 @@ const Loader = () => {
     };
   }, [isLoading]);
 
-  // Если лоадер не должен показываться, не рендерим ничего
   if (!shouldShow) return null;
 
   return (

@@ -1,6 +1,3 @@
-/* TransactionItem.module.css  */
-
-/* Базовые стили для строк */
 .recordLine {
     position: relative;
     transition: background-color 0.3s ease;
@@ -11,7 +8,6 @@
     transition: background-color 0.3s ease;
 }
 
-/* Стили для ячеек */
 .timeCell,
 .kindCell,
 .groupCell,
@@ -37,7 +33,6 @@
     text-align: left;
 }
 
-/* Стили для значений */
 .incomeValue {
     color: var(--color-accent);
     font-weight: 600;
@@ -52,12 +47,10 @@
     padding-right: 16px;
 }
 
-/* Первая буква с заглавной */
 .remarkCell::first-letter {
     text-transform: uppercase;
 }
 
-/* Ячейка управления */
 .manageCell {
     display: flex;
     align-items: center;
@@ -66,7 +59,6 @@
     padding: 16px;
 }
 
-/* Кнопка редактирования */
 .modifyBtn {
     color: hsl(220, 9%, 64%);
     background: transparent;
@@ -92,7 +84,6 @@
     stroke: var(--color-white);
 }
 
-/* Кнопка удаления */
 .eraseBtn {
     width: 69px;
     height: 29px;
@@ -115,26 +106,21 @@
     transform: scale(1.05);
 }
 
-/* Скрытый текст по умолчанию */
 .mobileEditText {
     display: none;
 }
 
-/* Мобильные стили */
 @media screen and (max-width: 767px) {
 
-    /* Стили строк */
     .recordLine,
     .recordLineNegative {
         position: relative;
         display: block;
         margin-bottom: 8px;
-        /* padding: 12px 0; */
         background: rgba(82, 59, 126, 0.6);
         border-radius: 10px;
     }
 
-    /* Цветной индикатор слева */
     .recordLine::before {
         content: "";
         position: absolute;
@@ -159,7 +145,6 @@
         border-bottom-left-radius: 10px;
     }
 
-    /* Стили ячеек */
     .timeCell,
     .kindCell,
     .groupCell,
@@ -178,7 +163,6 @@
         padding: 12px 20px;
     }
 
-    /* Подписи для мобильной версии */
     .timeLabel,
     .kindLabel,
     .groupLabel,
@@ -188,25 +172,24 @@
         color: var(--color-white);
     }
 
-    /* Текст для кнопки редактирования */
     .mobileEditText {
         display: inline-block;
         font-size: 0.875rem;
     }
 
-    /* Гибкий контейнер для комментария */
     .remarkCell p {
         margin: 0;
         text-overflow: ellipsis;
         overflow: hidden;
     }
 
-    /* Сохранение цветов для мобильной версии */
     .incomeValue {
         color: var(--color-accent);
         font-weight: 600;
-    }.outflowValue {
+    }
+
+    .outflowValue {
         color: hsl(0, 89%, 72%);
         font-weight: 600;
     }
-    }
+}
