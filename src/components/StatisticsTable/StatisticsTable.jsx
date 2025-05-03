@@ -3,7 +3,7 @@ import { getColorByCategory } from '../../utils/categoryColors';
 
 import css from './StatisticsTable.module.css';
 
-const StatisticsTable = ({ income = 0, expenses = 0, incomeCategories = [], expenseCategories = [] }) => {
+const StatisticsTable = ({ income = 0, expenses = 0, expenseCategories = [] }) => {
   const formatCurrency = (value) => {
     if (isNaN(value)) return '₴ 0.00';
     return `₴ ${Number(value).toFixed(2)}`;
@@ -15,10 +15,10 @@ const StatisticsTable = ({ income = 0, expenses = 0, incomeCategories = [], expe
       ...item,
       id: `expense-${item.name}-${index}`
     })),
-    ...incomeCategories.map((item, index) => ({
-      ...item,
-      id: `income-${item.name}-${index}`
-    }))
+//    ...incomeCategories.map((item, index) => ({
+//      ...item,
+//      id: `income-${item.name}-${index}`
+//    }))
   ];
 
   const sortedCategories = allCategories
@@ -30,7 +30,7 @@ const StatisticsTable = ({ income = 0, expenses = 0, incomeCategories = [], expe
   if (!hasData) {
     return (
       <div className={css.tableStat}>
-        <p className={css.noDataText}>Немає доступних записів за вибраний період</p>
+        <p className={css.noDataText}>No records available for the selected period</p>
       </div>
     );
   }

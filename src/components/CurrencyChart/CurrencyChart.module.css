@@ -32,10 +32,16 @@
     padding-top: 24px;
   }
 
-  .th:first-child,
-  .td:first-child {
+  .th:first-child {
     padding-left: 62px;
+    text-align: left;
   }
+
+  .td:first-child {
+    padding-left: 84px;
+    text-align: left;
+  }
+
   .th:last-child,
   .td:last-child {
     text-align: right;
