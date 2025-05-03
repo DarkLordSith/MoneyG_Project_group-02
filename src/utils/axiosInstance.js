@@ -5,7 +5,7 @@ import { logout } from "../redux/auth/operations";
 
 const axiosInstance = axios.create({
   baseURL: "https://money-guard-backend-lnfk.onrender.com",
-  withCredentials: true,
+  withCredentials: true, // чтобы refresh работал с cookie
 });
 
 let isRefreshing = false;
@@ -20,17 +20,16 @@ const processQueue = (error, token = null) => {
 };
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    if (
-      error.response?.status === 401 &&
-      !originalRequest._retry &&
-      getAuthToken()
-    ) {
+    // Обработка только 401 ошибки и только если токен есть
+    const isUnauthorized = error.response?.status === 401;
+    const hasToken = !!getAuthToken();
+    const isRetry = originalRequest._retry;
+
+    if (isUnauthorized && !isRetry && hasToken) {
       originalRequest._retry = true;
 
       if (isRefreshing) {
@@ -52,6 +51,8 @@ axiosInstance.interceptors.response.use(
         );
 
         const newToken = res.data.data.accessToken;
+        if (!newToken) throw new Error("No token in refresh response");
+
         setAuthToken(newToken);
         processQueue(null, newToken);
 
@@ -59,6 +60,8 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (err) {
         processQueue(err, null);
+        setAuthToken(null);
+        localStorage.removeItem("persist:root");
         store.dispatch(logout());
         return Promise.reject(err);
       } finally {

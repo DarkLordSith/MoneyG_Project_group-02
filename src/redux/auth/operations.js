@@ -75,7 +75,7 @@ export const getCurrentUser = createAsyncThunk(
     } catch (error) {
       const status = error?.response?.status;
       if (status === 401) {
-        thunkAPI.dispatch(logout());
+        await thunkAPI.dispatch(logout()).unwrap;
       }
       return thunkAPI.rejectWithValue(error.response?.data || error.message);
     } finally {

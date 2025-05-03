@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { selectIsRefreshing } from "./redux/auth/selectors";
 import { refreshUser, getCurrentUser } from "./redux/auth/operations";
 import { getAuthToken } from "./utils/authToken";
-import { fetchTransactions } from "./redux/transactions/operations";
+// import { fetchTransactions } from "./redux/transactions/operations";
 
 import Layout from "./components/Layout/Layout";
 import Loader from "./components/Loader/Loader";
@@ -35,7 +35,7 @@ const App = () => {
         const currentResult = await dispatch(getCurrentUser());
         if (getCurrentUser.rejected.match(currentResult)) return;
 
-        await dispatch(fetchTransactions());
+        // await dispatch(fetchTransactions());
       } catch (error) {
         toast.error("Сессія недійсна. Увійдіть знову.", error);
       }

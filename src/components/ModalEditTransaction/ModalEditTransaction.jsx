@@ -28,8 +28,6 @@ export const ModalEditTransaction = ({ transaction, onClose }) => {
     if (e.target === e.currentTarget) onClose();
   };
 
-  console.log("Rendering modal with transaction:", transaction);
-
   return ReactDOM.createPortal(
     <div className={css.modalOverlay} onClick={handleBackdropClick}>
       <div

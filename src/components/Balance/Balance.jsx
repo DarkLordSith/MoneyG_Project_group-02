@@ -9,7 +9,6 @@ const Balance = () => {
     (state) => state.transactions.summary.balance
   );
 
-  // якщо є balance з transactions — беремо його
   const balance =
     balanceFromTransactions !== 0
       ? balanceFromTransactions
