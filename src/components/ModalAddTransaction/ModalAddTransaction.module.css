@@ -356,28 +356,6 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Добавьте эти стили в ваш файл ModalAddTransaction.module.css */
-
-.addButton:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-    background: linear-gradient(167deg, #a678c9 0%, #9e40ba 61.46%, #7000ff 90.54%);
-}
-
-/* Добавьте это, если хотите анимацию загрузки */
-@keyframes pulse {
-    0% {
-        opacity: 0.7;
-    }
-
-    50% {
-        opacity: 0.9;
-    }
-
-    100% {
-        opacity: 0.7;
-    }
-}
 
 .addButton:disabled {
     animation: pulse 1.5s infinite;

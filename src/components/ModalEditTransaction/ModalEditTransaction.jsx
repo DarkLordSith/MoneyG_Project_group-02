@@ -1,10 +1,8 @@
-// components/ModalEditTransaction/ModalEditTransaction.jsx
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import { X } from "lucide-react";
 import css from "./ModalEditTransaction.module.css";
 import { EditTransactionForm } from "../EditTransactionForm/EditTransactionForm";
-import { IoClose } from "react-icons/io5";
 
 const modalRoot = document.getElementById("modal-root");
 
@@ -13,31 +11,46 @@ export const ModalEditTransaction = ({ transaction, onClose }) => {
     const handleEscape = (e) => {
       if (e.key === "Escape") onClose();
     };
+
+    // Блокируем скролл body при открытии модального окна
+    document.body.style.overflow = "hidden";
+
     window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+      // Возвращаем скролл при закрытии
+      document.body.style.overflow = "auto";
+    };
   }, [onClose]);
 
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) onClose();
   };
 
-  // if (!transaction || transaction.amount === undefined) return null;
+  console.log("Rendering modal with transaction:", transaction);
 
   return ReactDOM.createPortal(
     <div className={css.modalOverlay} onClick={handleBackdropClick}>
       <div
-        className={`${css.modalContainer} ${transaction.type === "expense" ? css.expenseContainer : ""}`}
+        className={`${css.modalContainer} ${
+          transaction.type === "expense" ? css.expenseContainer : ""
+        }`}
       >
         <div className={css.modalBackground} />
         <div className={css.closeButton}>
-          <button onClick={onClose}>
+          <button onClick={onClose} className={css.closeButtonIcon}>
             <X className={css.closeIcon} />
           </button>
         </div>
         <div className={css.titleContainer}>
           <h2 className={css.title}>Edit transaction</h2>
         </div>
+
+        {/* Форма редактирования транзакции */}
         <EditTransactionForm transaction={transaction} onClose={onClose} />
+
+        {/* Кнопка отмены внизу модального окна */}
         <div className={css.buttonsContainer}>
           <button className={css.cancelButton} onClick={onClose}>
             CANCEL
