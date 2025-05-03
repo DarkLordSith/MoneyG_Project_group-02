@@ -1,4 +1,3 @@
-// src/redux/auth/slice.js
 import { createSlice } from "@reduxjs/toolkit";
 import {
   register,

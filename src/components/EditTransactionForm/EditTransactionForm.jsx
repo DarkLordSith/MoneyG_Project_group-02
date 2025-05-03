@@ -40,8 +40,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
   // Устанавливаем начальные значения из транзакции
   useEffect(() => {
     if (transaction) {
-      console.log("Transaction data:", transaction);
-
       // Проверяем, есть ли поле sum или amount и устанавливаем значение
       if (transaction.sum !== undefined) {
         setValue("amount", transaction.sum);
@@ -70,8 +68,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
         comment: data.comment,
         date: new Date(data.date).toISOString(),
       };
-
-      console.log("Submitting:", payload);
 
       await dispatch(
         editTransaction({ id: transaction._id, body: payload })
