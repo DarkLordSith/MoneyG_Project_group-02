@@ -7,6 +7,7 @@ import TransactionsList from "../../components/TransactionList/TransactionList";
 import Loader from "../../components/Loader/Loader";
 import ButtonAddTransactions from "../../components/ButtonAddTransactions/ButtonAddTransactions";
 import { ModalEditTransaction } from "../../components/ModalEditTransaction/ModalEditTransaction";
+import EmptyTransactionsButton from "../../components/EmptyTransactionsButton/EmptyTransactionsButton";
 
 const HomeTab = () => {
   const dispatch = useDispatch();
@@ -41,9 +42,7 @@ const HomeTab = () => {
               onEdit={openEditModal}
             />
           ) : (
-            <div>
-              <p>No transactions. Add your first transaction!</p>
-            </div>
+            <EmptyTransactionsButton />
           )}
         </>
       )}

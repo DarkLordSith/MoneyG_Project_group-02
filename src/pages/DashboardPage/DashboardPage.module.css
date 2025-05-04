@@ -1,6 +1,3 @@
-/* src/pages/DashboardPage/DashboardPage.module.css */
-
-/* Основний контейнер для Dashboard */
 .dashboardContainer {
   display: flex;
   flex-direction: column;
@@ -15,7 +12,6 @@
 
 }
 
-/* Головний контейнер дешборду з адаптивними стилями */
 .dashboardPage {
   width: 100%;
   min-width: 320px;
@@ -26,13 +22,11 @@
 
 }
 
-/* Стилі для хедера */
 .header {
   width: 100%;
   height: 60px;
 }
 
-/* Фонові елементи */
 .backgroundElements {
   position: absolute;
   inset: 0;
@@ -44,7 +38,6 @@
 
 }
 
-/* Версії фону для різних пристроїв */
 .mobileBg {
   background-image: url("/src/assets/dashboard_images/gradient_mobile.webp");
 
@@ -60,7 +53,6 @@
 
 }
 
-/* Контейнер для вмісту (все крім Header) */
 .contentWrapper {
   display: flex;
   flex: 1;
@@ -72,17 +64,15 @@
   flex-direction: column;
 }
 
-/* Базові стилі для всіх версій */
 .balance .currency {
   border-radius: var(--radius-sm);
 }
 
-/* Лівий сайдбар (для мобільної і десктопної версій) */
 .sidebar {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 .dashboardData {
@@ -99,7 +89,6 @@
   display: none;
 }
 
-/* Стилі для мобільної версії (за замовчуванням) */
 .navigation {
   width: 100%;
 }
@@ -146,14 +135,6 @@
     padding-top: 0px;
   }
 
-  /* Спеціальні стилі для планшетної версії */
-  /* .tabletLayout {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    margin-bottom: 28px;
-  } */
 
   .tabletTopSection {
     display: flex;
@@ -163,7 +144,6 @@
 
   .navigation {
     width: 336px;
-    /* height: 66px; */
   }
 
   .balance {
@@ -188,7 +168,6 @@
   }
 }
 
-/* Стилі для десктопів (1280px і більше) */
 @media screen and (min-width: 1280px) {
   .dashboardPage {
     min-width: 1280px;
@@ -204,7 +183,6 @@
     flex-direction: row;
     min-width: 1280px;
     min-height: calc(100vh - 80px);
-    /* Висота екрану мінус висота хедера */
     gap: 0;
   }
 
@@ -262,7 +240,6 @@
   }
 }
 
-/* Додаткові стилі для повного екрану */
 html,
 body {
   margin: 0;

@@ -66,8 +66,8 @@ const DashboardPage = () => {
       await dispatch(logout()).unwrap();
       handleCloseLogoutModal();
     } catch (error) {
-      console.error("Помилка при виході з системи:", error);
-      toast.error("Помилка при виході з системи. Спробуйте ще раз.");
+      console.error("Error while logging out:", error);
+      toast.error("Error logging out. Please try again.");
     } finally {
       setIsLoading(false);
     }
