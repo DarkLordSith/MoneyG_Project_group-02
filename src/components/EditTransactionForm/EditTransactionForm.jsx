@@ -193,20 +193,18 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
         </div>
       </div>
 
-      {transaction?.type === "expense" && (
-        <div className={css.fieldGroup}>
-          <Controller
-            name="comment"
-            control={control}
-            render={({ field }) => (
-              <input {...field} type="text" placeholder="Comment" />
-            )}
-          />
-          {errors.comment && (
-            <p className={css.errorText}>{errors.comment.message}</p>
+      <div className={css.fieldGroup}>
+        <Controller
+          name="comment"
+          control={control}
+          render={({ field }) => (
+            <input {...field} type="text" placeholder="Comment" />
           )}
-        </div>
-      )}
+        />
+        {errors.comment && (
+          <p className={css.errorText}>{errors.comment.message}</p>
+        )}
+      </div>
 
       <div className={css.buttonWrapper}>
         <button type="submit" className={css.submitBtn}>
