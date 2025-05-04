@@ -23,12 +23,11 @@ const ModalLogOut = ({ isOpen, onClose, onLogout }) => {
 
   if (!isOpen) return null;
 
-  const confirmLogout = () => {
+  const confirmLogout = async () => {
     if (onLogout) {
-      onLogout();
-    } else {
-      onClose();
+      await onLogout();
     }
+    onClose();
   };
 
   return (

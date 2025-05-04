@@ -138,7 +138,7 @@ const AddTransactionForm = ({
   const formClasses = `${styles.form} ${isMobile ? styles.formMobile : ""} ${isTablet ? styles.formTablet : ""} ${isDesktop ? styles.formDesktop : ""}`;
 
   return (
-    <form className={formClasses} onSubmit={(e) => e.preventDefault()}>
+    <form className={formClasses} onSubmit={handleSubmit(onSubmit)}>
       <input type="hidden" {...register("type")} value={type} />
 
       {type === "expense" && (
@@ -213,6 +213,9 @@ const AddTransactionForm = ({
           <p className={styles.error}>{errors.comment.message}</p>
         )}
       </div>
+      <button type="submit" style={{ display: "none" }} aria-hidden="true">
+        Submit
+      </button>
     </form>
   );
 };

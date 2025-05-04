@@ -3,23 +3,30 @@ import ReactDOM from "react-dom";
 import { X } from "lucide-react";
 import css from "./ModalEditTransaction.module.css";
 import { EditTransactionForm } from "../EditTransactionForm/EditTransactionForm";
+import useMedia from "../../hooks/useMedia";
 
 const modalRoot = document.getElementById("modal-root");
 
 export const ModalEditTransaction = ({ transaction, onClose }) => {
+  const { isMobile, isTablet, isDesktop } = useMedia();
+  const getClasses = (baseClass, mobileClass, tabletClass, desktopClass) => {
+    const classes = [baseClass];
+    if (isMobile && mobileClass) classes.push(mobileClass);
+    if (isTablet && tabletClass) classes.push(tabletClass);
+    if (isDesktop && desktopClass) classes.push(desktopClass);
+    return classes.filter(Boolean).join(" ");
+  };
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === "Escape") onClose();
     };
 
-    // Блокируем скролл body при открытии модального окна
     document.body.style.overflow = "hidden";
 
     window.addEventListener("keydown", handleEscape);
 
     return () => {
       window.removeEventListener("keydown", handleEscape);
-      // Возвращаем скролл при закрытии
       document.body.style.overflow = "auto";
     };
   }, [onClose]);
@@ -45,12 +52,25 @@ export const ModalEditTransaction = ({ transaction, onClose }) => {
           <h2 className={css.title}>Edit transaction</h2>
         </div>
 
-        {/* Форма редактирования транзакции */}
         <EditTransactionForm transaction={transaction} onClose={onClose} />
 
-        {/* Кнопка отмены внизу модального окна */}
-        <div className={css.buttonsContainer}>
-          <button className={css.cancelButton} onClick={onClose}>
+        <div
+          className={getClasses(
+            css.buttonsContainer,
+            css.buttonsContainerMobile,
+            css.buttonsContainerTablet,
+            css.buttonsContainerDesktop
+          )}
+        >
+          <button
+            className={getClasses(
+              css.cancelButton,
+              css.cancelButtonMobile,
+              css.cancelButtonTablet,
+              css.cancelButtonDesktop
+            )}
+            onClick={onClose}
+          >
             CANCEL
           </button>
         </div>
