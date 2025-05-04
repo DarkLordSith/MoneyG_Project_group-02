@@ -8,7 +8,19 @@ import css from "./EditTransactionForm.module.css";
 import { useDispatch } from "react-redux";
 import { editTransaction } from "../../redux/transactions/operations";
 import { toast } from "react-toastify";
+import CustomSelect from "../CustomSelect/CustomSelect";
 
+const categories = [
+  "Main expenses",
+  "Products",
+  "Car",
+  "Self care",
+  "Child care",
+  "Household products",
+  "Education",
+  "Leisure",
+  "Other expenses",
+];
 const schema = yup.object().shape({
   amount: yup
     .number()
@@ -17,12 +29,16 @@ const schema = yup.object().shape({
     .required("Sum is required"),
   date: yup.date().required("Date is required"),
   comment: yup.string().max(50, "Max 50 characters"),
+  category: yup.string().when("type", {
+    is: "expense",
+    then: () => yup.string().required("Select a category"),
+    otherwise: () => yup.string().nullable(),
+  }),
 });
 
 export const EditTransactionForm = ({ transaction, onClose }) => {
   const dispatch = useDispatch();
 
-  // Инициализация формы с использованием Controller для управляемых полей
   const {
     control,
     handleSubmit,
@@ -34,27 +50,27 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
       amount: "",
       date: new Date(),
       comment: "",
+      category: transaction?.category || "",
     },
   });
 
-  // Устанавливаем начальные значения из транзакции
   useEffect(() => {
     if (transaction) {
-      // Проверяем, есть ли поле sum или amount и устанавливаем значение
       if (transaction.sum !== undefined) {
         setValue("amount", transaction.sum);
       } else if (transaction.amount !== undefined) {
         setValue("amount", transaction.amount);
       }
 
-      // Устанавливаем дату
       if (transaction.date) {
         setValue("date", new Date(transaction.date));
       }
 
-      // Устанавливаем комментарий
       if (transaction.comment !== undefined) {
         setValue("comment", transaction.comment);
+      }
+      if (transaction.category) {
+        setValue("category", transaction.category);
       }
     }
   }, [transaction, setValue]);
@@ -64,7 +80,7 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
       const payload = {
         sum: parseFloat(data.amount),
         type: transaction.type,
-        category: transaction.category,
+        category: data.category,
         comment: data.comment,
         date: new Date(data.date).toISOString(),
       };
@@ -82,7 +98,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={css.formContainer}>
-      {/* Переключатель типа (Доход/Расход) */}
       <div className={css.typeToggle}>
         <p
           className={
@@ -103,16 +118,28 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
         </p>
       </div>
 
-      {/* Категория транзакции */}
-      <div className={css.categorySelect}>
-        <span className={css.categoryValue}>{transaction?.category}</span>
-        <div className={css.underline} />
-      </div>
+      {transaction?.type === "expense" && (
+        <div className={css.fieldGroup}>
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <CustomSelect
+                options={categories}
+                onChange={(e) => field.onChange(e.target.value)}
+                placeholder="Select a category"
+                value={field.value}
+              />
+            )}
+          />
+          {errors.category && (
+            <p className={css.errorText}>{errors.category.message}</p>
+          )}
+        </div>
+      )}
 
-      {/* Сумма и дата */}
       <div className={css.inputContainer}>
         <div className={css.inputRow}>
-          {/* Поле суммы */}
           <div className={css.fieldGroup}>
             <Controller
               name="amount"
@@ -132,7 +159,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
             )}
           </div>
 
-          {/* Поле даты */}
           <div className={`${css.fieldGroup} ${css.dateContainer}`}>
             <Controller
               name="date"
@@ -167,7 +193,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
         </div>
       </div>
 
-      {/* Комментарий - только для типа Expense */}
       {transaction?.type === "expense" && (
         <div className={css.fieldGroup}>
           <Controller
@@ -183,7 +208,6 @@ export const EditTransactionForm = ({ transaction, onClose }) => {
         </div>
       )}
 
-      {/* Кнопка сохранения */}
       <div className={css.buttonWrapper}>
         <button type="submit" className={css.submitBtn}>
           SAVE
