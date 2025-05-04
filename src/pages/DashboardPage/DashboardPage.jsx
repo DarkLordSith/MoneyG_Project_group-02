@@ -66,8 +66,7 @@ const DashboardPage = () => {
       await dispatch(logout()).unwrap();
       handleCloseLogoutModal();
     } catch (error) {
-      console.error("Error while logging out:", error);
-      toast.error("Error logging out. Please try again.");
+      toast.error("Error logging out. Please try again.", error);
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +74,7 @@ const DashboardPage = () => {
 
   return (
     <div className={styles.dashboardContainer}>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
 
       <div

@@ -1,362 +1,366 @@
 .modalOverlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(44, 29, 86, 0.6);
-    z-index: 9999;
-    isolation: isolate;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(44, 29, 86, 0.6);
+  z-index: 9999;
+  isolation: isolate;
 }
 
 .modalContainer {
-    position: relative;
-    width: 540px;
-    height: 511px;
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 40px 20px;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    transition: height 0.3s ease;
+  position: relative;
+  width: 540px;
+  height: 511px;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 40px 20px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  transition: height 0.3s ease;
 }
 
 .modalContainerMobile {
-    width: 320px;
-    height: 600px;
+  width: 320px;
+  height: 600px;
 }
 
 .modalContainerTablet,
 .modalContainerDesktop {
-    width: 540px;
-    height: 511px;
-    padding: 40px 73px;
+  width: 540px;
+  height: 511px;
+  padding: 40px 73px;
 }
 
 .expenseContainer {
-    height: 589px !important;
+  height: 589px !important;
 }
 
 .modalContainerMobile.expenseContainer {
-    height: 650px !important;
+  height: 650px !important;
 }
 
 .modalContainerTablet.expenseContainer,
 .modalContainerDesktop.expenseContainer {
-    height: 589px !important;
+  height: 589px !important;
 }
 
 .modalBackground {
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(100px);
-    z-index: -1;
-    background-image: url('/src/assets/dashboard_images/modallogtab.webp');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    overflow: hidden;
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(100px);
+  z-index: -1;
+  background-image: url("/src/assets/dashboard_images/modallogtab.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 .modalBackground::before {
-    content: '';
-    position: absolute;
-    width: 768px;
-    height: 854px;
-    border-radius: 100%;
-    filter: blur(200px);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
+  content: "";
+  position: absolute;
+  width: 768px;
+  height: 854px;
+  border-radius: 100%;
+  filter: blur(200px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
 }
 
 .closeButton {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 2;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
 }
 
 .closeIcon {
-    height: 17px;
-    width: 17px;
-    color: white;
-    cursor: pointer;
+  height: 17px;
+  width: 17px;
+  color: white;
+  cursor: pointer;
 }
 
 .titleContainer {
-    margin-bottom: 32px;
-    position: relative;
+  margin-bottom: 32px;
+  position: relative;
 }
 
 .title {
-    font-size: 24px;
-    font-weight: normal;
-    color: #fbfbfb;
-    text-align: center;
+  font-size: 24px;
+  font-weight: normal;
+  color: #fbfbfb;
+  text-align: center;
 }
 
 .modalContainerTablet .title,
 .modalContainerDesktop .title {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 30px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 30px;
 }
 
 .modalContainerTablet .titleContainer,
 .modalContainerDesktop .titleContainer {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .toggleContainer {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
 .toggleContainerMobile {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .toggleWrapper {
-    width: 258px;
-    height: 44px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 258px;
+  height: 44px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .toggleOption {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 14px;
-    color: #c4c4c4;
-    z-index: 2;
-    padding: 0 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: #c4c4c4;
+  z-index: 2;
+  padding: 0 10px;
 }
 
 .activeIncome,
 .activeExpense {
-    font-family: var(--font-family);
-    font-weight: 600;
-    font-size: 16px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .activeIncome {
-    text-align: right;
-    color: #ffb627;
+  text-align: right;
+  color: #ffb627;
 }
 
 .activeExpense {
-    color: #ff868d;
+  color: #ff868d;
 }
 
 .toggleSwitch {
-    position: relative;
-    width: 80px;
-    height: 40px;
-    background: #fbfbfb;
-    border-radius: 30px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+  position: relative;
+  width: 80px;
+  height: 40px;
+  background: #fbfbfb;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .toggleSlider {
-    position: absolute;
-    width: 44px;
-    height: 44px;
-    background-color: #ffb627;
-    border-radius: 50%;
-    top: -2px;
-    left: 0;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 0V20' stroke='%23FBFBFB' stroke-width='2' /%3E%3Cpath d='M0 10L20 10' stroke='%23FBFBFB' stroke-width='2' /%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  background-color: #ffb627;
+  border-radius: 50%;
+  top: -2px;
+  left: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 0V20' stroke='%23FBFBFB' stroke-width='2' /%3E%3Cpath d='M0 10L20 10' stroke='%23FBFBFB' stroke-width='2' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .sliderRight {
-    left: 36px;
-    background-color: #FF6596;
-    background-image: url("data:image/svg+xml,%3Csvg width='20' height='2' viewBox='0 0 20 2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1L20 0.999999' stroke='white' stroke-width='2' /%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
+  left: 36px;
+  background-color: #ff6596;
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='2' viewBox='0 0 20 2' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 1L20 0.999999' stroke='white' stroke-width='2' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .formContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
 .selectWrapper {
-    position: relative;
-    margin-bottom: 15px;
+  position: relative;
+  margin-bottom: 15px;
 }
 
 .selectInput {
-    width: 100%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    font-size: 14px;
-    padding: 8px 0;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  padding: 8px 0;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
 }
 
 .selectInput option {
-    background-color: #4a2a7c;
-    color: white;
+  background-color: #4a2a7c;
+  color: white;
 }
 
 .selectArrow {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .inputRowContainer {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .inputWrapper {
-    position: relative;
-    width: 48%;
+  position: relative;
+  width: 48%;
 }
 
 .amountInput,
 .dateInput,
 .commentInput {
-    width: 100%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    font-size: 14px;
-    text-align: left;
-    padding: 8px 0;
-    outline: none;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  text-align: left;
+  padding: 8px 0;
+  outline: none;
 }
 
 .dateInputContainer {
-    display: flex;
-    align-items: center;
-    position: relative;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
 .dateInput {
-    padding-right: 30px;
+  padding-right: 30px;
 }
 
 .calendarIcon {
-    width: 18px;
-    height: 18px;
-    color: white;
-    position: absolute;
-    right: 0;
+  width: 18px;
+  height: 18px;
+  color: white;
+  position: absolute;
+  right: 0;
 }
 
 .inputUnderline {
-    height: 1px;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
-    margin-top: 4px;
+  height: 1px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin-top: 4px;
 }
 
 .commentContainer {
-    margin-bottom: 20px;
-    position: relative;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .commentInput::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Обновленные стили для кнопок */
 .buttonsContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    width: 300px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 300px;
+  margin: 0 auto;
 }
 
 .buttonsContainerMobile {
-    width: 280px;
+  width: 280px;
 }
 
 .buttonsContainerTablet,
 .buttonsContainerDesktop {
-    width: 300px;
+  width: 300px;
 }
 
 .addButton,
 .cancelButton {
-    width: 300px;
-    min-height: 50px;
-    border: none;
-    border-radius: 20px;
-    font-size: 18px;
-    font-family: var(--font-main);
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  width: 300px;
+  min-height: 50px;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  font-family: var(--font-main);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .addButtonMobile,
 .cancelButtonMobile {
-    width: 280px;
+  width: 280px;
 }
 
 .addButtonTablet,
 .addButtonDesktop,
 .cancelButtonTablet,
 .cancelButtonDesktop {
-    width: 300px;
+  width: 300px;
 }
 
 .addButton {
-    box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
-    background: linear-gradient(167deg, var(--color-accent) 0%, #9e40ba 61.46%, #7000ff 90.54%);
-    color: #fbfbfb;
+  box-shadow: 1px 9px 15px 0 rgba(0, 0, 0, 0.2);
+  background: linear-gradient(
+    167deg,
+    var(--color-accent) 0%,
+    #9e40ba 61.46%,
+    #7000ff 90.54%
+  );
+  color: #fbfbfb;
 }
 
 .addButton:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 .cancelButton {
-    background-color: white;
-    color: #623f8b;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  color: #623f8b;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-
 .addButton:disabled {
-    animation: pulse 1.5s infinite;
+  animation: pulse 1.5s infinite;
 }

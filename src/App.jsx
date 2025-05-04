@@ -47,45 +47,48 @@ const App = () => {
   if (isRefreshing) return <Loader />; // Покажемо лоадер під час перевірки
 
   return (
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <RestrictedRoute>
-              <LoginPage />
-            </RestrictedRoute>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <RestrictedRoute>
-              <RegisterPage />
-            </RestrictedRoute>
-          }
-        />
-        <Route path="/" element={<Layout />}>
+    <>
+      <Loader />
+      <Suspense fallback={<Loader />}>
+        <Routes>
           <Route
-            index
+            path="/login"
             element={
-              <PrivateRoute>
-                <Navigate to="/dashboard" replace />
-              </PrivateRoute>
+              <RestrictedRoute>
+                <LoginPage />
+              </RestrictedRoute>
             }
           />
           <Route
-            path="/dashboard/*"
+            path="/register"
             element={
-              <PrivateRoute>
-                <DashboardPage />
-              </PrivateRoute>
+              <RestrictedRoute>
+                <RegisterPage />
+              </RestrictedRoute>
             }
           />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
-    </Suspense>
+          <Route path="/" element={<Layout />}>
+            <Route
+              index
+              element={
+                <PrivateRoute>
+                  <Navigate to="/dashboard" replace />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/dashboard/*"
+              element={
+                <PrivateRoute>
+                  <DashboardPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </Suspense>
+    </>
   );
 };
 

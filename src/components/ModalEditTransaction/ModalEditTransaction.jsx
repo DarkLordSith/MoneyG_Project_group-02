@@ -54,17 +54,26 @@ export const ModalEditTransaction = ({ transaction, onClose }) => {
 
         <EditTransactionForm transaction={transaction} onClose={onClose} />
 
-        <button
+        <div
           className={getClasses(
-            css.cancelButton,
-            css.cancelButtonMobile,
-            css.cancelButtonTablet,
-            css.cancelButtonDesktop
+            css.buttonsContainer,
+            css.buttonsContainerMobile,
+            css.buttonsContainerTablet,
+            css.buttonsContainerDesktop
           )}
-          onClick={onClose}
         >
-          CANCEL
-        </button>
+          <button
+            className={getClasses(
+              css.cancelButton,
+              css.cancelButtonMobile,
+              css.cancelButtonTablet,
+              css.cancelButtonDesktop
+            )}
+            onClick={onClose}
+          >
+            CANCEL
+          </button>
+        </div>
       </div>
     </div>,
     modalRoot
