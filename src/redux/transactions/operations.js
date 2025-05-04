@@ -1,9 +1,7 @@
-// import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../utils/axiosInstance";
 import { startLoading, stopLoading } from "../global/slice";
 import { setAuthToken } from "../../utils/authToken";
-import { getCurrentUser } from "../auth/operations";
 
 // fetchTransactions
 export const fetchTransactions = createAsyncThunk(
@@ -16,7 +14,6 @@ export const fetchTransactions = createAsyncThunk(
       setAuthToken(token);
 
       const response = await axiosInstance.get("/transactions/");
-      console.log(response.data.data.data);
       return response.data.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -40,10 +37,8 @@ export const addTransaction = createAsyncThunk(
         "/transactions/",
         transactionData
       );
-      thunkAPI.dispatch(fetchTransactions());
-      thunkAPI.dispatch(getCurrentUser());
 
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {
@@ -59,9 +54,7 @@ export const editTransaction = createAsyncThunk(
       thunkAPI.dispatch(startLoading());
 
       const response = await axiosInstance.patch(`/transactions/${id}`, body);
-      thunkAPI.dispatch(fetchTransactions());
-      thunkAPI.dispatch(getCurrentUser());
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Failed to edit"
@@ -78,10 +71,11 @@ export const deleteTransaction = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       thunkAPI.dispatch(startLoading());
-      await axiosInstance.delete(`/transactions/${id}`);
-      thunkAPI.dispatch(fetchTransactions());
-      thunkAPI.dispatch(getCurrentUser());
-      return id;
+      const response = await axiosInstance.delete(`/transactions/${id}`);
+      return {
+        deletedId: response.data._id,
+        balanceAfter: response.data.balanceAfter,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     } finally {

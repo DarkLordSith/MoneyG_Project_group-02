@@ -1,15 +1,10 @@
-import React from "react"; //
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteTransaction,
-  editTransaction,
-} from "../../redux/transactions/operations";
+import { deleteTransaction } from "../../redux/transactions/operations";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import useMedia from "../../hooks/useMedia";
 import s from "./TransactionList.module.css";
 import { selectTransactions } from "../../redux/transactions/selectors";
 import MobileTransactionItem from "../TransactionItem/MobileTransactionItem";
-// import { getCurrentUser } from "../../redux/auth/operations";
 
 const TransactionList = ({ onEdit }) => {
   const dispatch = useDispatch();
@@ -19,10 +14,6 @@ const TransactionList = ({ onEdit }) => {
   const handleDeleteTransaction = async (id) => {
     await dispatch(deleteTransaction(id));
   };
-
-  // const handleEditTransaction = async (id) => {
-  //   await dispatch(editTransaction(id));
-  // };
 
   return (
     <div className={s.operationsPanel}>
@@ -34,7 +25,6 @@ const TransactionList = ({ onEdit }) => {
       ) : (
         <>
           {!isMobile ? (
-            // Десктопная версия с отдельной таблицей для заголовка
             <>
               <table className={s.dataGrid}>
                 <thead className={s.gridHeader}>
@@ -48,33 +38,39 @@ const TransactionList = ({ onEdit }) => {
                   </tr>
                 </thead>
               </table>
+
               <div className={s.tableBodyContainer}>
                 <table className={s.dataGrid}>
                   <tbody className={s.gridBody}>
-                    {transactions.map((operation) => (
-                      <TransactionItem
+                    {Array.isArray(transactions) &&
+                      transactions
+                        .filter((item) => item && item._id)
+                        .map((operation) => (
+                          <TransactionItem
+                            key={operation._id}
+                            transaction={operation}
+                            onEdit={onEdit}
+                            handleRemove={handleDeleteTransaction}
+                          />
+                        ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          ) : (
+            <table className={s.dataGrid}>
+              <tbody className={s.gridBody}>
+                {Array.isArray(transactions) &&
+                  transactions
+                    .filter((item) => item && item._id)
+                    .map((operation) => (
+                      <MobileTransactionItem
                         key={operation._id}
                         transaction={operation}
                         onEdit={onEdit}
                         handleRemove={handleDeleteTransaction}
                       />
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            </>
-          ) : (
-            // Мобильная версия
-            <table className={s.dataGrid}>
-              <tbody className={s.gridBody}>
-                {transactions.map((operation) => (
-                  <MobileTransactionItem
-                    key={operation._id}
-                    transaction={operation}
-                    onEdit={onEdit}
-                    handleRemove={handleDeleteTransaction}
-                  />
-                ))}
               </tbody>
             </table>
           )}

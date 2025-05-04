@@ -52,14 +52,12 @@ const transactionsSlice = createSlice({
       })
 
       .addCase(addTransaction.fulfilled, (state, action) => {
-        state.items.push(action.payload);
-        if (action.payload.type === "income") {
-          state.totalIncome += action.payload.amount;
-          state.balance += action.payload.amount;
-        } else {
-          state.totalExpenses += action.payload.amount;
-          state.balance -= action.payload.amount;
+        const { balanceAfter, ...transaction } = action.payload;
+
+        if (transaction && transaction._id) {
+          state.items.unshift(transaction);
         }
+        state.summary.balance = balanceAfter;
       })
 
       .addCase(editTransaction.pending, (state) => {
@@ -68,13 +66,14 @@ const transactionsSlice = createSlice({
       })
       .addCase(editTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
-        const updatedTransaction = action.payload;
+        const { balanceAfter, ...updatedTransaction } = action.payload;
         const index = state.items.findIndex(
           (t) => t._id === updatedTransaction._id
         );
         if (index !== -1) {
           state.items[index] = updatedTransaction;
         }
+        state.summary.balance = balanceAfter;
       })
       .addCase(editTransaction.rejected, (state, action) => {
         state.isLoading = false;
@@ -82,7 +81,9 @@ const transactionsSlice = createSlice({
       })
 
       .addCase(deleteTransaction.fulfilled, (state, action) => {
-        state.items = state.items.filter((item) => item._id !== action.payload);
+        const { deletedId, balanceAfter } = action.payload;
+        state.items = state.items.filter((item) => item._id !== deletedId);
+        state.summary.balance = balanceAfter;
       })
 
       .addCase(fetchSummary.pending, (state) => {
